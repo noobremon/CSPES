@@ -2,28 +2,28 @@
 
 **System:** AI-Powered National Unified Material Master Framework  
 **Document Classification:** Security & Operations Manual (Phase 4)  
-**Status:** `ACTIVE`
+**Status:** `ACTIVE / AUDITED`
 
 ---
 
 ## 1. Environment Variable Architecture
 
-Configuration is managed via Pydantic `BaseSettings` (`backend/app/core/config.py`) and Vite environment modes (`frontend/.env`).
+Configuration is managed via Pydantic `BaseSettings` (`backend/app/core/config.py`), Vite environment modes (`frontend/.env`), and the canonical root `docker-compose.yml`.
 
 All environment variables must be defined in `.env` (which is excluded from Git via `.gitignore`). Safe defaults and templates are provided in `.env.example`.
 
 ```mermaid
 flowchart LR
     EnvFile[".env (Excluded from Git)"] --> Pydantic["Backend: Pydantic BaseSettings"]
-    EnvFile --> Vite["Frontend: import.meta.env"]
-    EnvFile --> Compose["Docker Compose: Environment Ingestion"]
+    EnvFile --> Vite["Frontend: import.meta.env (VITE_API_BASE_URL)"]
+    EnvFile --> Compose["Root docker-compose.yml: Environment Ingestion"]
 ```
 
 ---
 
 ## 2. Configuration Key Reference
 
-| Variable Name | Default / Example Value | Required | Purpose |
+| Variable Name | Default / Example Value | Required | Scope / Purpose |
 |---|---|---|---|
 | `ENVIRONMENT` | `development` / `production` | Yes | Controls debug logging, SQL echoing, and error verbosity. |
 | `LOG_LEVEL` | `INFO` / `DEBUG` / `WARNING` | Yes | Structured logging threshold for Loguru. |
@@ -31,10 +31,10 @@ flowchart LR
 | `SECRET_KEY` | *(Min 32-character string)* | Yes | Cryptographic key for signing JWT access/refresh tokens. |
 | `CSRF_SECRET_KEY` | *(Min 32-character string)* | Yes | Cryptographic key for Double Submit Anti-CSRF token verification. |
 | `DATABASE_URL` | `postgresql+asyncpg://postgres:postgres@localhost:5432/material_master` | Yes | Async SQLAlchemy connection string for PostgreSQL. |
-| `REDIS_URL` | `redis://localhost:6379/0` | Yes | Redis connection URL for caching, session blacklist, and rate limiting. |
+| `REDIS_URL` | `redis://localhost:6379/0` | Yes | Single Redis connection URL for caching, sessions, and Celery broker. |
 | `CELERY_BROKER_URL` | `redis://localhost:6379/0` | Yes | Celery task message broker connection. |
 | `CELERY_RESULT_BACKEND` | `redis://localhost:6379/0` | Yes | Celery task state and result backend. |
-| `VITE_API_BASE_URL` | `http://localhost:8000/api/v1` | Yes | Base URL used by React frontend to communicate with API gateway. |
+| `VITE_API_BASE_URL` | `http://localhost:8000/api/v1` | Yes | Base URL used by React frontend (Vite & NGINX) to reach API gateway. |
 | `ALLOWED_CORS_ORIGINS` | `["http://localhost:3000","http://127.0.0.1:3000"]` | Yes | CORS allowlist restricting allowed client origins. |
 
 ---

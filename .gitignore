@@ -49,6 +49,9 @@ pnpm-debug.log*
 *.sqlite3
 *.db
 
+# Uploads & Temporary Ingestion Data
+data/uploads/
+
 # IDE & OS Files
 .DS_Store
 Thumbs.db

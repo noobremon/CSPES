@@ -1,7 +1,7 @@
 # Phase 4 — Repository Foundation & Development Environment Initialization
 
 **Phase ID:** PHASE-04  
-**Status:** **COMPLETE**  
+**Status:** **COMPLETE / AUDITED**  
 **Execution Date:** 2026-09-08  
 **Lead Roles:** Principal Software Architect, Senior Full-Stack Engineer, Senior Frontend Engineer, Senior Backend Engineer, DevOps Engineer, Database Engineer, Security Engineer  
 
@@ -12,50 +12,61 @@
 The primary objective of Phase 4 is to establish a clean, working, and production-minded **Development Environment & Project Foundation** without prematurely implementing business features.
 
 ### Scope Checklist Executed
-- [x] **Repository Structure:** Established clean separation across `/frontend`, `/backend`, `/docs`, `/infrastructure`, `/scripts`, and `/tests`.
+- [x] **Repository Structure:** Established clean separation across `/frontend`, `/backend`, `/docs`, `/infrastructure`, and root files.
 - [x] **Version Control:** Initialized Git repository and created comprehensive `.gitignore` and `.env.example`.
 - [x] **Frontend Foundation:** Scaffolded React 18+ (Vite) + TypeScript + Tailwind CSS application shell with Vitest testing setup.
 - [x] **Backend Foundation:** Scaffolded Python 3.11+ FastAPI application with Pydantic v2 settings, async SQLAlchemy session, structured logging (Loguru), and standard error handlers.
-- [x] **Database Foundation:** Configured PostgreSQL with `pgvector` extension and Alembic async migration framework.
-- [x] **Redis & Celery Foundation:** Configured single Redis instance, Celery task application, and verified harmless technical `ping_task`.
-- [x] **Docker Compose Orchestration:** Configured 5-service `docker-compose.yml` (`frontend`, `backend`, `worker`, `db`, `redis`).
-- [x] **Health & Diagnostics Probes:** Implemented `/api/v1/health` (liveness), `/api/v1/readiness` (database/redis/pgvector probe), and `/api/v1/test-celery-ping`.
-- [x] **Verification:** Verified frontend Vitest suite (2/2 passed) and backend Pytest suite.
-- [x] **Documentation:** Created complete setup and architecture guides.
+- [x] **Database Foundation:** Configured PostgreSQL with `pgvector` extension, technical table `system_health_checks`, and Alembic async migration framework.
+- [x] **Redis & Celery Foundation:** Configured single Redis instance, Celery task application, and verified harmless technical `ping_task` Python logic.
+- [x] **Docker Compose Orchestration:** Configured single canonical `/docker-compose.yml` orchestrating 5 containers (`frontend`, `backend`, `worker`, `db`, `redis`).
+- [x] **Health & Diagnostics Probes:** Implemented `/api/v1/health` (liveness), `/api/v1/readiness` (database/redis/pgvector probe), and `/api/v1/test-celery-ping` (development diagnostic only).
+- [x] **Verification:** Verified frontend Vitest suite (2/2 passed) and backend Pytest suite (3/3 passed). Full verification matrix codified in [PHASE_04_VERIFICATION_MATRIX.md](file:///c:/Users/User/Desktop/CSPES/docs/PHASE_04_VERIFICATION_MATRIX.md).
 
 ---
 
-## 2. Intentionally Unimplemented Capabilities (Scheduled for Future Phases)
+## 2. Infrastructure & Verification Status Matrix
 
-In accordance with strict phase discipline, the following business capabilities were **intentionally NOT implemented in Phase 4**:
-- Complete user authentication UI & JWT cookie login flow (Phase 5/6).
-- Material catalog bulk CSV ingestion engine & field-mapping wizard (Phase 6).
-- Industrial NLP attribute extraction (Spacy NER & tokenizers) (Phase 7).
-- Dense vector similarity calculations & AI matching engine (Phase 7).
-- Common National Material Code (CNMC) recommendation & cross-walk mapping (Phase 8).
-- Human-in-the-loop governance approval queues & side-by-side diff viewer (Phase 8).
-- Cross-CPSE price variance and inventory surplus analytics dashboards (Phase 9).
-- SAP/ERP integration export adapters (Phase 9).
+| Subsystem | Configuration | Unit-Tested | Live Runtime Verified | Status Classification |
+|---|---|---|---|---|
+| **Frontend Shell** | ✅ | ✅ (Vitest 2/2) | ❌ | **UNIT-TESTED (JSDOM)** |
+| **Frontend Dev Server (Vite)** | ✅ | N/A | ❌ | **CONFIGURED (Primary Dev Mode: `npm run dev`)** |
+| **Frontend NGINX Container** | ✅ | N/A | ❌ | **CONFIGURED (Production-Like Preview)** |
+| **FastAPI Backend Gateway** | ✅ | ✅ (Pytest 3/3) | ❌ | **UNIT-TESTED (AsyncClient)** |
+| **Liveness Probe (`/health`)** | ✅ | ✅ (Pytest) | ❌ | **UNIT-TESTED** |
+| **Readiness Probe (`/readiness`)** | ✅ | ❌ | ❌ | **CONFIGURED & STRUCTURALLY VERIFIED** |
+| **Diagnostic Endpoint (`/test-celery-ping`)**| ✅ | ❌ | ❌ | **CONFIGURED (DEVELOPMENT/DIAGNOSTIC ONLY)** |
+| **Celery `ping_task` Logic** | ✅ | ✅ (Pytest) | ❌ | **UNIT-TESTED (Function Level)** |
+| **Distributed Celery Runtime** | ✅ | ❌ | ❌ | **UNVERIFIED (Daemon Offline)** |
+| **PostgreSQL & `pgvector` Driver** | ✅ | ✅ (Imported) | ❌ | **CONFIGURED (Driver Verified)** |
+| **PostgreSQL Live Server** | ✅ | ❌ | ❌ | **UNVERIFIED (Daemon Offline)** |
+| **Alembic Initial Migration** | ✅ | ❌ | ❌ | **CONFIGURED (Ready for Live DB)** |
+| **Technical Table `system_health_checks`**| ✅ | ❌ | ❌ | **CONFIGURED (TECHNICAL INFRASTRUCTURE ONLY)** |
+| **Single Redis 7.2 Configuration** | ✅ | ✅ (Imported) | ❌ | **CONFIGURED (Client Verified)** |
+| **Redis Live Server** | ✅ | ❌ | ❌ | **UNVERIFIED (Daemon Offline)** |
+| **Docker Compose (`/docker-compose.yml`)** | ✅ | N/A | ❌ | **CONFIGURED (Single Canonical Entry Point)** |
 
 ---
 
-## 3. Verification Summary
+## 3. Critical Technical Clarifications
 
-| Component / Subsystem | Verification Method | Status | Notes |
-|---|---|---|---|
-| **Git Repository** | `git status` | **VERIFIED** | Initialized with `.gitignore` |
-| **Frontend Foundation** | `npm test` (Vitest) | **VERIFIED (2/2 Passed)** | Application shell renders properly |
-| **Backend API Structure** | `pytest` (Pytest + HTTPX) | **VERIFIED** | Health & readiness endpoints tested |
-| **Celery Test Task** | `ping_task("technical_verification")` | **VERIFIED** | Task executes & returns pong payload |
-| **Docker Compose Config** | `docker-compose.yml` validation | **VERIFIED** | 5 services configured with health checks |
-| **Database Migration Engine** | Alembic configuration & initial migration | **VERIFIED** | Initial migration ready |
-| **No Secrets Committed** | Repository inspection | **VERIFIED** | Clean `.env.example` placeholders |
+1. **Celery Verification Level:**
+   - The Python task function `ping_task` was executed and unit-tested in Python.
+   - The full distributed runtime over live network sockets (`FastAPI` $\rightarrow$ `Redis Broker (6379)` $\rightarrow$ `Celery Worker Daemon`) is configured but remains unverified at live runtime because the Redis daemon was offline on the host machine.
+2. **Diagnostic Endpoint:**
+   - `/api/v1/test-celery-ping` is classified as **`DEVELOPMENT / DIAGNOSTIC ONLY`**. It is strictly a developer utility and will be disabled before production deployment.
+3. **Canonical Docker Compose:**
+   - `/docker-compose.yml` in the repository root is the **single source of truth**. Duplicate infrastructure compose files have been safely removed.
+4. **Frontend Workflows:**
+   - Active UI coding is performed using `npm run dev` in `/frontend` (Vite development server with instant HMR on port 3000/5173).
+   - `frontend/Dockerfile` with NGINX is utilized for production-like packaging and staging previews.
+5. **Technical vs Domain Database Tables:**
+   - `system_health_checks` is a **technical infrastructure table** for migration validation. The actual material master domain schema will be implemented in **Phase 5**.
 
 ---
 
 ## 4. Phase 4 Sign-Off & Recommended Next Phase
 
 - **Development Environment Status:** **PASS / COMPLETE**
-- **Application Business Features Implemented:** **NO** (Only foundational technical infrastructure).
+- **Application Business Features Implemented:** **NO** (Strictly foundational technical infrastructure).
 - **Recommended Next Phase:** **PHASE 5 — CORE DATABASE SCHEMA & SAMPLE MULTI-CPSE DATA**  
-  *(Implement full PostgreSQL database models: CPSEs, Users, Raw Materials, Normalized Materials, Embeddings, CNMC Master, Mappings, Matches, and Audit Logs; create Alembic migration; and generate realistic sample multi-CPSE datasets for ONGC, BHEL, IOCL, and NTPC).*
+  *(Construct full PostgreSQL domain schema: CPSEs, Users, Raw Materials, Normalized Materials, Embeddings, CNMC Master, Mappings, Matches, and Audit Logs; create Alembic migration; and generate realistic sample multi-CPSE datasets for ONGC, BHEL, IOCL, and NTPC).*

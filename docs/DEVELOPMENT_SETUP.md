@@ -2,13 +2,13 @@
 
 **System:** AI-Powered National Unified Material Master Framework  
 **Document Classification:** Development & DevOps Manual (Phase 4)  
-**Status:** `ACTIVE`
+**Status:** `ACTIVE / AUDITED`
 
 ---
 
 ## 1. Prerequisites
 
-Before setting up the project locally, ensure you have the following installed:
+Before setting up the project locally, ensure you have the following installed on your machine:
 - **Git** (v2.40+)
 - **Node.js** (v18.0+ or v20.x) & **npm** (v9.0+)
 - **Python** (v3.11 or v3.12)
@@ -16,9 +16,9 @@ Before setting up the project locally, ensure you have the following installed:
 
 ---
 
-## 2. Quickstart with Docker Compose
+## 2. Docker Compose Environment (Single Canonical Entry Point)
 
-The simplest and most reproducible method to launch the full 5-container stack is using Docker Compose:
+The **single canonical source of truth** for containerized development is the root **`/docker-compose.yml`**.
 
 ```bash
 # 1. Clone repository
@@ -28,76 +28,79 @@ cd CSPES
 # 2. Configure environment file
 cp .env.example .env
 
-# 3. Build and launch containers
+# 3. Build and launch all 5 containers
 docker compose up --build
 ```
 
-### Accessing Running Services:
-- **Frontend Single Page App:** [http://localhost:3000](http://localhost:3000)
+### Containerized Services Overview:
+- **Frontend App (NGINX Container):** [http://localhost:3000](http://localhost:3000) *(Production-like static bundle preview)*
 - **FastAPI OpenAPI Interactive Swagger Docs:** [http://localhost:8000/docs](http://localhost:8000/docs)
-- **FastAPI ReDoc Documentation:** [http://localhost:8000/redoc](http://localhost:8000/redoc)
 - **Liveness Health Check:** [http://localhost:8000/api/v1/health](http://localhost:8000/api/v1/health)
 - **Readiness Health Check:** [http://localhost:8000/api/v1/readiness](http://localhost:8000/api/v1/readiness)
+- **Diagnostic Celery Task Trigger:** `POST http://localhost:8000/api/v1/test-celery-ping` *(Development/Diagnostic only)*
 - **PostgreSQL Database:** `localhost:5432` (User: `postgres`, Password: `postgres`, DB: `material_master`)
 - **Redis Server:** `localhost:6379`
+- **Celery Worker:** Running in background container consuming from Redis broker.
 
 ---
 
-## 3. Native Local Development Setup (Without Docker)
+## 3. Native Local Development Setup (Recommended for Active Coding)
 
-### Backend Setup (FastAPI & Celery)
+For rapid development with instant Hot Module Replacement (HMR) and live debugging, run frontend and backend natively:
+
+### A. Frontend Setup (Vite Development Server with HMR)
 ```bash
-# Navigate to backend directory
+cd frontend
+
+# Install dependencies
+npm install
+
+# Start Vite hot-reloading development server
+npm run dev
+```
+*Note:* The Vite development server provides instant HMR on `http://localhost:3000` or `http://localhost:5173`. Use this for all UI development rather than rebuilding the NGINX container.
+
+### B. Backend Setup (FastAPI & Celery Worker)
+```bash
 cd backend
 
-# Create Python virtual environment
-python -m venv .venv
+# Create & activate Python virtual environment
+py -3.12 -m venv .venv
+# On Windows: .venv\Scripts\activate | On Linux/macOS: source .venv/bin/activate
 
-# Activate virtual environment
-# Windows (PowerShell):
-.venv\Scripts\Activate.ps1
-# Linux / macOS:
-source .venv/bin/activate
-
-# Upgrade pip and install requirements
+# Install dependencies
 pip install --upgrade pip
 pip install -r requirements.txt
 
-# Run database migrations (Ensure PostgreSQL is running locally)
+# Run initial technical database migration (Requires running PostgreSQL)
 alembic upgrade head
 
-# Start FastAPI server
+# Start FastAPI ASGI server
 uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 
-# In a separate terminal, start Celery worker:
+# In a separate terminal, start the Celery background worker (Requires running Redis):
 celery -A app.core.celery_app worker --loglevel=info --concurrency=2
 ```
-
-### Frontend Setup (React & Vite)
-```bash
-# Navigate to frontend directory
-cd frontend
-
-# Install npm packages
-npm install
-
-# Start Vite development server
-npm run dev
-```
-The frontend is available at [http://localhost:3000](http://localhost:3000) or [http://localhost:5173](http://localhost:5173).
 
 ---
 
 ## 4. Running Test Suites
 
-### Running Frontend Tests:
+### Running Frontend Tests (Vitest in JSDOM):
 ```bash
 cd frontend
 npm test
 ```
 
-### Running Backend Tests:
+### Running Backend Tests (Pytest with AsyncClient):
 ```bash
 cd backend
 pytest
 ```
+
+---
+
+## 5. Development Diagnostic Endpoints Notice
+
+- **`POST /api/v1/test-celery-ping`:** A **DEVELOPMENT / DIAGNOSTIC ONLY** endpoint designed to verify Celery task dispatching to Redis. It is not part of the business API surface and will be disabled in production.
+- **`system_health_checks` table:** A **TECHNICAL INFRASTRUCTURE TABLE** created to verify Alembic migration execution. Real material master domain models will be added in Phase 5.

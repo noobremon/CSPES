@@ -1,17 +1,318 @@
-import { ApiResponse, SystemStatus } from '../types';
+import {
+  ApiResponse,
+  SystemStatus,
+  CNMCCandidateItem,
+  CNMCRecommendation,
+  CPSEMappingItem,
+  CNMCReviewSubmission,
+  CNMCReviewResult,
+  GovernanceReviewItem,
+  NationalDashboardResponse,
+  DuplicateAnalyticsResponse,
+  CrossCPSEMatrixResponse,
+  CNMCStandardizationAnalyticsResponse,
+  ProcurementOpportunityResponse,
+  RationalizationPriorityResponse,
+  CategoryAnalyticsResponse,
+  User,
+  AuthResponse,
+  LoginCredentials
+} from '../types';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api/v1';
 
-export async function fetchHealth(): Promise<ApiResponse<SystemStatus>> {
-  const response = await fetch(`${API_BASE_URL}/health`, {
+let authToken: string | null = typeof window !== 'undefined' ? localStorage.getItem('auth_token') : null;
+
+export function setAuthToken(token: string | null) {
+  authToken = token;
+  if (typeof window !== 'undefined') {
+    if (token) {
+      localStorage.setItem('auth_token', token);
+    } else {
+      localStorage.removeItem('auth_token');
+    }
+  }
+}
+
+export function getAuthToken(): string | null {
+  if (authToken) return authToken;
+  if (typeof window !== 'undefined') {
+    return localStorage.getItem('auth_token');
+  }
+  return null;
+}
+
+function getHeaders(customHeaders: Record<string, string> = {}): Record<string, string> {
+  const headers: Record<string, string> = {
+    'Accept': 'application/json',
+    ...customHeaders,
+  };
+  const token = getAuthToken();
+  if (token) {
+    headers['Authorization'] = `Bearer ${token}`;
+  }
+  return headers;
+}
+
+// ==========================================
+// Authentication Client Functions
+// ==========================================
+
+export async function loginUser(credentials: LoginCredentials): Promise<AuthResponse> {
+  const response = await fetch(`${API_BASE_URL}/auth/login`, {
+    method: 'POST',
     headers: {
+      'Content-Type': 'application/json',
       'Accept': 'application/json',
     },
+    body: JSON.stringify(credentials),
   });
 
   if (!response.ok) {
-    throw new Error(`API health check failed with status: ${response.status}`);
+    const errorData = await response.json().catch(() => ({}));
+    const message = errorData.error?.message || errorData.detail || 'Login failed. Please check your credentials.';
+    throw new Error(message);
+  }
+
+  const data: AuthResponse = await response.json();
+  setAuthToken(data.access_token);
+  return data;
+}
+
+export async function logoutUser(): Promise<void> {
+  try {
+    await fetch(`${API_BASE_URL}/auth/logout`, {
+      method: 'POST',
+      headers: getHeaders({ 'Content-Type': 'application/json' }),
+    });
+  } catch (e) {
+    console.warn('Logout request failed or server unreachable:', e);
+  } finally {
+    setAuthToken(null);
+  }
+}
+
+export async function fetchCurrentUser(): Promise<User> {
+  const response = await fetch(`${API_BASE_URL}/auth/me`, {
+    headers: getHeaders(),
+  });
+
+  if (!response.ok) {
+    throw new Error('Session expired or unauthorized.');
   }
 
   return response.json();
 }
+
+// ==========================================
+// System & Domain Endpoints
+// ==========================================
+
+export async function fetchHealth(): Promise<ApiResponse<SystemStatus>> {
+  const response = await fetch(`${API_BASE_URL}/health`, {
+    headers: getHeaders(),
+  });
+  if (!response.ok) {
+    throw new Error(`API health check failed with status: ${response.status}`);
+  }
+  return response.json();
+}
+
+export async function fetchCNMCCandidates(statusFilter?: string, search?: string): Promise<CNMCCandidateItem[]> {
+  const params = new URLSearchParams();
+  if (statusFilter && statusFilter !== 'ALL') params.append('status_filter', statusFilter);
+  if (search) params.append('search', search);
+
+  const response = await fetch(`${API_BASE_URL}/cnmc/candidates?${params.toString()}`, {
+    headers: getHeaders(),
+  });
+  if (!response.ok) {
+    throw new Error(`Failed to fetch CNMC candidates: ${response.statusText}`);
+  }
+  return response.json();
+}
+
+export async function fetchCandidateDetail(candidateId: string): Promise<CNMCCandidateItem> {
+  const response = await fetch(`${API_BASE_URL}/cnmc/candidates/${candidateId}`, {
+    headers: getHeaders(),
+  });
+  if (!response.ok) {
+    throw new Error(`Failed to fetch candidate details: ${response.statusText}`);
+  }
+  return response.json();
+}
+
+export async function generateCNMCRecommendation(
+  materialId: string,
+  persistCandidate: boolean = true,
+  demoReviewer: string = 'demo_reviewer@sih.gov.in'
+): Promise<CNMCRecommendation> {
+  const response = await fetch(`${API_BASE_URL}/cnmc/recommend`, {
+    method: 'POST',
+    headers: getHeaders({
+      'Content-Type': 'application/json',
+      'X-Demo-Reviewer': demoReviewer,
+    }),
+    body: JSON.stringify({
+      material_id: materialId,
+      persist_candidate: persistCandidate,
+    }),
+  });
+  if (!response.ok) {
+    const err = await response.json().catch(() => ({ detail: response.statusText }));
+    throw new Error(err.error?.message || err.detail || `Failed to generate CNMC recommendation: ${response.status}`);
+  }
+  return response.json();
+}
+
+export async function submitCNMCReview(
+  candidateId: string,
+  submission: CNMCReviewSubmission,
+  demoReviewer: string = 'demo_domain_reviewer@sih.gov.in'
+): Promise<CNMCReviewResult> {
+  const response = await fetch(`${API_BASE_URL}/cnmc/candidates/${candidateId}/review`, {
+    method: 'POST',
+    headers: getHeaders({
+      'Content-Type': 'application/json',
+      'X-Demo-Reviewer': demoReviewer,
+    }),
+    body: JSON.stringify(submission),
+  });
+  if (!response.ok) {
+    const err = await response.json().catch(() => ({ detail: response.statusText }));
+    throw new Error(err.error?.message || err.detail || `Failed to submit review decision: ${response.status}`);
+  }
+  return response.json();
+}
+
+export async function fetchCPSEMappings(orgId?: string, cnmcId?: string): Promise<CPSEMappingItem[]> {
+  const params = new URLSearchParams();
+  if (orgId) params.append('organization_id', orgId);
+  if (cnmcId) params.append('cnmc_id', cnmcId);
+
+  const response = await fetch(`${API_BASE_URL}/cnmc/mappings?${params.toString()}`, {
+    headers: getHeaders(),
+  });
+  if (!response.ok) {
+    throw new Error(`Failed to fetch cross-walk mappings: ${response.statusText}`);
+  }
+  return response.json();
+}
+
+export async function fetchGovernanceReviews(entityId?: string): Promise<GovernanceReviewItem[]> {
+  const params = new URLSearchParams();
+  if (entityId) params.append('entity_id', entityId);
+
+  const response = await fetch(`${API_BASE_URL}/governance/reviews?${params.toString()}`, {
+    headers: getHeaders(),
+  });
+  if (!response.ok) {
+    throw new Error(`Failed to fetch governance reviews: ${response.statusText}`);
+  }
+  return response.json();
+}
+
+// ==========================================
+// Phase 9 National Analytics Client Functions
+// ==========================================
+
+export async function fetchNationalDashboard(): Promise<NationalDashboardResponse> {
+  const response = await fetch(`${API_BASE_URL}/analytics/dashboard/national`, {
+    headers: getHeaders(),
+  });
+  if (!response.ok) {
+    throw new Error(`Failed to fetch national dashboard KPIs: ${response.statusText}`);
+  }
+  return response.json();
+}
+
+export async function fetchDuplicateAnalytics(): Promise<DuplicateAnalyticsResponse> {
+  const response = await fetch(`${API_BASE_URL}/analytics/duplicates`, {
+    headers: getHeaders(),
+  });
+  if (!response.ok) {
+    throw new Error(`Failed to fetch duplicate analytics: ${response.statusText}`);
+  }
+  return response.json();
+}
+
+export async function fetchCrossCPSEMatrix(minOverlap?: number): Promise<CrossCPSEMatrixResponse> {
+  const params = new URLSearchParams();
+  if (minOverlap !== undefined) params.append('min_overlap', String(minOverlap));
+
+  const response = await fetch(`${API_BASE_URL}/analytics/matrix/cross-cpse?${params.toString()}`, {
+    headers: getHeaders(),
+  });
+  if (!response.ok) {
+    throw new Error(`Failed to fetch cross-CPSE overlap matrix: ${response.statusText}`);
+  }
+  return response.json();
+}
+
+export async function fetchCNMCStandardizationAnalytics(): Promise<CNMCStandardizationAnalyticsResponse> {
+  const response = await fetch(`${API_BASE_URL}/analytics/standardization/cnmc`, {
+    headers: getHeaders(),
+  });
+  if (!response.ok) {
+    throw new Error(`Failed to fetch CNMC standardization analytics: ${response.statusText}`);
+  }
+  return response.json();
+}
+
+export async function fetchProcurementOpportunities(type?: string, priority?: string): Promise<ProcurementOpportunityResponse> {
+  const params = new URLSearchParams();
+  if (type && type !== 'ALL') params.append('opportunity_type', type);
+  if (priority && priority !== 'ALL') params.append('priority', priority);
+
+  const response = await fetch(`${API_BASE_URL}/analytics/procurement/opportunities?${params.toString()}`, {
+    headers: getHeaders(),
+  });
+  if (!response.ok) {
+    throw new Error(`Failed to fetch procurement opportunities: ${response.statusText}`);
+  }
+  return response.json();
+}
+
+export async function fetchRationalizationPriorities(priority?: string): Promise<RationalizationPriorityResponse> {
+  const params = new URLSearchParams();
+  if (priority && priority !== 'ALL') params.append('priority', priority);
+
+  const response = await fetch(`${API_BASE_URL}/analytics/rationalization/priorities?${params.toString()}`, {
+    headers: getHeaders(),
+  });
+  if (!response.ok) {
+    throw new Error(`Failed to fetch rationalization priorities: ${response.statusText}`);
+  }
+  return response.json();
+}
+
+export async function fetchCategoryAnalytics(): Promise<CategoryAnalyticsResponse> {
+  const response = await fetch(`${API_BASE_URL}/analytics/categories`, {
+    headers: getHeaders(),
+  });
+  if (!response.ok) {
+    throw new Error(`Failed to fetch category analytics: ${response.statusText}`);
+  }
+  return response.json();
+}
+
+// Unified API Object for easy consumption
+export const api = {
+  login: loginUser,
+  logout: logoutUser,
+  fetchMe: fetchCurrentUser,
+  fetchHealth,
+  getNationalDashboard: fetchNationalDashboard,
+  getDuplicateAnalytics: fetchDuplicateAnalytics,
+  getCrossCPSEMatrix: fetchCrossCPSEMatrix,
+  getCNMCStandardizationAnalytics: fetchCNMCStandardizationAnalytics,
+  getProcurementOpportunities: fetchProcurementOpportunities,
+  getRationalizationPriorities: fetchRationalizationPriorities,
+  getCategoryAnalytics: fetchCategoryAnalytics,
+  getCNMCCandidates: fetchCNMCCandidates,
+  getCandidateDetail: fetchCandidateDetail,
+  generateRecommendation: generateCNMCRecommendation,
+  submitReview: submitCNMCReview,
+  getCPSEMappings: fetchCPSEMappings,
+  getGovernanceReviews: fetchGovernanceReviews,
+};

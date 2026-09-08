@@ -2,7 +2,7 @@
 
 **System:** AI-Powered National Unified Material Master Framework  
 **Document Classification:** Development & Architecture Manual (Phase 4)  
-**Status:** `ACTIVE`
+**Status:** `ACTIVE / AUDITED`
 
 ---
 
@@ -12,17 +12,18 @@
 c:\Users\User\Desktop\CSPES
 ├── .github/                       # CI/CD workflows (GitHub Actions)
 │   └── workflows/
-│       └── ci.yml
+│       └── ci.yml                 # Automated testing & linting pipeline
 ├── backend/                       # Python FastAPI Backend & Celery Worker
 │   ├── alembic/                   # Database migration framework
-│   │   ├── versions/              # Migration scripts (pgvector & schemas)
+│   │   ├── versions/              # Migration scripts (pgvector & initial schema)
+│   │   │   └── 2026_09_08_0001-initial_health_foundation.py
 │   │   ├── env.py                 # Async migration runner
 │   │   └── script.py.mako         # Migration template
 │   ├── app/
 │   │   ├── api/
 │   │   │   └── v1/
-│   │   │       ├── endpoints/     # API routes (health, materials, matching)
-│   │   │       │   └── health.py
+│   │   │       ├── endpoints/     # API routes (health, diagnostics)
+│   │   │       │   └── health.py  # Liveness, readiness, diagnostic ping
 │   │   │       ├── dependencies.py
 │   │   │       └── router.py      # v1 Router aggregator
 │   │   ├── core/                  # Core configurations & security
@@ -34,7 +35,7 @@ c:\Users\User\Desktop\CSPES
 │   │   │   ├── base.py
 │   │   │   └── session.py         # Async SQLAlchemy engine
 │   │   ├── models/                # SQLAlchemy ORM models
-│   │   │   └── __init__.py
+│   │   │   └── __init__.py        # Technical table: SystemHealthCheck
 │   │   ├── schemas/               # Pydantic v2 DTO validation schemas
 │   │   │   ├── health.py
 │   │   │   └── response.py        # Generic API envelope schemas
@@ -46,6 +47,7 @@ c:\Users\User\Desktop\CSPES
 │   │   └── test_health.py
 │   ├── alembic.ini
 │   ├── Dockerfile                 # Backend container image build
+│   ├── pyproject.toml             # Pytest configuration
 │   └── requirements.txt           # Python dependency manifest
 ├── frontend/                      # React 18+ (Vite) Single Page Application
 │   ├── public/                    # Static assets & icons
@@ -69,7 +71,7 @@ c:\Users\User\Desktop\CSPES
 │   ├── tests/                     # Frontend Vitest test suite
 │   │   ├── setup.ts
 │   │   └── App.test.tsx
-│   ├── Dockerfile                 # Frontend container build (NGINX)
+│   ├── Dockerfile                 # Frontend container build (NGINX preview)
 │   ├── nginx.conf                 # NGINX reverse proxy config
 │   ├── index.html
 │   ├── package.json
@@ -77,11 +79,12 @@ c:\Users\User\Desktop\CSPES
 │   ├── tailwind.config.js
 │   ├── tsconfig.json
 │   └── vite.config.ts             # Vite configuration with Vitest setup
-├── docs/                          # Complete Documentation Suite (45+ Docs)
+├── docs/                          # Complete Documentation Suite (47+ Docs)
 │   ├── phases/                    # Phase sign-off records
 │   │   ├── PHASE_01_DISCOVERY.md
 │   │   ├── PHASE_02_PRODUCT_SYSTEM_DESIGN.md
-│   │   └── PHASE_03_SYSTEM_ARCHITECTURE.md
+│   │   ├── PHASE_03_SYSTEM_ARCHITECTURE.md
+│   │   └── PHASE_04_FOUNDATION.md
 │   ├── ADR_DECISION_SUMMARY.md
 │   ├── AI_ARCHITECTURE.md
 │   ├── ARCHITECTURE_DECISIONS.md
@@ -99,6 +102,7 @@ c:\Users\User\Desktop\CSPES
 │   ├── NON_FUNCTIONAL_REQUIREMENTS.md
 │   ├── OBSERVABILITY_ARCHITECTURE.md
 │   ├── PERFORMANCE_ARCHITECTURE.md
+│   ├── PHASE_04_VERIFICATION_MATRIX.md
 │   ├── PRODUCT_MODULES.md
 │   ├── PRODUCT_REQUIREMENTS.md
 │   ├── REPOSITORY_STRUCTURE.md
@@ -106,13 +110,13 @@ c:\Users\User\Desktop\CSPES
 │   ├── SECURITY_ARCHITECTURE.md
 │   ├── SIH_DEMO_SCENARIOS.md
 │   ├── SIH_MVP_SCOPE.md
+│   ├── STAKEHOLDERS_AND_USERS.md
 │   ├── SYSTEM_ARCHITECTURE.md
 │   ├── SYSTEM_CONTEXT.md
 │   └── TESTING_STRATEGY.md
-├── infrastructure/                # Deployment configs & Docker Compose
-│   └── docker-compose.yml
+├── infrastructure/                # Deployment configs & cloud assets
 ├── .env.example                   # Environment configuration template
 ├── .gitignore                     # Git exclusion rules
-├── docker-compose.yml             # Root Docker Compose file
+├── docker-compose.yml             # Single Canonical Root Docker Compose file
 └── README.md                      # Primary project overview
 ```
