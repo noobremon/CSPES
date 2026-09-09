@@ -69,6 +69,17 @@ async def login(
     res = await db.execute(stmt)
     user = res.scalars().first()
 
+    # Self-healing demo account provisioning if database was migrated without manual seed
+    if not user:
+        from app.services.auth.seed_users import DEMO_USERS
+        # Check if requested email is a known demo account
+        is_demo_account = any(d["email"].lower() == req.email.lower().strip() for d in DEMO_USERS)
+        if is_demo_account:
+            await seed_demo_users(db)
+            await db.commit()
+            res = await db.execute(stmt)
+            user = res.scalars().first()
+
     if not user or not verify_password(req.password, user.hashed_password):
         # Record failed login audit log (sanitized - never log passwords)
         audit_fail = AuditLog(

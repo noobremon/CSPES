@@ -33,6 +33,7 @@ from app.models.standards import StandardsEquivalence
 from app.models.matching import MaterialSimilarityMatch
 from app.models.cnmc import CNMCCandidate, CNMCMaster, CPSECNMCMapping
 from app.models.governance import GovernanceReview, AuditLog
+from app.services.auth.seed_users import seed_demo_users
 
 
 async def seed_data(session: AsyncSession) -> dict:
@@ -107,10 +108,14 @@ async def seed_data(session: AsyncSession) -> dict:
                 system_type=s["type"],
                 is_active=True
             )
-            session.add(sys_item)
             sys_map[s["org"]] = sys_item
         else:
             sys_map[s["org"]] = existing
+    await session.flush()
+
+    # Seed Demo Users for Role-Based Access Control
+    print("  -> Seeding demonstration personas and admin users...")
+    await seed_demo_users(session)
     await session.flush()
 
     # 3. Seed Multi-Level Material Taxonomy
