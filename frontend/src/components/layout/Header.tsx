@@ -2,14 +2,11 @@ import React from 'react';
 import { 
   Layers, 
   ShieldCheck, 
-  CheckCircle, 
   FileText, 
   CheckSquare, 
   GitCompare, 
   Info,
   LogOut,
-  Building2,
-  UserCheck,
   UploadCloud
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
@@ -26,15 +23,15 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, pending
   const getRoleBadge = (role?: string) => {
     switch (role) {
       case 'NATIONAL_MASTER_ADMIN':
-        return 'bg-rose-500/15 text-rose-300 border-rose-500/30';
+        return 'bg-gov-navy text-white border-gov-navy';
       case 'CPSE_MATERIAL_MANAGER':
-        return 'bg-blue-500/15 text-blue-300 border-blue-500/30';
+        return 'bg-blue-50 text-blue-800 border-blue-200';
       case 'DOMAIN_REVIEWER':
-        return 'bg-purple-500/15 text-purple-300 border-purple-500/30';
+        return 'bg-purple-50 text-purple-800 border-purple-200';
       case 'AUDITOR':
-        return 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30';
+        return 'bg-emerald-50 text-emerald-800 border-emerald-200';
       default:
-        return 'bg-slate-500/15 text-slate-300 border-slate-500/30';
+        return 'bg-slate-100 text-slate-700 border-slate-200';
     }
   };
 
@@ -44,36 +41,36 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, pending
   };
 
   return (
-    <header className="border-b border-slate-200 bg-white/95 backdrop-blur-md sticky top-0 z-50 px-6 py-3.5 shadow-xs">
+    <header className="border-b border-slate-200 bg-white sticky top-0 z-50 px-6 py-3.5 shadow-2xs">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
         {/* Brand & Platform Identity */}
         <div className="flex items-center space-x-3.5">
-          <div className="p-2.5 bg-brand-50 text-brand-600 rounded-xl border border-brand-200 shadow-inner">
-            <Layers className="w-6 h-6" />
+          <div className="p-2 bg-gov-navy text-white rounded-lg shadow-xs">
+            <Layers className="w-5 h-5" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h1 className="text-base font-bold text-slate-900 tracking-tight sm:text-lg">
+              <h1 className="text-sm font-bold text-gov-navy tracking-tight sm:text-base">
                 National Unified Material Master Framework
               </h1>
-              <span className="text-[10px] uppercase font-bold px-2 py-0.5 rounded bg-brand-50 text-brand-700 border border-brand-200">
+              <span className="text-[10px] uppercase font-bold px-2 py-0.5 rounded bg-blue-50 text-gov-blue border border-blue-200">
                 SIH 2026
               </span>
             </div>
-            <p className="text-xs text-slate-500">
-              Smart India Hackathon (SIH) 2026 • “One Nation – One Common Material Code”
+            <p className="text-[11px] text-slate-500 font-medium">
+              Smart India Hackathon 2026 • Unified Material Intelligence Platform
             </p>
           </div>
         </div>
 
         {/* Enterprise Navigation Tabs */}
-        <nav className="flex items-center space-x-1 bg-slate-100 p-1 rounded-xl border border-slate-200 text-xs font-medium">
+        <nav className="flex items-center space-x-1 bg-slate-50 p-1 rounded-xl border border-slate-200 text-xs font-medium">
           <button
             onClick={() => setActiveTab('ingestion')}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all ${
               activeTab === 'ingestion'
-                ? 'bg-brand-600 text-white shadow-xs font-semibold'
-                : 'text-slate-600 hover:text-slate-900 hover:bg-white/80'
+                ? 'bg-gov-navy text-white shadow-xs font-semibold'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-white'
             }`}
           >
             <UploadCloud className="w-3.5 h-3.5" />
@@ -84,8 +81,8 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, pending
             onClick={() => setActiveTab('workspace')}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all ${
               activeTab === 'workspace'
-                ? 'bg-brand-600 text-white shadow-xs font-semibold'
-                : 'text-slate-600 hover:text-slate-900 hover:bg-white/80'
+                ? 'bg-gov-navy text-white shadow-xs font-semibold'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-white'
             }`}
           >
             <FileText className="w-3.5 h-3.5" />
@@ -96,8 +93,8 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, pending
             onClick={() => setActiveTab('queue')}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all relative ${
               activeTab === 'queue'
-                ? 'bg-brand-600 text-white shadow-xs font-semibold'
-                : 'text-slate-600 hover:text-slate-900 hover:bg-white/80'
+                ? 'bg-gov-navy text-white shadow-xs font-semibold'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-white'
             }`}
           >
             <CheckSquare className="w-3.5 h-3.5" />
@@ -113,8 +110,8 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, pending
             onClick={() => setActiveTab('mappings')}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all ${
               activeTab === 'mappings'
-                ? 'bg-brand-600 text-white shadow-xs font-semibold'
-                : 'text-slate-600 hover:text-slate-900 hover:bg-white/80'
+                ? 'bg-gov-navy text-white shadow-xs font-semibold'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-white'
             }`}
           >
             <GitCompare className="w-3.5 h-3.5" />
@@ -125,11 +122,11 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, pending
             onClick={() => setActiveTab('analytics')}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all ${
               activeTab === 'analytics'
-                ? 'bg-brand-600 text-white shadow-xs font-semibold'
-                : 'text-slate-600 hover:text-slate-900 hover:bg-white/80'
+                ? 'bg-gov-navy text-white shadow-xs font-semibold'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-white'
             }`}
           >
-            <ShieldCheck className="w-3.5 h-3.5 text-brand-600" />
+            <ShieldCheck className="w-3.5 h-3.5 text-blue-600" />
             National Analytics
           </button>
 
@@ -137,8 +134,8 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, pending
             onClick={() => setActiveTab('health')}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all ${
               activeTab === 'health'
-                ? 'bg-brand-600 text-white shadow-xs font-semibold'
-                : 'text-slate-600 hover:text-slate-900 hover:bg-white/80'
+                ? 'bg-gov-navy text-white shadow-xs font-semibold'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-white'
             }`}
           >
             <Info className="w-3.5 h-3.5" />
@@ -149,36 +146,29 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, pending
         {/* Authenticated User Profile & Logout */}
         <div className="flex items-center space-x-3 text-xs">
           {user ? (
-            <div className="flex items-center gap-2.5 bg-slate-100 px-3 py-1.5 rounded-xl border border-slate-200 shadow-xs">
+            <div className="flex items-center gap-2.5 bg-slate-50 px-3 py-1.5 rounded-xl border border-slate-200 shadow-2xs">
               <div className="flex flex-col text-left">
                 <div className="flex items-center gap-1.5">
-                  <span className="font-bold text-slate-900 text-[11px] truncate max-w-[130px]" title={user.full_name}>
-                    {user.full_name}
+                  <span className="font-semibold text-slate-900">{user.full_name || user.username}</span>
+                  <span className={`text-[10px] font-bold px-1.5 py-0.2 rounded border ${getRoleBadge(user.role)}`}>
+                    {formatRoleName(user.role)}
                   </span>
-                  {user.organization_code && (
-                    <span className="px-1.5 py-0.2 bg-blue-100 text-blue-800 border border-blue-200 rounded text-[10px] font-mono font-semibold">
-                      {user.organization_code}
-                    </span>
-                  )}
                 </div>
-                <span className={`text-[9px] uppercase tracking-wider font-semibold px-1.5 py-0.2 rounded border w-fit mt-0.5 ${getRoleBadge(user.role)}`}>
-                  {formatRoleName(user.role)}
+                <span className="text-[10px] text-slate-500 font-mono">
+                  {user.organization_code || 'ALL_CPSE'} • {user.email}
                 </span>
               </div>
 
               <button
-                onClick={() => logout()}
+                onClick={logout}
                 title="Sign Out of Portal"
-                className="p-1.5 rounded-lg text-slate-500 hover:text-rose-600 hover:bg-rose-50 transition-colors ml-1 cursor-pointer"
+                className="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-white rounded-lg transition-colors ml-1"
               >
                 <LogOut className="w-4 h-4" />
               </button>
             </div>
           ) : (
-            <div className="flex items-center space-x-1.5 text-slate-500 text-xs">
-              <ShieldCheck className="w-4 h-4 text-brand-600" />
-              <span>Unauthenticated</span>
-            </div>
+            <div className="text-slate-400 text-xs italic">Unauthenticated Demo</div>
           )}
         </div>
       </div>

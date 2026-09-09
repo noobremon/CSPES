@@ -118,11 +118,9 @@ export const GovernanceReviewQueue: React.FC<GovernanceReviewQueueProps> = ({
       if (data && data.length > 0) {
         setCandidates(data);
       } else {
-        // Fallback to local demo list if backend is empty
         setCandidates(INITIAL_DEMO_CANDIDATES);
       }
     } catch {
-      // Fallback in standalone mode
       setCandidates(INITIAL_DEMO_CANDIDATES);
     } finally {
       setLoading(false);
@@ -146,27 +144,27 @@ export const GovernanceReviewQueue: React.FC<GovernanceReviewQueueProps> = ({
     switch (status) {
       case 'APPROVED':
         return (
-          <span className="flex items-center gap-1 text-[11px] font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 px-2 py-0.5 rounded-full">
-            <CheckCircle2 className="w-3 h-3" /> Approved
+          <span className="inline-flex items-center gap-1 text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-300 px-2.5 py-0.5 rounded-full">
+            <CheckCircle2 className="w-3 h-3 text-emerald-600" /> Approved
           </span>
         );
       case 'REJECTED':
         return (
-          <span className="flex items-center gap-1 text-[11px] font-semibold bg-rose-500/10 text-rose-400 border border-rose-500/30 px-2 py-0.5 rounded-full">
-            <XCircle className="w-3 h-3" /> Rejected
+          <span className="inline-flex items-center gap-1 text-[11px] font-semibold bg-rose-50 text-rose-700 border border-rose-300 px-2.5 py-0.5 rounded-full">
+            <XCircle className="w-3 h-3 text-rose-600" /> Rejected
           </span>
         );
       case 'MODIFIED':
         return (
-          <span className="flex items-center gap-1 text-[11px] font-semibold bg-indigo-500/10 text-indigo-400 border border-indigo-500/30 px-2 py-0.5 rounded-full">
-            <Edit3 className="w-3 h-3" /> Modified
+          <span className="inline-flex items-center gap-1 text-[11px] font-semibold bg-blue-50 text-blue-700 border border-blue-300 px-2.5 py-0.5 rounded-full">
+            <Edit3 className="w-3 h-3 text-blue-600" /> Modified
           </span>
         );
       case 'PENDING_REVIEW':
       default:
         return (
-          <span className="flex items-center gap-1 text-[11px] font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/30 px-2 py-0.5 rounded-full">
-            <Clock className="w-3 h-3" /> Pending Review
+          <span className="inline-flex items-center gap-1 text-[11px] font-semibold bg-amber-50 text-amber-800 border border-amber-300 px-2.5 py-0.5 rounded-full">
+            <Clock className="w-3 h-3 text-amber-600" /> Pending Review
           </span>
         );
     }
@@ -175,7 +173,7 @@ export const GovernanceReviewQueue: React.FC<GovernanceReviewQueueProps> = ({
   return (
     <div className="space-y-4">
       {/* Header Controls: Filters & Search */}
-      <div className="bg-slate-900/80 border border-slate-800 rounded-xl p-4 flex flex-col md:flex-row items-center justify-between gap-4">
+      <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm flex flex-col md:flex-row items-center justify-between gap-4">
         {/* Search */}
         <div className="relative w-full md:w-80">
           <Search className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
@@ -184,20 +182,20 @@ export const GovernanceReviewQueue: React.FC<GovernanceReviewQueueProps> = ({
             placeholder="Search candidate CNMC or material title..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-9 pr-3 py-1.5 text-xs bg-slate-950 rounded-lg border border-slate-800 text-slate-200 placeholder-slate-500 focus:outline-none focus:border-brand-500"
+            className="w-full pl-9 pr-3 py-1.5 text-xs bg-slate-50 rounded-lg border border-slate-300 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-gov-navy/20 focus:border-gov-navy transition-all"
           />
         </div>
 
         {/* Status Filter Tabs */}
-        <div className="flex items-center space-x-1 bg-slate-950 p-1 rounded-lg border border-slate-800 text-xs">
+        <div className="flex items-center space-x-1 bg-slate-100 p-1 rounded-lg border border-slate-200 text-xs">
           {['ALL', 'PENDING_REVIEW', 'APPROVED', 'REJECTED', 'MODIFIED'].map((st) => (
             <button
               key={st}
               onClick={() => setStatusFilter(st)}
-              className={`px-2.5 py-1 rounded-md transition-all font-medium ${
+              className={`px-3 py-1 rounded-md transition-all font-medium text-xs ${
                 statusFilter === st
-                  ? 'bg-slate-800 text-slate-100 font-semibold'
-                  : 'text-slate-400 hover:text-slate-200'
+                  ? 'bg-gov-navy text-white font-semibold shadow-sm'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-white/60'
               }`}
             >
               {st.replace('_', ' ')}
@@ -208,7 +206,7 @@ export const GovernanceReviewQueue: React.FC<GovernanceReviewQueueProps> = ({
         {/* Refresh Button */}
         <button
           onClick={loadCandidates}
-          className="p-1.5 bg-slate-950 border border-slate-800 rounded-lg text-slate-400 hover:text-slate-200"
+          className="p-2 bg-white border border-slate-300 rounded-lg text-slate-600 hover:text-gov-navy hover:border-slate-400 shadow-sm transition-all"
           title="Refresh Queue"
         >
           <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
@@ -219,37 +217,37 @@ export const GovernanceReviewQueue: React.FC<GovernanceReviewQueueProps> = ({
       <Card
         title="Human Governance Review Queue"
         subtitle={`Showing ${filteredCandidates.length} candidate proposal(s) awaiting domain verification.`}
-        icon={<CheckSquare className="w-5 h-5 text-brand-400" />}
+        icon={<CheckSquare className="w-5 h-5 text-gov-navy" />}
       >
         <div className="overflow-x-auto -mx-6 -mb-6">
-          <table className="w-full text-left text-xs text-slate-300">
-            <thead className="bg-slate-950/80 border-y border-slate-800 text-slate-400 text-[11px] uppercase tracking-wider">
+          <table className="w-full text-left text-xs text-slate-700">
+            <thead className="bg-slate-50 border-y border-slate-200 text-slate-700 text-[11px] font-bold uppercase tracking-wider">
               <tr>
                 <th className="py-3 px-6">Proposed Prototype CNMC</th>
                 <th className="py-3 px-4">Material Cluster Title</th>
                 <th className="py-3 px-4">Generation Source</th>
-                <th className="py-3 px-4">Strength</th>
+                <th className="py-3 px-4">Confidence / Strength</th>
                 <th className="py-3 px-4">Status</th>
                 <th className="py-3 px-6 text-right">Review Action</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800/60">
+            <tbody className="divide-y divide-slate-200">
               {filteredCandidates.length > 0 ? (
                 filteredCandidates.map((candidate) => (
-                  <tr key={candidate.id} className="hover:bg-slate-800/40 transition-colors">
-                    <td className="py-3.5 px-6 font-mono font-bold text-white flex items-center gap-2">
-                      <Tag className="w-3.5 h-3.5 text-brand-400" />
+                  <tr key={candidate.id} className="hover:bg-slate-50/80 transition-colors">
+                    <td className="py-3.5 px-6 font-mono font-bold text-gov-navy flex items-center gap-2">
+                      <Tag className="w-3.5 h-3.5 text-blue-600 shrink-0" />
                       <span>{candidate.proposed_cnmc}</span>
                     </td>
                     <td className="py-3.5 px-4 max-w-sm">
-                      <div className="font-medium text-slate-200 truncate">{candidate.candidate_group_name}</div>
-                      <div className="text-[11px] text-slate-400 truncate">{candidate.proposed_description}</div>
+                      <div className="font-semibold text-slate-900 truncate">{candidate.candidate_group_name}</div>
+                      <div className="text-[11px] text-slate-500 truncate mt-0.5">{candidate.proposed_description}</div>
                     </td>
-                    <td className="py-3.5 px-4 text-slate-400 font-mono text-[11px]">
+                    <td className="py-3.5 px-4 text-slate-600 font-mono text-[11px]">
                       {candidate.generation_source}
                     </td>
                     <td className="py-3.5 px-4">
-                      <span className="font-semibold text-emerald-400">
+                      <span className="font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded text-[11px]">
                         {(candidate.confidence_score * 100).toFixed(0)}% HIGH
                       </span>
                     </td>
@@ -257,7 +255,7 @@ export const GovernanceReviewQueue: React.FC<GovernanceReviewQueueProps> = ({
                     <td className="py-3.5 px-6 text-right">
                       <button
                         onClick={() => onSelectCandidate(candidate)}
-                        className="py-1 px-3 bg-brand-600/20 hover:bg-brand-600 text-brand-300 hover:text-white border border-brand-500/30 rounded-lg font-semibold transition-all inline-flex items-center gap-1.5"
+                        className="py-1 px-3 bg-white hover:bg-gov-navy hover:text-white text-gov-navy border border-slate-300 hover:border-gov-navy rounded-lg font-semibold shadow-sm transition-all inline-flex items-center gap-1.5"
                       >
                         <span>Examine</span>
                         <ExternalLink className="w-3 h-3" />

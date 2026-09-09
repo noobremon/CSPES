@@ -91,18 +91,26 @@ export const CPSEMappingView: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Scope Disclaimer Banner */}
-      <div className="rounded-xl border border-brand-500/30 bg-brand-500/10 p-4 flex items-start gap-3 text-xs text-brand-200">
-        <Info className="w-5 h-5 text-brand-400 shrink-0 mt-0.5" />
-        <div>
-          <span className="font-bold uppercase tracking-wider text-brand-300">
+      <div className="rounded-xl border border-blue-200 bg-blue-50/70 p-4 flex items-start gap-3 text-xs text-slate-800 shadow-2xs">
+        <Info className="w-5 h-5 text-gov-blue shrink-0 mt-0.5" />
+        <div className="leading-relaxed">
+          <span className="font-bold uppercase tracking-wider text-gov-navy">
             Cross-Walk Traceability & Safety Principle:
           </span>{' '}
-          Original CPSE local item codes (e.g. <code className="bg-brand-950/60 px-1 py-0.5 rounded text-brand-200">MAT-1001</code>, <code className="bg-brand-950/60 px-1 py-0.5 rounded text-brand-200">BOLT-778</code>) are permanently preserved in Layer 1 and are <span className="font-bold text-white">NEVER overwritten</span> in source ERPs. The platform establishes an immutable cross-walk binding to the governed prototype CNMC.
+          Original CPSE local item codes (e.g.{' '}
+          <code className="bg-white border border-slate-200 px-1.5 py-0.5 rounded text-gov-navy font-mono font-semibold">
+            MAT-1001
+          </code>
+          ,{' '}
+          <code className="bg-white border border-slate-200 px-1.5 py-0.5 rounded text-gov-navy font-mono font-semibold">
+            BOLT-778
+          </code>
+          ) are permanently preserved in Layer 1 and are <span className="font-bold text-slate-900">NEVER overwritten</span> in source ERPs. The platform establishes an immutable cross-walk binding to the governed prototype CNMC.
         </div>
       </div>
 
       {/* Filter / Search Bar */}
-      <div className="bg-slate-900/80 border border-slate-800 rounded-xl p-4 flex flex-col md:flex-row items-center justify-between gap-4">
+      <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm flex flex-col md:flex-row items-center justify-between gap-4">
         <div className="relative w-full md:w-80">
           <Search className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
           <input
@@ -110,13 +118,13 @@ export const CPSEMappingView: React.FC = () => {
             placeholder="Search by CNMC code, CPSE, or local item code..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-9 pr-3 py-1.5 text-xs bg-slate-950 rounded-lg border border-slate-800 text-slate-200 placeholder-slate-500 focus:outline-none focus:border-brand-500"
+            className="w-full pl-9 pr-3 py-1.5 text-xs bg-slate-50 rounded-lg border border-slate-300 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-gov-navy/20 focus:border-gov-navy transition-all"
           />
         </div>
 
         <button
           onClick={loadMappings}
-          className="p-1.5 bg-slate-950 border border-slate-800 rounded-lg text-slate-400 hover:text-slate-200 flex items-center gap-1 text-xs px-3"
+          className="p-2 bg-white border border-slate-300 rounded-lg text-slate-700 hover:text-gov-navy hover:border-slate-400 flex items-center gap-1.5 text-xs px-3 shadow-2xs transition-all"
           title="Refresh Mappings"
         >
           <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
@@ -128,11 +136,11 @@ export const CPSEMappingView: React.FC = () => {
       <Card
         title="Active CPSE ↔ Governed Prototype CNMC Cross-Walk Mappings"
         subtitle={`Showing ${filteredMappings.length} approved cross-walk record(s).`}
-        icon={<GitCompare className="w-5 h-5 text-brand-400" />}
+        icon={<GitCompare className="w-5 h-5 text-gov-navy" />}
       >
         <div className="overflow-x-auto -mx-6 -mb-6">
-          <table className="w-full text-left text-xs text-slate-300">
-            <thead className="bg-slate-950/80 border-y border-slate-800 text-slate-400 text-[11px] uppercase tracking-wider">
+          <table className="w-full text-left text-xs text-slate-700">
+            <thead className="bg-slate-50 border-y border-slate-200 text-slate-700 text-[11px] font-bold uppercase tracking-wider">
               <tr>
                 <th className="py-3 px-6">Governed Prototype CNMC</th>
                 <th className="py-3 px-4">CPSE Enterprise</th>
@@ -142,42 +150,40 @@ export const CPSEMappingView: React.FC = () => {
                 <th className="py-3 px-6">Approved By</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800/60">
+            <tbody className="divide-y divide-slate-200">
               {filteredMappings.length > 0 ? (
                 filteredMappings.map((m) => (
-                  <tr key={m.id} className="hover:bg-slate-800/40 transition-colors">
-                    <td className="py-3.5 px-6 font-mono font-bold text-white flex items-center gap-2">
-                      <Tag className="w-3.5 h-3.5 text-brand-400" />
-                      <span>{m.cnmc_code || 'N/A'}</span>
+                  <tr key={m.id} className="hover:bg-slate-50/80 transition-colors">
+                    <td className="py-3.5 px-6 font-mono font-bold text-gov-navy flex items-center gap-2">
+                      <Tag className="w-3.5 h-3.5 text-blue-600 shrink-0" />
+                      <span>{m.cnmc_code}</span>
                     </td>
-                    <td className="py-3.5 px-4 font-semibold text-slate-200">
-                      <div className="flex items-center gap-1.5">
-                        <Building2 className="w-3.5 h-3.5 text-slate-400" />
-                        <span>{m.organization_code}</span>
-                      </div>
-                    </td>
-                    <td className="py-3.5 px-4">
-                      <span className="font-mono bg-slate-950 text-brand-300 px-2 py-0.5 rounded border border-slate-800 font-bold">
-                        {m.local_material_code}
+                    <td className="py-3.5 px-4 font-semibold text-slate-900">
+                      <span className="bg-slate-100 border border-slate-300 text-slate-800 px-2 py-0.5 rounded text-[11px] mr-1.5 font-bold">
+                        {m.organization_code}
                       </span>
+                      {m.organization_name}
                     </td>
-                    <td className="py-3.5 px-4 max-w-xs truncate text-slate-300">
-                      {m.canonical_name || 'Standardized Master Item'}
+                    <td className="py-3.5 px-4 font-mono font-bold text-slate-800">
+                      {m.local_material_code}
+                    </td>
+                    <td className="py-3.5 px-4 max-w-xs truncate text-slate-700 font-medium">
+                      {m.canonical_name}
                     </td>
                     <td className="py-3.5 px-4">
-                      <span className="text-[11px] font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2 py-0.5 rounded">
+                      <span className="font-semibold text-[11px] bg-blue-50 text-blue-700 border border-blue-200 px-2 py-0.5 rounded">
                         {m.mapping_type}
                       </span>
                     </td>
-                    <td className="py-3.5 px-6 text-slate-400 font-mono text-[11px]">
-                      {m.approved_by}
+                    <td className="py-3.5 px-6 text-slate-500 font-mono text-[11px]">
+                      {m.approved_by || 'System Automatic'}
                     </td>
                   </tr>
                 ))
               ) : (
                 <tr>
                   <td colSpan={6} className="py-8 text-center text-slate-500">
-                    No approved cross-walk mappings found.
+                    No mapping records found matching current query.
                   </td>
                 </tr>
               )}

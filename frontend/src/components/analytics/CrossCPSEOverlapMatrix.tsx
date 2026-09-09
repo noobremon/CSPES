@@ -29,96 +29,94 @@ export const CrossCPSEOverlapMatrix: React.FC<CrossCPSEOverlapMatrixProps> = ({
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-primary-600"></div>
-        <span className="ml-3 text-sm text-gray-500 font-medium">Computing Dynamic Cross-CPSE Overlap Matrix...</span>
+        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-gov-navy"></div>
+        <span className="ml-3 text-sm text-slate-600 font-medium">Computing Dynamic Cross-CPSE Overlap Matrix...</span>
       </div>
     );
   }
 
   if (!data || data.cpses.length === 0) {
     return (
-      <div className="p-8 text-center bg-gray-50 rounded-xl border border-gray-200">
-        <p className="text-gray-500 text-sm">No CPSE overlap matrix data available.</p>
+      <div className="p-8 text-center bg-white rounded-xl border border-slate-200">
+        <p className="text-slate-500 text-sm">No CPSE overlap matrix data available.</p>
       </div>
     );
   }
 
   // Helper to color cells based on overlap percentage
   const getCellColor = (isSelf: boolean, pct: number, count: number) => {
-    if (isSelf) return 'bg-gray-100 text-gray-400 font-normal';
-    if (count === 0) return 'bg-gray-50/50 text-gray-300';
-    if (pct < 10) return 'bg-indigo-50 text-indigo-700 font-semibold hover:bg-indigo-100';
-    if (pct < 25) return 'bg-indigo-100 text-indigo-800 font-semibold hover:bg-indigo-200';
-    if (pct < 50) return 'bg-indigo-200 text-indigo-900 font-bold hover:bg-indigo-300';
-    return 'bg-indigo-600 text-white font-bold hover:bg-indigo-700';
+    if (isSelf) return 'bg-slate-100 text-slate-400 font-normal';
+    if (count === 0) return 'bg-slate-50/50 text-slate-400';
+    if (pct < 10) return 'bg-blue-50 text-blue-800 font-semibold hover:bg-blue-100';
+    if (pct < 25) return 'bg-blue-100 text-blue-900 font-semibold hover:bg-blue-200';
+    if (pct < 50) return 'bg-blue-200 text-blue-950 font-bold hover:bg-blue-300';
+    return 'bg-gov-navy text-white font-bold hover:bg-gov-navy-dark';
   };
-
-  const cpseMap = new Map<string, any>(data.cpses.map((c: any) => [c.cpse_code, c]));
 
   return (
     <div className="space-y-6">
       {/* Top Header & Legend */}
-      <div className="bg-white p-5 rounded-xl border border-gray-200 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-2xs flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <Grid3X3 className="w-5 h-5 text-indigo-600" />
-            <h3 className="text-base font-bold text-gray-900">Dynamic Cross-CPSE Overlap Matrix</h3>
+            <Grid3X3 className="w-5 h-5 text-gov-navy" />
+            <h3 className="text-base font-bold text-slate-900">Dynamic Cross-CPSE Overlap Matrix</h3>
           </div>
-          <p className="text-xs text-gray-500 mt-1">
+          <p className="text-xs text-slate-500 mt-1">
             Pairwise material catalog overlap rates across {data.total_cpses} active CPSEs ($N \times N$ matrix)
           </p>
         </div>
 
         {/* Filter Slider */}
-        <div className="flex items-center gap-3 bg-gray-50 p-2.5 rounded-lg border border-gray-200 text-xs">
-          <Sliders className="w-4 h-4 text-gray-400" />
-          <span className="font-semibold text-gray-700">Min Overlap Filter:</span>
+        <div className="flex items-center gap-3 bg-slate-50 p-2.5 rounded-lg border border-slate-200 text-xs">
+          <Sliders className="w-4 h-4 text-slate-500" />
+          <span className="font-semibold text-slate-700">Min Overlap Filter:</span>
           <input
             type="range"
             min="0"
             max="10"
             value={minOverlapFilter}
             onChange={(e) => setMinOverlapFilter(Number(e.target.value))}
-            className="w-24 accent-indigo-600"
+            className="w-24 accent-gov-navy"
           />
-          <span className="font-bold text-indigo-600">&ge; {minOverlapFilter} items</span>
+          <span className="font-bold text-gov-navy">&ge; {minOverlapFilter} items</span>
         </div>
       </div>
 
       {/* Heatmap Legend */}
-      <div className="flex items-center gap-2 text-xs text-gray-500 bg-white p-3 rounded-lg border border-gray-100">
-        <span className="font-semibold text-gray-700">Overlap Heatmap:</span>
-        <div className="flex items-center gap-1">
-          <span className="px-2 py-0.5 rounded text-[10px] bg-gray-50 text-gray-400 border border-gray-200">0%</span>
-          <span className="px-2 py-0.5 rounded text-[10px] bg-indigo-50 text-indigo-700 border border-indigo-100">&lt;10%</span>
-          <span className="px-2 py-0.5 rounded text-[10px] bg-indigo-100 text-indigo-800 border border-indigo-200">10-25%</span>
-          <span className="px-2 py-0.5 rounded text-[10px] bg-indigo-200 text-indigo-900 border border-indigo-300">25-50%</span>
-          <span className="px-2 py-0.5 rounded text-[10px] bg-indigo-600 text-white font-bold">&ge;50%</span>
+      <div className="flex items-center gap-2 text-xs text-slate-600 bg-white p-3 rounded-lg border border-slate-200 shadow-2xs">
+        <span className="font-semibold text-slate-800">Overlap Heatmap:</span>
+        <div className="flex items-center gap-1.5">
+          <span className="px-2 py-0.5 rounded text-[10px] bg-slate-100 text-slate-600 border border-slate-300">0%</span>
+          <span className="px-2 py-0.5 rounded text-[10px] bg-blue-50 text-blue-800 border border-blue-200">&lt;10%</span>
+          <span className="px-2 py-0.5 rounded text-[10px] bg-blue-100 text-blue-900 border border-blue-300">10-25%</span>
+          <span className="px-2 py-0.5 rounded text-[10px] bg-blue-200 text-blue-950 border border-blue-400">25-50%</span>
+          <span className="px-2 py-0.5 rounded text-[10px] bg-gov-navy text-white font-bold">&ge;50%</span>
         </div>
       </div>
 
       {/* Matrix Table */}
-      <div className="bg-white rounded-xl border border-gray-200 shadow-xs overflow-x-auto">
+      <div className="bg-white rounded-xl border border-slate-200 shadow-2xs overflow-x-auto">
         <table className="w-full text-xs text-left border-collapse">
           <thead>
-            <tr className="bg-gray-50 border-b border-gray-200">
-              <th className="p-3 font-bold text-gray-600 uppercase tracking-wider border-r border-gray-200 sticky left-0 bg-gray-50 z-10">
+            <tr className="bg-slate-50 border-b border-slate-200">
+              <th className="p-3 font-bold text-slate-700 uppercase tracking-wider border-r border-slate-200 sticky left-0 bg-slate-50 z-10">
                 CPSE Enterprise
               </th>
               {data.cpses.map((c) => (
-                <th key={c.cpse_code} className="p-3 font-bold text-center text-gray-700 min-w-[90px]">
+                <th key={c.cpse_code} className="p-3 font-bold text-center text-slate-800 min-w-[90px]">
                   <div className="truncate max-w-[100px]" title={c.cpse_name}>{c.cpse_code}</div>
-                  <div className="text-[10px] font-normal text-gray-400">{c.total_materials} items</div>
+                  <div className="text-[10px] font-normal text-slate-500">{c.total_materials} items</div>
                 </th>
               ))}
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-100">
+          <tbody className="divide-y divide-slate-200">
             {data.cpses.map((rowCPSE, rIdx) => (
-              <tr key={rowCPSE.cpse_code} className="hover:bg-gray-50/50">
-                <td className="p-3 font-bold text-gray-800 border-r border-gray-200 sticky left-0 bg-white z-10">
+              <tr key={rowCPSE.cpse_code} className="hover:bg-slate-50/50">
+                <td className="p-3 font-bold text-slate-900 border-r border-slate-200 sticky left-0 bg-white z-10">
                   <div>{rowCPSE.cpse_name}</div>
-                  <div className="text-[10px] text-gray-400 font-mono">{rowCPSE.cpse_code}</div>
+                  <div className="text-[10px] text-slate-500 font-mono">{rowCPSE.cpse_code}</div>
                 </td>
                 {data.cpses.map((colCPSE, cIdx) => {
                   const isSelf = rIdx === cIdx;
@@ -136,7 +134,7 @@ export const CrossCPSEOverlapMatrix: React.FC<CrossCPSEOverlapMatrixProps> = ({
                     <td 
                       key={colCPSE.cpse_code} 
                       className={`p-2 text-center transition-all cursor-pointer ${
-                        isDimmed ? 'opacity-30 bg-gray-50 text-gray-400' : getCellColor(isSelf, pct, count)
+                        isDimmed ? 'opacity-30 bg-slate-50 text-slate-400' : getCellColor(isSelf, pct, count)
                       }`}
                       onClick={() => !isSelf && setSelectedCell({
                         sourceCode: rowCPSE.cpse_code,
@@ -148,11 +146,11 @@ export const CrossCPSEOverlapMatrix: React.FC<CrossCPSEOverlapMatrixProps> = ({
                       title={isSelf ? 'Self' : `${rowCPSE.cpse_code} ↔ ${colCPSE.cpse_code}: ${count} items (${pct.toFixed(1)}%)`}
                     >
                       {isSelf ? (
-                        <span className="text-gray-400">—</span>
+                        <span className="text-[11px] font-mono text-slate-400">—</span>
                       ) : (
                         <div>
-                          <div className="text-xs font-bold">{count}</div>
-                          <div className="text-[10px] opacity-80">{pct.toFixed(1)}%</div>
+                          <span className="text-xs font-bold block">{count}</span>
+                          <span className="text-[10px] opacity-80">{pct.toFixed(0)}%</span>
                         </div>
                       )}
                     </td>
@@ -164,55 +162,59 @@ export const CrossCPSEOverlapMatrix: React.FC<CrossCPSEOverlapMatrixProps> = ({
         </table>
       </div>
 
-      {/* Selected Cell Detail Drawer / Card */}
+      {/* Selected Pair Detail Modal */}
       {selectedCell && (
-        <div className="bg-indigo-50/50 border border-indigo-200 rounded-xl p-5 space-y-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Building2 className="w-5 h-5 text-indigo-700" />
-              <h4 className="text-sm font-bold text-gray-900">
-                Pairwise Catalog Overlap: {cpseMap.get(selectedCell.sourceCode)?.cpse_name} &harr; {cpseMap.get(selectedCell.targetCode)?.cpse_name}
-              </h4>
+        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 flex items-center justify-center p-4">
+          <div className="bg-white border border-slate-200 rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-4">
+            <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+              <div>
+                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Pairwise Catalog Interlock</span>
+                <h4 className="text-base font-bold text-slate-900 mt-0.5">
+                  {selectedCell.sourceCode} &harr; {selectedCell.targetCode}
+                </h4>
+              </div>
+              <button 
+                onClick={() => setSelectedCell(null)}
+                className="text-slate-400 hover:text-slate-700 font-bold text-lg px-2"
+              >
+                &times;
+              </button>
             </div>
-            <button
-              onClick={() => setSelectedCell(null)}
-              className="text-xs text-indigo-700 hover:text-indigo-900 font-semibold"
-            >
-              Dismiss
-            </button>
-          </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div className="p-3 bg-white rounded-lg border border-indigo-100 shadow-2xs">
-              <span className="text-xs text-gray-500 font-medium">Shared Overlap Items</span>
-              <div className="text-xl font-bold text-indigo-900 mt-1">{selectedCell.count} items</div>
-            </div>
-            <div className="p-3 bg-white rounded-lg border border-indigo-100 shadow-2xs">
-              <span className="text-xs text-gray-500 font-medium">Catalog Overlap Percentage</span>
-              <div className="text-xl font-bold text-indigo-900 mt-1">{selectedCell.pct.toFixed(1)}%</div>
-            </div>
-            <div className="p-3 bg-white rounded-lg border border-indigo-100 shadow-2xs">
-              <span className="text-xs text-gray-500 font-medium">Top Overlapping Category</span>
-              <div className="text-xs font-bold text-gray-800 mt-2">
-                {selectedCell.pairDetail?.top_overlapping_categories[0]?.category_name || 'Cross-category'}
+            <div className="grid grid-cols-2 gap-3 text-xs">
+              <div className="p-3 bg-slate-50 rounded-lg border border-slate-200/80">
+                <span className="text-slate-500">Overlapping Line Items</span>
+                <div className="text-xl font-bold text-gov-navy mt-0.5">{selectedCell.count} items</div>
+              </div>
+              <div className="p-3 bg-slate-50 rounded-lg border border-slate-200/80">
+                <span className="text-slate-500">Relative Catalog Overlap</span>
+                <div className="text-xl font-bold text-blue-700 mt-0.5">{selectedCell.pct.toFixed(1)}%</div>
               </div>
             </div>
-          </div>
 
-          {selectedCell.pairDetail && selectedCell.pairDetail.top_overlapping_categories.length > 0 && (
-            <div>
-              <span className="text-xs font-bold text-gray-700 uppercase tracking-wider block mb-2">
-                Overlap by Category between these two CPSEs:
-              </span>
-              <div className="flex flex-wrap gap-2">
-                {selectedCell.pairDetail.top_overlapping_categories.map((c, i) => (
-                  <span key={i} className="px-2.5 py-1 bg-white border border-indigo-200 text-indigo-900 rounded-md text-xs font-medium">
-                    {c.category_name}: <strong>{c.overlap_count}</strong> items
-                  </span>
-                ))}
+            {selectedCell.pairDetail && (
+              <div className="space-y-2 text-xs">
+                <span className="font-bold text-slate-900 uppercase tracking-wider block">Top Overlapping Concepts</span>
+                <div className="space-y-1 max-h-48 overflow-y-auto">
+                  {selectedCell.pairDetail.top_overlapping_materials.map((mat, i) => (
+                    <div key={i} className="p-2 bg-slate-50 rounded border border-slate-200/80 flex items-center justify-between">
+                      <span className="font-medium text-slate-800">{mat.canonical_name}</span>
+                      <span className="text-[11px] font-mono text-gov-navy font-bold">{mat.suggested_cnmc || 'PENDING'}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
+            )}
+
+            <div className="flex justify-end pt-3 border-t border-slate-100">
+              <button
+                onClick={() => setSelectedCell(null)}
+                className="px-4 py-2 bg-gov-navy text-white text-xs font-semibold rounded-lg hover:bg-gov-navy-dark transition-all shadow-2xs"
+              >
+                Close View
+              </button>
             </div>
-          )}
+          </div>
         </div>
       )}
     </div>

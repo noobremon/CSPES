@@ -29,16 +29,16 @@ export const NationalOverviewDashboard: React.FC<NationalOverviewDashboardProps>
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-primary-600"></div>
-        <span className="ml-3 text-sm text-gray-500 font-medium">Computing National Material Intelligence KPIs...</span>
+        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-gov-navy"></div>
+        <span className="ml-3 text-sm text-slate-600 font-medium">Computing National Material Intelligence KPIs...</span>
       </div>
     );
   }
 
   if (!data) {
     return (
-      <div className="p-8 text-center bg-gray-50 rounded-xl border border-gray-200">
-        <p className="text-gray-500 text-sm">No national intelligence analytics data available.</p>
+      <div className="p-8 text-center bg-white rounded-xl border border-slate-200">
+        <p className="text-slate-500 text-sm">No national intelligence analytics data available.</p>
       </div>
     );
   }
@@ -50,7 +50,7 @@ export const NationalOverviewDashboard: React.FC<NationalOverviewDashboardProps>
       value: data.total_participating_cpses.toLocaleString(),
       subtext: 'Active enterprise entities',
       icon: Building2,
-      color: 'text-blue-600 bg-blue-50 border-blue-100',
+      color: 'text-blue-700 bg-blue-50 border-blue-200',
     },
     {
       id: 'kpi-materials',
@@ -58,7 +58,7 @@ export const NationalOverviewDashboard: React.FC<NationalOverviewDashboardProps>
       value: data.total_ingested_materials.toLocaleString(),
       subtext: 'Line items across all ERPs',
       icon: Layers,
-      color: 'text-slate-600 bg-slate-50 border-slate-200',
+      color: 'text-slate-700 bg-slate-50 border-slate-200',
     },
     {
       id: 'kpi-clusters',
@@ -66,7 +66,7 @@ export const NationalOverviewDashboard: React.FC<NationalOverviewDashboardProps>
       value: data.total_duplicate_clusters.toLocaleString(),
       subtext: 'Clusters identified by AI',
       icon: Copy,
-      color: 'text-amber-600 bg-amber-50 border-amber-100',
+      color: 'text-amber-800 bg-amber-50 border-amber-200',
     },
     {
       id: 'kpi-overlap-rate',
@@ -74,7 +74,7 @@ export const NationalOverviewDashboard: React.FC<NationalOverviewDashboardProps>
       value: `${data.cross_cpse_overlap_percentage.toFixed(1)}%`,
       subtext: 'Materials appearing in >1 CPSE',
       icon: Percent,
-      color: 'text-indigo-600 bg-indigo-50 border-indigo-100',
+      color: 'text-gov-navy bg-slate-100 border-slate-300',
     },
     {
       id: 'kpi-unique-standard',
@@ -82,7 +82,7 @@ export const NationalOverviewDashboard: React.FC<NationalOverviewDashboardProps>
       value: data.unique_standardized_concepts.toLocaleString(),
       subtext: 'Normalized material entities',
       icon: Target,
-      color: 'text-emerald-600 bg-emerald-50 border-emerald-100',
+      color: 'text-emerald-800 bg-emerald-50 border-emerald-200',
     },
     {
       id: 'kpi-cnmc-coverage',
@@ -90,7 +90,7 @@ export const NationalOverviewDashboard: React.FC<NationalOverviewDashboardProps>
       value: `${data.cnmc_mapping_coverage_percentage.toFixed(1)}%`,
       subtext: 'Raw items mapped to CNMC Master',
       icon: CheckCircle2,
-      color: 'text-teal-600 bg-teal-50 border-teal-100',
+      color: 'text-teal-800 bg-teal-50 border-teal-200',
     },
     {
       id: 'kpi-pipeline',
@@ -98,7 +98,7 @@ export const NationalOverviewDashboard: React.FC<NationalOverviewDashboardProps>
       value: (data.cnmc_candidates_pending + data.cnmc_candidates_approved + data.cnmc_candidates_rejected).toLocaleString(),
       subtext: `${data.cnmc_candidates_approved} approved / ${data.cnmc_candidates_pending} pending`,
       icon: Sparkles,
-      color: 'text-purple-600 bg-purple-50 border-purple-100',
+      color: 'text-purple-800 bg-purple-50 border-purple-200',
     },
     {
       id: 'kpi-standardized-master',
@@ -106,7 +106,7 @@ export const NationalOverviewDashboard: React.FC<NationalOverviewDashboardProps>
       value: data.cnmc_master_codes_created.toLocaleString(),
       subtext: 'Governed prototype masters',
       icon: ShieldAlert,
-      color: 'text-emerald-700 bg-emerald-50 border-emerald-200',
+      color: 'text-emerald-900 bg-emerald-50 border-emerald-300',
     },
     {
       id: 'kpi-opportunities',
@@ -114,7 +114,7 @@ export const NationalOverviewDashboard: React.FC<NationalOverviewDashboardProps>
       value: data.identified_procurement_opportunities.toLocaleString(),
       subtext: 'High & medium impact synergy clusters',
       icon: TrendingUp,
-      color: 'text-orange-600 bg-orange-50 border-orange-100',
+      color: 'text-amber-900 bg-amber-50 border-amber-300',
     },
     {
       id: 'kpi-savings-score',
@@ -122,20 +122,20 @@ export const NationalOverviewDashboard: React.FC<NationalOverviewDashboardProps>
       value: `${data.synthetic_potential_savings_score.toFixed(1)}/100`,
       subtext: 'Illustrative synergy potential',
       icon: BarChart3,
-      color: 'text-cyan-700 bg-cyan-50 border-cyan-100',
+      color: 'text-cyan-900 bg-cyan-50 border-cyan-200',
     }
   ];
 
   return (
     <div className="space-y-6">
       {/* Synthetic Demonstration Disclaimer Banner */}
-      <div className="p-4 rounded-xl border border-amber-200 bg-amber-50/80 text-amber-900 flex items-start gap-3 shadow-xs">
-        <ShieldAlert className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
+      <div className="p-4 rounded-xl border border-gov-notice-border bg-gov-notice-bg text-slate-800 flex items-start gap-3 shadow-2xs">
+        <ShieldAlert className="w-5 h-5 text-gov-saffron shrink-0 mt-0.5" />
         <div className="text-xs space-y-1">
-          <p className="font-semibold uppercase tracking-wider text-amber-800">
+          <p className="font-bold uppercase tracking-wider text-slate-900">
             {data.disclaimer_notice}
           </p>
-          <p className="text-amber-700 leading-relaxed">
+          <p className="text-slate-700 leading-relaxed">
             All overlap counts, standardization funnels, and procurement opportunity scores shown below are derived from demonstration multi-CPSE datasets.
             This intelligence system operates with strict Layer 1 commercial isolation (no commercial PO pricing, contract terms, or vendor identities are ingested).
           </p>
@@ -148,116 +148,144 @@ export const NationalOverviewDashboard: React.FC<NationalOverviewDashboardProps>
           const Icon = kpi.icon;
           return (
             <div 
-              key={kpi.id} 
-              className="bg-white p-4 rounded-xl border border-gray-200 shadow-xs hover:shadow-md transition-shadow flex flex-col justify-between"
+              key={kpi.id}
+              className="bg-white p-4 rounded-xl border border-slate-200 shadow-2xs hover:shadow-sm transition-all flex flex-col justify-between space-y-3"
             >
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">{kpi.label}</span>
-                <div className={`p-2 rounded-lg border ${kpi.color}`}>
+              <div className="flex items-center justify-between">
+                <span className="text-[11px] font-bold text-slate-600 uppercase tracking-wider">
+                  {kpi.label}
+                </span>
+                <div className={`p-1.5 rounded-lg border ${kpi.color}`}>
                   <Icon className="w-4 h-4" />
                 </div>
               </div>
               <div>
-                <div className="text-2xl font-bold text-gray-900 tracking-tight">{kpi.value}</div>
-                <div className="text-xs text-gray-500 mt-1">{kpi.subtext}</div>
+                <div className="text-2xl font-bold text-slate-900 tracking-tight">{kpi.value}</div>
+                <div className="text-[11px] text-slate-500 font-medium mt-0.5">{kpi.subtext}</div>
               </div>
             </div>
           );
         })}
       </div>
 
-      {/* Macro Summary & Top Overlapping Categories */}
+      {/* Cross-CPSE Quick Insights & Distribution */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Overlap Summary Card */}
-        <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-xs flex flex-col justify-between">
-          <div>
-            <div className="flex items-center justify-between pb-3 border-b border-gray-100">
-              <h3 className="text-base font-bold text-gray-900">Cross-CPSE Overlap Summary</h3>
-              <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700 border border-indigo-100">
-                {data.cross_cpse_overlap_count} Overlapping Lines
-              </span>
+        {/* CPSE Breakdown Overview */}
+        <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-2xs space-y-4">
+          <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+            <div>
+              <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider">CPSE Enterprise Breakdown</h3>
+              <p className="text-xs text-slate-500">Materials and duplicate density by organization</p>
             </div>
-            <p className="text-xs text-gray-500 mt-3 leading-relaxed">
-              Out of {data.total_ingested_materials.toLocaleString()} ingested materials across {data.total_participating_cpses} CPSEs, {data.cross_cpse_overlap_count.toLocaleString()} materials ({data.cross_cpse_overlap_percentage.toFixed(1)}%) share identical or functionally equivalent specifications across multiple public sector enterprises.
-            </p>
+            {onNavigateToTab && (
+              <button 
+                onClick={() => onNavigateToTab('matrix')}
+                className="text-xs text-blue-600 hover:text-gov-navy font-semibold flex items-center gap-1"
+              >
+                Matrix <ArrowRight className="w-3 h-3" />
+              </button>
+            )}
+          </div>
 
-            <div className="mt-4 space-y-2">
-              <div className="flex justify-between text-xs text-gray-600">
-                <span>Mapping Coverage Funnel</span>
-                <span className="font-semibold">{data.cnmc_mapping_coverage_percentage.toFixed(1)}%</span>
+          <div className="space-y-3">
+            {(data.top_cpses_by_volume || []).map((cpse) => (
+              <div key={cpse.cpse_code} className="p-3 bg-slate-50 rounded-lg border border-slate-200/80 flex items-center justify-between">
+                <div>
+                  <span className="text-xs font-bold text-slate-900">{cpse.cpse_name}</span>
+                  <p className="text-[11px] text-slate-500 font-mono mt-0.5">{cpse.cpse_code} • {cpse.material_count} items</p>
+                </div>
+                <div className="text-right">
+                  <span className="text-xs font-bold text-amber-800 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded">
+                    {cpse.duplicate_density_percentage.toFixed(1)}%
+                  </span>
+                  <p className="text-[10px] text-slate-500 mt-0.5">Overlap density</p>
+                </div>
               </div>
-              <div className="w-full bg-gray-100 rounded-full h-2 overflow-hidden">
-                <div 
-                  className="bg-teal-500 h-2 rounded-full transition-all duration-500" 
-                  style={{ width: `${Math.min(100, data.cnmc_mapping_coverage_percentage)}%` }}
-                />
+            ))}
+          </div>
+        </div>
+
+        {/* Top High-Overlap Material Clusters */}
+        <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-2xs space-y-4">
+          <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+            <div>
+              <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider">Top Overlap Clusters</h3>
+              <p className="text-xs text-slate-500">Materials shared across multiple CPSEs</p>
+            </div>
+            {onNavigateToTab && (
+              <button 
+                onClick={() => onNavigateToTab('duplicates')}
+                className="text-xs text-blue-600 hover:text-gov-navy font-semibold flex items-center gap-1"
+              >
+                All <ArrowRight className="w-3 h-3" />
+              </button>
+            )}
+          </div>
+
+          <div className="space-y-3">
+            {(data.top_high_overlap_clusters || []).map((cluster) => (
+              <div key={cluster.cluster_id} className="p-3 bg-slate-50 rounded-lg border border-slate-200/80 space-y-1.5">
+                <div className="flex items-start justify-between gap-2">
+                  <span className="text-xs font-bold text-slate-900 leading-tight">
+                    {cluster.canonical_name}
+                  </span>
+                  <span className="text-[10px] font-bold text-blue-700 bg-blue-50 border border-blue-200 px-2 py-0.5 rounded shrink-0">
+                    {cluster.participating_cpse_count} CPSEs
+                  </span>
+                </div>
+                <div className="flex items-center justify-between text-[11px] text-slate-500">
+                  <span>{cluster.duplicate_item_count} duplicate items</span>
+                  {cluster.cnmc_code && (
+                    <span className="font-mono text-gov-navy font-semibold">{cluster.cnmc_code}</span>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Actionable Harmonization Roadmap */}
+        <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-2xs space-y-4 flex flex-col justify-between">
+          <div className="space-y-3">
+            <div className="border-b border-slate-100 pb-3">
+              <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider">Standardization Roadmap</h3>
+              <p className="text-xs text-slate-500">Next high-impact steps for national master data</p>
+            </div>
+
+            <div className="space-y-2.5 text-xs text-slate-700">
+              <div className="p-3 bg-slate-50 rounded-lg border border-slate-200/80 flex items-start gap-2.5">
+                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                <div>
+                  <span className="font-bold text-slate-900">Review Pending Candidates:</span> {data.cnmc_candidates_pending} prototype candidates in the governance queue require review.
+                </div>
+              </div>
+
+              <div className="p-3 bg-slate-50 rounded-lg border border-slate-200/80 flex items-start gap-2.5">
+                <TrendingUp className="w-4 h-4 text-blue-600 shrink-0 mt-0.5" />
+                <div>
+                  <span className="font-bold text-slate-900">Explore Synergy Pools:</span> {data.identified_procurement_opportunities} cross-CPSE procurement synergy opportunities identified.
+                </div>
+              </div>
+
+              <div className="p-3 bg-slate-50 rounded-lg border border-slate-200/80 flex items-start gap-2.5">
+                <Clock className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+                <div>
+                  <span className="font-bold text-slate-900">Catalog Coverage Target:</span> Current {data.cnmc_mapping_coverage_percentage.toFixed(1)}% coverage. Target is &ge; 85% post-governance approval.
+                </div>
               </div>
             </div>
           </div>
 
           {onNavigateToTab && (
             <button
-              onClick={() => onNavigateToTab('matrix')}
-              className="mt-6 flex items-center justify-center gap-2 w-full py-2.5 px-4 text-xs font-semibold rounded-lg bg-indigo-50 text-indigo-700 hover:bg-indigo-100 transition-colors border border-indigo-200"
+              onClick={() => onNavigateToTab('rationalization')}
+              className="w-full py-2 bg-gov-navy hover:bg-gov-navy-dark text-white rounded-lg font-semibold text-xs transition-all shadow-2xs flex items-center justify-center gap-1.5"
             >
-              Explore Cross-CPSE Matrix <ArrowRight className="w-3.5 h-3.5" />
+              <span>View Full Harmonization Priorities</span>
+              <ArrowRight className="w-3.5 h-3.5" />
             </button>
           )}
         </div>
-
-        {/* Top Overlapping Categories */}
-        <div className="lg:col-span-2 bg-white p-6 rounded-xl border border-gray-200 shadow-xs">
-          <div className="flex items-center justify-between pb-3 border-b border-gray-100 mb-4">
-            <div>
-              <h3 className="text-base font-bold text-gray-900">Highest Cross-CPSE Overlap Categories</h3>
-              <p className="text-xs text-gray-500">Material categories with the densest cross-enterprise commonality</p>
-            </div>
-            {onNavigateToTab && (
-              <button
-                onClick={() => onNavigateToTab('categories')}
-                className="text-xs text-primary-600 hover:text-primary-700 font-semibold flex items-center gap-1"
-              >
-                View all categories <ArrowRight className="w-3 h-3" />
-              </button>
-            )}
-          </div>
-
-          <div className="space-y-3">
-            {data.top_overlapping_categories.length === 0 ? (
-              <p className="text-xs text-gray-400 py-4 text-center">No category overlap data available yet.</p>
-            ) : (
-              data.top_overlapping_categories.map((cat, idx) => (
-                <div key={idx} className="p-3 rounded-lg border border-gray-100 bg-gray-50/50 flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <span className="w-6 h-6 rounded-full bg-primary-100 text-primary-800 text-xs font-bold flex items-center justify-center">
-                      {idx + 1}
-                    </span>
-                    <div>
-                      <h4 className="text-xs font-bold text-gray-900">{cat.category_name}</h4>
-                      <p className="text-xs text-gray-500">
-                        {cat.distinct_cpses_involved} CPSEs • {cat.duplicate_cluster_count} duplicate clusters
-                      </p>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <span className="text-xs font-bold text-indigo-700 bg-indigo-50 border border-indigo-100 px-2 py-1 rounded">
-                      {cat.overlap_count} overlapping items
-                    </span>
-                  </div>
-                </div>
-              ))
-            )}
-          </div>
-        </div>
-      </div>
-
-      {/* Snapshot Timestamp Footer */}
-      <div className="flex items-center justify-between text-xs text-gray-400 px-1">
-        <div className="flex items-center gap-1.5">
-          <Clock className="w-3.5 h-3.5" />
-          <span>Calculated: {new Date(data.generated_at).toLocaleString()}</span>
-        </div>
-        <span>Architecture Tier: Layer 2 / Layer 3 Analytical Intelligence (SIH 2026 Prototype)</span>
       </div>
     </div>
   );

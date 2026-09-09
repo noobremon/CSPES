@@ -4,6 +4,32 @@
 
 @layer base {
   body {
-    @apply min-h-screen bg-slate-50 font-sans text-slate-900 antialiased;
+    @apply min-h-screen bg-slate-50 font-sans text-slate-900 antialiased selection:bg-brand-500 selection:text-white;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply tracking-tight text-slate-900;
+  }
+}
+
+@layer components {
+  .gov-card {
+    @apply bg-white border border-slate-200 rounded-xl shadow-xs;
+  }
+  
+  .gov-badge-navy {
+    @apply bg-slate-100 text-gov-navy border border-slate-200 font-semibold;
+  }
+
+  .gov-badge-blue {
+    @apply bg-blue-50 text-blue-700 border border-blue-200 font-semibold;
+  }
+
+  .gov-badge-saffron {
+    @apply bg-amber-50 text-amber-800 border border-amber-200 font-semibold;
+  }
+
+  .gov-badge-green {
+    @apply bg-emerald-50 text-emerald-800 border border-emerald-200 font-semibold;
   }
 }

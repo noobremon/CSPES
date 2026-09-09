@@ -6,7 +6,7 @@ import {
   ShieldCheck, 
   TrendingUp, 
   Target, 
-  PieChart,
+  PieChart, 
   RefreshCw
 } from 'lucide-react';
 import { api } from '../../services/api';
@@ -95,8 +95,8 @@ export const AnalyticsContainer: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Sub-navigation Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-gray-200">
-        <div className="flex items-center space-x-1 overflow-x-auto pb-2 sm:pb-0">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-slate-200">
+        <div className="flex items-center space-x-1.5 overflow-x-auto pb-2 sm:pb-0">
           {subTabs.map((tab) => {
             const Icon = tab.icon;
             const isActive = activeSubTab === tab.id;
@@ -104,10 +104,10 @@ export const AnalyticsContainer: React.FC = () => {
               <button
                 key={tab.id}
                 onClick={() => setActiveSubTab(tab.id)}
-                className={`flex items-center gap-2 px-3 py-2 text-xs font-semibold rounded-lg whitespace-nowrap transition-colors ${
+                className={`flex items-center gap-2 px-3 py-2 text-xs font-semibold rounded-lg whitespace-nowrap transition-all ${
                   isActive
-                    ? 'bg-primary-600 text-white shadow-xs'
-                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                    ? 'bg-gov-navy text-white shadow-sm'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
                 }`}
               >
                 <Icon className="w-4 h-4" />
@@ -120,7 +120,7 @@ export const AnalyticsContainer: React.FC = () => {
         <button
           onClick={fetchAllAnalytics}
           disabled={refreshing}
-          className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 shrink-0 self-end sm:self-auto disabled:opacity-50"
+          className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-700 bg-white border border-slate-300 rounded-lg hover:bg-slate-50 shadow-2xs shrink-0 self-end sm:self-auto disabled:opacity-50 transition-all"
         >
           <RefreshCw className={`w-3.5 h-3.5 ${refreshing ? 'animate-spin' : ''}`} />
           <span>Refresh Analytics</span>

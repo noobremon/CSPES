@@ -83,43 +83,41 @@ export const LoginPage: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-slate-950 flex flex-col justify-center items-center p-4 selection:bg-brand-500 selection:text-white relative overflow-hidden">
-      {/* Background Glows */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-brand-500/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
-
-      <div className="max-w-4xl w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-center z-10">
+    <div className="min-h-screen bg-slate-50 flex flex-col justify-center items-center p-6 selection:bg-brand-500 selection:text-white">
+      <div className="max-w-4xl w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
         {/* Left / Top Info Column */}
         <div className="lg:col-span-6 space-y-5 text-left">
-          <div className="flex items-center space-x-3">
-            <div className="p-2.5 bg-brand-600/20 text-brand-400 rounded-xl border border-brand-500/30 shadow-inner">
-              <Layers className="w-7 h-7" />
+          <div className="flex items-center space-x-3.5">
+            <div className="p-2.5 bg-slate-900 text-white rounded-xl shadow-xs">
+              <Layers className="w-6 h-6" />
             </div>
             <div>
-              <span className="text-[10px] font-bold uppercase tracking-wider text-brand-400 bg-brand-500/10 px-2 py-0.5 rounded border border-brand-500/20">
-                Phase 10 • Secure Multi-Tenant Access
-              </span>
-              <h1 className="text-xl font-extrabold text-white tracking-tight sm:text-2xl mt-1">
+              <div className="flex items-center gap-2">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-blue-700 bg-blue-50 px-2.5 py-0.5 rounded border border-blue-200">
+                  Government Enterprise Portal
+                </span>
+              </div>
+              <h1 className="text-xl font-extrabold text-slate-900 tracking-tight sm:text-2xl mt-1">
                 National Unified Material Master
               </h1>
             </div>
           </div>
 
-          <p className="text-xs text-slate-300 leading-relaxed">
+          <p className="text-xs text-slate-600 leading-relaxed font-medium">
             Smart India Hackathon (SIH) 2026 • “One Nation – One Common Material Code”.
             Enterprise role-based access control protecting Layer 1 CPSE catalog data, Layer 2 normalized intelligence, and Layer 3 governed master records.
           </p>
 
           {/* Demonstration Quick Fill Cards */}
-          <div className="space-y-2 pt-2">
-            <div className="flex items-center justify-between text-xs text-slate-400">
-              <span className="font-semibold uppercase tracking-wider text-[11px] text-slate-300">
+          <div className="space-y-2.5 pt-1">
+            <div className="flex items-center justify-between text-xs text-slate-500">
+              <span className="font-bold uppercase tracking-wider text-[11px] text-slate-700">
                 SIH Prototype Demo Personas
               </span>
-              <span className="text-[10px] text-slate-500">Click any persona to auto-fill credentials</span>
+              <span className="text-[10px] text-slate-500">Click any persona to load credentials</span>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
               {demoAccounts.map((demo) => {
                 const Icon = demo.icon;
                 const isSelected = email === demo.email;
@@ -128,92 +126,93 @@ export const LoginPage: React.FC = () => {
                     key={demo.email}
                     type="button"
                     onClick={() => handleDemoFill(demo.email, demo.password)}
-                    className={`p-3 rounded-xl border text-left transition-all ${
+                    className={`p-3 rounded-xl border text-left transition-all cursor-pointer ${
                       isSelected
-                        ? 'bg-slate-800 border-brand-500/60 shadow-md ring-1 ring-brand-500/40'
-                        : 'bg-slate-900/60 border-slate-800 hover:bg-slate-800/80 hover:border-slate-700'
+                        ? 'bg-blue-50/60 border-blue-600 shadow-xs ring-1 ring-blue-600'
+                        : 'bg-white border-slate-200 hover:border-slate-300 hover:bg-slate-50 shadow-xs'
                     }`}
                   >
                     <div className="flex items-center justify-between">
-                      <span className="text-xs font-bold text-white flex items-center gap-1.5">
-                        <Icon className="w-3.5 h-3.5 text-brand-400" />
+                      <span className="text-xs font-bold text-slate-900 flex items-center gap-1.5">
+                        <Icon className="w-3.5 h-3.5 text-blue-600" />
                         {demo.title}
                       </span>
                       {isSelected && (
-                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                        <CheckCircle2 className="w-3.5 h-3.5 text-blue-600 shrink-0" />
                       )}
                     </div>
-                    <div className="mt-2 space-y-0.5 bg-slate-950/60 p-2 rounded-lg border border-slate-800/80 text-[10px] font-mono">
-                      <div className="flex items-center gap-1 text-slate-300 truncate">
-                        <Mail className="w-2.5 h-2.5 text-slate-500 shrink-0" />
+                    <div className="mt-2 space-y-0.5 bg-slate-50 p-2 rounded-lg border border-slate-200 text-[10px] font-mono">
+                      <div className="flex items-center gap-1 text-slate-700 truncate font-semibold">
+                        <Mail className="w-2.5 h-2.5 text-slate-400 shrink-0" />
                         <span className="truncate">{demo.email}</span>
                       </div>
-                      <div className="flex items-center gap-1 text-slate-400">
-                        <KeyRound className="w-2.5 h-2.5 text-slate-500 shrink-0" />
+                      <div className="flex items-center gap-1 text-slate-500">
+                        <KeyRound className="w-2.5 h-2.5 text-slate-400 shrink-0" />
                         <span>{demo.password}</span>
                       </div>
                     </div>
-                    <p className="text-[10px] text-slate-400 mt-1.5 leading-tight">{demo.desc}</p>
+                    <p className="text-[10px] text-slate-500 mt-1.5 leading-tight">{demo.desc}</p>
                   </button>
                 );
               })}
             </div>
 
-            <div className="p-2.5 rounded-lg bg-slate-900/90 border border-slate-800 text-[11px] text-slate-400 flex items-start gap-2">
-              <Info className="w-3.5 h-3.5 text-brand-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>SIH MVP DEMONSTRATION CREDENTIALS — DEVELOPMENT/DEMO ENVIRONMENT ONLY.</strong> Click any persona above to auto-load credentials or click <strong>Sign In to Platform</strong> with the pre-filled Admin account.
+            {/* Official Notice Box */}
+            <div className="p-3 rounded-xl bg-amber-50/80 border border-amber-200 text-[11px] text-amber-900 flex items-start gap-2.5">
+              <Info className="w-4 h-4 text-amber-600 mt-0.5 shrink-0" />
+              <span className="leading-relaxed">
+                <strong>SIH 2026 DEMONSTRATION CREDENTIALS — NON-PRODUCTION ENVIRONMENT.</strong> Select any persona above to load credentials or click <strong>Sign In to Platform</strong> with the pre-filled Admin account.
               </span>
             </div>
           </div>
         </div>
 
         {/* Right / Login Form Card */}
-        <div className="lg:col-span-6 bg-slate-900/90 border border-slate-800 p-7 rounded-2xl shadow-2xl backdrop-blur-md">
+        <div className="lg:col-span-6 bg-white border border-slate-200 p-8 rounded-2xl shadow-xs">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-lg font-bold text-white tracking-tight">Portal Authentication</h2>
-              <p className="text-xs text-slate-400 mt-1">Enter your registered credentials to access the platform</p>
+              <h2 className="text-lg font-bold text-slate-900 tracking-tight">Portal Authentication</h2>
+              <p className="text-xs text-slate-500 mt-0.5">Enter registered enterprise credentials to access the platform</p>
             </div>
-            <span className="text-[10px] font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2 py-1 rounded-md">
+            <span className="text-[10px] font-mono bg-blue-50 text-blue-700 border border-blue-200 px-2 py-1 rounded-md font-semibold">
               Pre-filled: Admin
             </span>
           </div>
 
           {error && (
-            <div className="mt-4 p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-400 text-xs flex items-center gap-2">
-              <AlertCircle className="w-4 h-4 shrink-0" />
+            <div className="mt-4 p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs flex items-center gap-2">
+              <AlertCircle className="w-4 h-4 shrink-0 text-rose-600" />
               <span>{error}</span>
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="mt-5 space-y-4 text-xs">
+          <form onSubmit={handleSubmit} className="mt-6 space-y-4 text-xs">
             <div>
-              <label className="block text-slate-300 font-semibold mb-1.5">Email</label>
+              <label className="block text-slate-700 font-bold mb-1.5">Email Address</label>
               <div className="relative">
-                <Mail className="w-4 h-4 text-slate-500 absolute left-3.5 top-3" />
+                <Mail className="w-4 h-4 text-slate-400 absolute left-3.5 top-3" />
                 <input
                   type="email"
                   required
                   placeholder="e.g. national_admin@sih.demo"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full pl-10 pr-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-white placeholder-slate-500 focus:outline-hidden focus:border-brand-500 focus:ring-1 focus:ring-brand-500"
+                  className="w-full pl-10 pr-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-hidden focus:border-blue-600 focus:bg-white focus:ring-1 focus:ring-blue-600 font-medium"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-slate-300 font-semibold mb-1.5">Password</label>
+              <label className="block text-slate-700 font-bold mb-1.5">Password</label>
               <div className="relative">
-                <Lock className="w-4 h-4 text-slate-500 absolute left-3.5 top-3" />
+                <Lock className="w-4 h-4 text-slate-400 absolute left-3.5 top-3" />
                 <input
                   type="password"
                   required
                   placeholder="Enter demonstration password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-10 pr-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-white placeholder-slate-500 focus:outline-hidden focus:border-brand-500 focus:ring-1 focus:ring-brand-500"
+                  className="w-full pl-10 pr-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-hidden focus:border-blue-600 focus:bg-white focus:ring-1 focus:ring-blue-600 font-medium"
                 />
               </div>
             </div>
@@ -221,7 +220,7 @@ export const LoginPage: React.FC = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full mt-2 py-3 px-4 bg-brand-600 hover:bg-brand-500 text-white font-bold rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer"
+              className="w-full mt-3 py-3 px-4 bg-gov-navy hover:bg-gov-navy-dark text-white font-bold rounded-xl shadow-md transition-all flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer"
             >
               {loading ? (
                 <>
@@ -237,8 +236,8 @@ export const LoginPage: React.FC = () => {
             </button>
           </form>
 
-          <div className="mt-6 pt-4 border-t border-slate-800/80 text-[11px] text-slate-500 flex items-center justify-between">
-            <span>Session: JWT / HttpOnly Cookie</span>
+          <div className="mt-6 pt-4 border-t border-slate-100 text-[11px] text-slate-500 flex items-center justify-between">
+            <span>Session: Secure JWT Bearer</span>
             <span>Security Standard: ADR-007</span>
           </div>
         </div>
