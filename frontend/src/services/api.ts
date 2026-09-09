@@ -19,7 +19,19 @@ import {
   LoginCredentials
 } from '../types';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api/v1';
+function getApiBaseUrl(): string {
+  const envUrl = (import.meta.env.VITE_API_BASE_URL as string | undefined)?.trim();
+  if (!envUrl) {
+    return 'http://localhost:8000/api/v1';
+  }
+  const cleanUrl = envUrl.replace(/\/+$/, '');
+  if (!cleanUrl.endsWith('/api/v1')) {
+    return `${cleanUrl}/api/v1`;
+  }
+  return cleanUrl;
+}
+
+const API_BASE_URL = getApiBaseUrl();
 
 let authToken: string | null = typeof window !== 'undefined' ? localStorage.getItem('auth_token') : null;
 

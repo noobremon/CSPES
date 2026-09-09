@@ -50,6 +50,9 @@ app.add_exception_handler(HTTPException, http_exception_handler)
 
 # Include API Router
 app.include_router(api_router, prefix=settings.API_V1_STR)
+# Mount at root as well so calls directly to /auth/login or /health succeed seamlessly
+if settings.API_V1_STR:
+    app.include_router(api_router)
 
 
 @app.get("/", tags=["Root"])
