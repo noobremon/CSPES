@@ -1,9 +1,16 @@
+import sys
+import os
 import asyncio
 from logging.config import fileConfig
 from sqlalchemy import pool
 from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config
 from alembic import context
+
+# Ensure backend root is always in sys.path
+BASE_DIR = os.path.realpath(os.path.join(os.path.dirname(__file__), ".."))
+if BASE_DIR not in sys.path:
+    sys.path.insert(0, BASE_DIR)
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -19,11 +26,12 @@ if config.config_file_name is not None:
 from app.db.base import Base
 from app.models import SystemHealthCheck  # Import models for discovery
 from app.core.config import settings
+from app.db.session import get_async_db_url
 
 target_metadata = Base.metadata
 
-# Override URL from settings if present
-config.set_main_option("sqlalchemy.url", settings.DATABASE_URL)
+# Override URL from settings if present and ensure asyncpg driver format
+config.set_main_option("sqlalchemy.url", get_async_db_url(settings.DATABASE_URL))
 
 
 def run_migrations_offline() -> None:

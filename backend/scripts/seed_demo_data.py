@@ -7,11 +7,18 @@ All organization names, material descriptions, and codes in this script are
 fictional/synthetic demonstration data created strictly for SIH 2026 evaluation.
 They do not represent real internal proprietary CPSE databases.
 """
+import sys
+import os
 import asyncio
 import uuid
 from datetime import datetime, timezone
 from sqlalchemy import select, delete
 from sqlalchemy.ext.asyncio import AsyncSession
+
+# Ensure backend directory is in sys.path
+BASE_DIR = os.path.realpath(os.path.join(os.path.dirname(__file__), ".."))
+if BASE_DIR not in sys.path:
+    sys.path.insert(0, BASE_DIR)
 
 from app.db.session import AsyncSessionLocal
 from app.models.organization import Organization, SourceSystem
