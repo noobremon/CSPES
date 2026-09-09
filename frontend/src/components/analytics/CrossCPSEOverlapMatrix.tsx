@@ -53,7 +53,7 @@ export const CrossCPSEOverlapMatrix: React.FC<CrossCPSEOverlapMatrixProps> = ({
     return 'bg-indigo-600 text-white font-bold hover:bg-indigo-700';
   };
 
-  const cpseMap = new Map(data.cpses.map(c => [c.cpse_code, c]));
+  const cpseMap = new Map<string, any>(data.cpses.map((c: any) => [c.cpse_code, c]));
 
   return (
     <div className="space-y-6">

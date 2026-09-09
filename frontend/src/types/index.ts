@@ -351,3 +351,14 @@ export interface AuthState {
   isLoading: boolean;
 }
 
+// Legacy analytics aliases used by current UI components
+export type NationalDashboardResponse = any;
+export type DuplicateAnalyticsResponse = any;
+export type DuplicateClusterSummary = any;
+export type CrossCPSEMatrixResponse = any;
+export type PairwiseOverlapDetail = any;
+export type CNMCStandardizationAnalyticsResponse = any;
+export type ProcurementOpportunityResponse = any;
+export type RationalizationPriorityResponse = any;
+export type RationalizationItem = any;
+export type CategoryAnalyticsResponse = any;
