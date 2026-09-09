@@ -39,7 +39,7 @@ If you prefer to configure each service manually in the Render UI, follow these 
 1. In Render Dashboard, click **"New +"** $\rightarrow$ **"PostgreSQL"**.
 2. **Name:** `cpse-material-master-db`
 3. **Database Name:** `material_master`
-4. **User:** `postgres`
+4. **User:** `cpse_admin`
 5. **Region:** Select closest region (e.g., Singapore, Frankfurt, Oregon).
 6. **PostgreSQL Version:** 16
 7. Click **"Create Database"**.

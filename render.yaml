@@ -58,6 +58,6 @@ services:
 databases:
   - name: cpse-material-master-db
     databaseName: material_master
-    user: postgres
+    user: cpse_admin
     plan: standard
     postgresMajorVersion: "16"
