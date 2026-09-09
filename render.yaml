@@ -1,0 +1,63 @@
+services:
+  # ============================================================
+  # 1. FastAPI Backend Web Service
+  # ============================================================
+  - type: web
+    name: cpse-unified-material-master-backend
+    runtime: python
+    rootDir: backend
+    plan: standard
+    buildCommand: pip install -r requirements.txt && alembic upgrade head && python scripts/seed_demo_data.py
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: ENVIRONMENT
+        value: production
+      - key: LOG_LEVEL
+        value: INFO
+      - key: SECRET_KEY
+        generateValue: true
+      - key: CSRF_SECRET_KEY
+        generateValue: true
+      - key: ACCESS_TOKEN_EXPIRE_MINUTES
+        value: "60"
+      - key: REFRESH_TOKEN_EXPIRE_DAYS
+        value: "7"
+      - key: ALLOWED_CORS_ORIGINS
+        value: "*"
+      - key: DATABASE_URL
+        fromDatabase:
+          name: cpse-material-master-db
+          property: connectionString
+      - key: REDIS_URL
+        value: "redis://localhost:6379/0"
+
+  # ============================================================
+  # 2. React + TypeScript Frontend Static Site
+  # ============================================================
+  - type: web
+    name: cpse-unified-material-master-frontend
+    runtime: static
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: VITE_API_BASE_URL
+        fromService:
+          type: web
+          name: cpse-unified-material-master-backend
+          envVarKey: RENDER_EXTERNAL_URL
+          value: ${RENDER_EXTERNAL_URL}/api/v1
+
+# ============================================================
+# 3. PostgreSQL Database Instance (PostgreSQL 16)
+# ============================================================
+databases:
+  - name: cpse-material-master-db
+    databaseName: material_master
+    user: postgres
+    plan: standard
+    postgresMajorVersion: "16"
