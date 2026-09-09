@@ -9,14 +9,17 @@ import {
   Building2, 
   UserCheck, 
   FileCheck2,
-  Info
+  Info,
+  KeyRound,
+  CheckCircle2
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 
 export const LoginPage: React.FC = () => {
   const { login } = useAuth();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  // By default, pre-populate National Master Admin credentials for instant 1-click evaluation
+  const [email, setEmail] = useState('national_admin@sih.demo');
+  const [password, setPassword] = useState('DemoAdmin@2026');
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -113,7 +116,7 @@ export const LoginPage: React.FC = () => {
               <span className="font-semibold uppercase tracking-wider text-[11px] text-slate-300">
                 SIH Prototype Demo Personas
               </span>
-              <span className="text-[10px] text-slate-500">Click persona to load email</span>
+              <span className="text-[10px] text-slate-500">Click any persona to auto-fill credentials</span>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -136,8 +139,21 @@ export const LoginPage: React.FC = () => {
                         <Icon className="w-3.5 h-3.5 text-brand-400" />
                         {demo.title}
                       </span>
+                      {isSelected && (
+                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                      )}
                     </div>
-                    <p className="text-[10px] text-slate-400 mt-1 leading-tight">{demo.desc}</p>
+                    <div className="mt-2 space-y-0.5 bg-slate-950/60 p-2 rounded-lg border border-slate-800/80 text-[10px] font-mono">
+                      <div className="flex items-center gap-1 text-slate-300 truncate">
+                        <Mail className="w-2.5 h-2.5 text-slate-500 shrink-0" />
+                        <span className="truncate">{demo.email}</span>
+                      </div>
+                      <div className="flex items-center gap-1 text-slate-400">
+                        <KeyRound className="w-2.5 h-2.5 text-slate-500 shrink-0" />
+                        <span>{demo.password}</span>
+                      </div>
+                    </div>
+                    <p className="text-[10px] text-slate-400 mt-1.5 leading-tight">{demo.desc}</p>
                   </button>
                 );
               })}
@@ -146,7 +162,7 @@ export const LoginPage: React.FC = () => {
             <div className="p-2.5 rounded-lg bg-slate-900/90 border border-slate-800 text-[11px] text-slate-400 flex items-start gap-2">
               <Info className="w-3.5 h-3.5 text-brand-400 mt-0.5 shrink-0" />
               <span>
-                <strong>SIH MVP DEMONSTRATION CREDENTIALS — DEVELOPMENT/DEMO ENVIRONMENT ONLY.</strong> Click a persona to populate the corporate email, then enter your assigned password.
+                <strong>SIH MVP DEMONSTRATION CREDENTIALS — DEVELOPMENT/DEMO ENVIRONMENT ONLY.</strong> Click any persona above to auto-load credentials or click <strong>Sign In to Platform</strong> with the pre-filled Admin account.
               </span>
             </div>
           </div>
@@ -154,8 +170,15 @@ export const LoginPage: React.FC = () => {
 
         {/* Right / Login Form Card */}
         <div className="lg:col-span-6 bg-slate-900/90 border border-slate-800 p-7 rounded-2xl shadow-2xl backdrop-blur-md">
-          <h2 className="text-lg font-bold text-white tracking-tight">Portal Authentication</h2>
-          <p className="text-xs text-slate-400 mt-1">Enter your registered enterprise credentials to access the platform</p>
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-lg font-bold text-white tracking-tight">Portal Authentication</h2>
+              <p className="text-xs text-slate-400 mt-1">Enter your registered credentials to access the platform</p>
+            </div>
+            <span className="text-[10px] font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2 py-1 rounded-md">
+              Pre-filled: Admin
+            </span>
+          </div>
 
           {error && (
             <div className="mt-4 p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-400 text-xs flex items-center gap-2">
@@ -166,13 +189,13 @@ export const LoginPage: React.FC = () => {
 
           <form onSubmit={handleSubmit} className="mt-5 space-y-4 text-xs">
             <div>
-              <label className="block text-slate-300 font-semibold mb-1.5">Corporate / Government Email</label>
+              <label className="block text-slate-300 font-semibold mb-1.5">Email</label>
               <div className="relative">
                 <Mail className="w-4 h-4 text-slate-500 absolute left-3.5 top-3" />
                 <input
                   type="email"
                   required
-                  placeholder="e.g. cpse_manager_a@sih.demo"
+                  placeholder="e.g. national_admin@sih.demo"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="w-full pl-10 pr-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-white placeholder-slate-500 focus:outline-hidden focus:border-brand-500 focus:ring-1 focus:ring-brand-500"
@@ -198,7 +221,7 @@ export const LoginPage: React.FC = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full mt-2 py-3 px-4 bg-brand-600 hover:bg-brand-500 text-white font-bold rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 disabled:opacity-50"
+              className="w-full mt-2 py-3 px-4 bg-brand-600 hover:bg-brand-500 text-white font-bold rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer"
             >
               {loading ? (
                 <>
