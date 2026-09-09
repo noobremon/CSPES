@@ -2,21 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { 
   UploadCloud, 
   FileSpreadsheet, 
-  FileText, 
   CheckCircle2, 
   AlertCircle, 
-  Layers, 
-  ShieldCheck, 
   ArrowRight, 
   RefreshCw, 
   Building2, 
   Sparkles,
   Database,
   Lock,
-  Eye,
-  Check,
   XCircle,
-  HelpCircle,
   Zap
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
@@ -70,11 +64,9 @@ export const DataIngestionView: React.FC<DataIngestionViewProps> = ({
         const validList = Array.isArray(data) ? data : [];
         setOrganizations(validList);
         if (validList.length > 0) {
-          // If user belongs to an organization, auto-select their org
           if (user?.organization_id) {
             setSelectedOrgId(user.organization_id);
           } else {
-            // Default to IOCL or first org
             const defaultOrg = validList.find(o => o.code === 'IOCL') || validList[0];
             setSelectedOrgId(defaultOrg.id);
           }
@@ -91,7 +83,6 @@ export const DataIngestionView: React.FC<DataIngestionViewProps> = ({
 
   // Handle file selection and auto-run discovery
   const handleFileChange = async (file: File) => {
-    // Check format
     const name = file.name.toLowerCase();
     if (name.endsWith('.xls')) {
       setDiscoveryError('Legacy Excel (.xls) binary format is rejected for security. Please upload modern .xlsx or RFC 4180 .csv files.');
@@ -226,46 +217,46 @@ BHEL-MTR-103,HIGH VOLTAGE INDUCTION MOTOR 350KW 6.6KV 1000RPM,NOS,FABRICATED STE
   return (
     <div className="space-y-6 animate-fadeIn text-left">
       {/* Page Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-slate-900/90 border border-slate-800 p-6 rounded-2xl shadow-xl backdrop-blur-md">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white border border-slate-200 p-6 rounded-2xl shadow-xs">
         <div className="space-y-1.5">
           <div className="flex items-center gap-2">
-            <div className="p-2 bg-brand-500/10 text-brand-400 rounded-lg border border-brand-500/20">
+            <div className="p-2 bg-brand-50 text-brand-600 rounded-lg border border-brand-200">
               <UploadCloud className="w-5 h-5" />
             </div>
-            <span className="text-[10px] font-bold uppercase tracking-wider text-brand-400 bg-brand-500/10 px-2 py-0.5 rounded border border-brand-500/20">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-brand-700 bg-brand-50 px-2 py-0.5 rounded border border-brand-200">
               Multi-Sector Ingestion Engine
             </span>
           </div>
-          <h2 className="text-xl font-extrabold text-white tracking-tight sm:text-2xl">
+          <h2 className="text-xl font-extrabold text-slate-900 tracking-tight sm:text-2xl">
             CPSE Material Master Data Ingestion & Normalization
           </h2>
-          <p className="text-xs text-slate-400 max-w-3xl leading-relaxed">
+          <p className="text-xs text-slate-600 max-w-3xl leading-relaxed">
             Upload material catalogs in <strong>CSV</strong> or <strong>Excel (.xlsx)</strong> format. The pipeline automatically calculates SHA-256 integrity hashes, detects schemas, segregates confidential commercial pricing into private <strong>Layer 1</strong>, and dispatches normalized engineering attributes to <strong>Layer 2</strong> for AI similarity matching.
           </p>
         </div>
 
         {/* Quick Demo Preloads */}
-        <div className="bg-slate-950/80 p-3 rounded-xl border border-slate-800 shrink-0 space-y-2">
-          <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider flex items-center gap-1">
-            <Zap className="w-3 h-3 text-amber-400" />
+        <div className="bg-slate-50 p-3 rounded-xl border border-slate-200 shrink-0 space-y-2">
+          <span className="text-[10px] font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1">
+            <Zap className="w-3 h-3 text-amber-500" />
             1-Click Demo Catalogs
           </span>
           <div className="flex flex-wrap gap-1.5">
             <button
               onClick={() => loadDemoCatalog('fasteners')}
-              className="px-2.5 py-1 text-[11px] bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg border border-slate-700 transition-colors flex items-center gap-1 cursor-pointer"
+              className="px-2.5 py-1 text-[11px] bg-white hover:bg-slate-100 text-slate-800 font-medium rounded-lg border border-slate-300 shadow-xs transition-colors flex items-center gap-1 cursor-pointer"
             >
               🔩 Fasteners
             </button>
             <button
               onClick={() => loadDemoCatalog('valves')}
-              className="px-2.5 py-1 text-[11px] bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg border border-slate-700 transition-colors flex items-center gap-1 cursor-pointer"
+              className="px-2.5 py-1 text-[11px] bg-white hover:bg-slate-100 text-slate-800 font-medium rounded-lg border border-slate-300 shadow-xs transition-colors flex items-center gap-1 cursor-pointer"
             >
               🚰 Valves
             </button>
             <button
               onClick={() => loadDemoCatalog('motors')}
-              className="px-2.5 py-1 text-[11px] bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg border border-slate-700 transition-colors flex items-center gap-1 cursor-pointer"
+              className="px-2.5 py-1 text-[11px] bg-white hover:bg-slate-100 text-slate-800 font-medium rounded-lg border border-slate-300 shadow-xs transition-colors flex items-center gap-1 cursor-pointer"
             >
               ⚡ Motors
             </button>
@@ -277,21 +268,21 @@ BHEL-MTR-103,HIGH VOLTAGE INDUCTION MOTOR 350KW 6.6KV 1000RPM,NOS,FABRICATED STE
         {/* Left Column: Organization & Upload Area */}
         <div className="lg:col-span-6 space-y-6">
           {/* 1. Target Organization Selector */}
-          <div className="bg-slate-900/90 border border-slate-800 p-5 rounded-2xl shadow-lg space-y-3">
+          <div className="bg-white border border-slate-200 p-5 rounded-2xl shadow-xs space-y-3">
             <div className="flex items-center justify-between">
-              <label className="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-2">
-                <Building2 className="w-4 h-4 text-brand-400" />
+              <label className="text-xs font-bold text-slate-900 uppercase tracking-wider flex items-center gap-2">
+                <Building2 className="w-4 h-4 text-brand-600" />
                 1. Select CPSE Organization
               </label>
               {selectedOrg && (
-                <span className="text-[10px] font-mono bg-brand-500/10 text-brand-300 border border-brand-500/20 px-2 py-0.5 rounded">
+                <span className="text-[10px] font-mono bg-brand-50 text-brand-700 border border-brand-200 px-2 py-0.5 rounded font-semibold">
                   {selectedOrg.organization_type} • {selectedOrg.sector}
                 </span>
               )}
             </div>
 
             {loadingOrgs ? (
-              <div className="p-3 text-xs text-slate-400 flex items-center gap-2">
+              <div className="p-3 text-xs text-slate-500 flex items-center gap-2">
                 <RefreshCw className="w-3.5 h-3.5 animate-spin" />
                 Loading CPSE registry...
               </div>
@@ -300,9 +291,9 @@ BHEL-MTR-103,HIGH VOLTAGE INDUCTION MOTOR 350KW 6.6KV 1000RPM,NOS,FABRICATED STE
                 value={selectedOrgId}
                 onChange={(e) => setSelectedOrgId(e.target.value)}
                 disabled={Boolean(user?.organization_id)}
-                className="w-full bg-slate-950 border border-slate-800 text-white rounded-xl p-3 text-xs focus:border-brand-500 focus:outline-hidden"
+                className="w-full bg-slate-50 border border-slate-300 text-slate-900 rounded-xl p-3 text-xs focus:border-brand-500 focus:outline-hidden font-medium"
               >
-                {organizations.map((org) => (
+                {orgList.map((org) => (
                   <option key={org.id} value={org.id}>
                     {org.code} — {org.name} ({org.sector})
                   </option>
@@ -311,16 +302,16 @@ BHEL-MTR-103,HIGH VOLTAGE INDUCTION MOTOR 350KW 6.6KV 1000RPM,NOS,FABRICATED STE
             )}
 
             {user?.organization_id && (
-              <p className="text-[11px] text-slate-400 italic">
+              <p className="text-[11px] text-slate-500 italic">
                 * Locked to your authenticated tenant: <strong>{user.organization_code}</strong>
               </p>
             )}
           </div>
 
           {/* 2. File Drag & Drop Zone */}
-          <div className="bg-slate-900/90 border border-slate-800 p-5 rounded-2xl shadow-lg space-y-4">
-            <label className="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-2">
-              <FileSpreadsheet className="w-4 h-4 text-brand-400" />
+          <div className="bg-white border border-slate-200 p-5 rounded-2xl shadow-xs space-y-4">
+            <label className="text-xs font-bold text-slate-900 uppercase tracking-wider flex items-center gap-2">
+              <FileSpreadsheet className="w-4 h-4 text-brand-600" />
               2. Upload Material Catalog (.csv / .xlsx)
             </label>
 
@@ -330,8 +321,8 @@ BHEL-MTR-103,HIGH VOLTAGE INDUCTION MOTOR 350KW 6.6KV 1000RPM,NOS,FABRICATED STE
               onDrop={handleDrop}
               className={`border-2 border-dashed rounded-2xl p-8 text-center transition-all cursor-pointer ${
                 isDragging
-                  ? 'border-brand-500 bg-brand-500/10'
-                  : 'border-slate-800 hover:border-slate-700 bg-slate-950/60'
+                  ? 'border-brand-500 bg-brand-50'
+                  : 'border-slate-300 hover:border-brand-400 bg-slate-50/70 hover:bg-slate-50'
               }`}
               onClick={() => document.getElementById('catalog-file-input')?.click()}
             >
@@ -348,19 +339,19 @@ BHEL-MTR-103,HIGH VOLTAGE INDUCTION MOTOR 350KW 6.6KV 1000RPM,NOS,FABRICATED STE
               />
 
               <div className="flex flex-col items-center justify-center space-y-3">
-                <div className="p-3 bg-brand-500/10 text-brand-400 rounded-full border border-brand-500/20 shadow-inner">
+                <div className="p-3 bg-brand-50 text-brand-600 rounded-full border border-brand-200 shadow-inner">
                   <UploadCloud className="w-8 h-8" />
                 </div>
                 <div>
-                  <p className="text-xs font-bold text-white">
+                  <p className="text-xs font-bold text-slate-900">
                     {selectedFile ? selectedFile.name : 'Click to browse or drag & drop catalog file'}
                   </p>
-                  <p className="text-[11px] text-slate-400 mt-1">
+                  <p className="text-[11px] text-slate-500 mt-1">
                     Supports <strong>CSV (RFC 4180)</strong> and <strong>Excel (.xlsx)</strong> up to 50 MB
                   </p>
                 </div>
                 {selectedFile && (
-                  <span className="text-[10px] font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2 py-0.5 rounded">
+                  <span className="text-[10px] font-mono bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-0.5 rounded font-semibold">
                     Size: {(selectedFile.size / 1024).toFixed(1)} KB • Ready for Ingestion
                   </span>
                 )}
@@ -368,7 +359,7 @@ BHEL-MTR-103,HIGH VOLTAGE INDUCTION MOTOR 350KW 6.6KV 1000RPM,NOS,FABRICATED STE
             </div>
 
             {discoveryError && (
-              <div className="p-3 bg-rose-500/10 border border-rose-500/30 rounded-xl text-rose-400 text-xs flex items-center gap-2">
+              <div className="p-3 bg-rose-50 border border-rose-200 rounded-xl text-rose-700 text-xs flex items-center gap-2">
                 <AlertCircle className="w-4 h-4 shrink-0" />
                 <span>{discoveryError}</span>
               </div>
@@ -376,12 +367,12 @@ BHEL-MTR-103,HIGH VOLTAGE INDUCTION MOTOR 350KW 6.6KV 1000RPM,NOS,FABRICATED STE
           </div>
 
           {/* 3. Layer 1 Sensitive Data Privacy Guarantee */}
-          <div className="p-4 bg-slate-900/60 border border-slate-800 rounded-xl text-xs space-y-2">
-            <div className="flex items-center gap-2 text-emerald-400 font-bold text-[11px] uppercase tracking-wider">
+          <div className="p-4 bg-slate-100 border border-slate-200 rounded-xl text-xs space-y-2">
+            <div className="flex items-center gap-2 text-emerald-700 font-bold text-[11px] uppercase tracking-wider">
               <Lock className="w-3.5 h-3.5" />
               Layer 1 Sensitive Data Sanitization Guarantee
             </div>
-            <p className="text-slate-400 text-[11px] leading-relaxed">
+            <p className="text-slate-600 text-[11px] leading-relaxed">
               Commercial purchase prices, vendor details, and purchase order numbers remain <strong>tenant-isolated in Layer 1</strong>. Only normalized engineering specifications (dimensions, metallurgy, standards) are shared for cross-CPSE AI matching.
             </p>
           </div>
@@ -390,34 +381,34 @@ BHEL-MTR-103,HIGH VOLTAGE INDUCTION MOTOR 350KW 6.6KV 1000RPM,NOS,FABRICATED STE
         {/* Right Column: Schema Preview & Ingestion Monitor */}
         <div className="lg:col-span-6 space-y-6">
           {discovering ? (
-            <div className="bg-slate-900/90 border border-slate-800 p-12 rounded-2xl flex flex-col items-center justify-center text-center space-y-3 shadow-xl">
-              <div className="w-8 h-8 border-3 border-brand-500/20 border-t-brand-500 rounded-full animate-spin" />
-              <p className="text-xs font-bold text-white">Inspecting Schema & Parsing Headers...</p>
-              <p className="text-[11px] text-slate-400">Detecting column taxonomy, UOMs, and technical attributes</p>
+            <div className="bg-white border border-slate-200 p-12 rounded-2xl flex flex-col items-center justify-center text-center space-y-3 shadow-xs">
+              <div className="w-8 h-8 border-3 border-brand-500/20 border-t-brand-600 rounded-full animate-spin" />
+              <p className="text-xs font-bold text-slate-900">Inspecting Schema & Parsing Headers...</p>
+              <p className="text-[11px] text-slate-500">Detecting column taxonomy, UOMs, and technical attributes</p>
             </div>
           ) : discoveryData ? (
-            <div className="bg-slate-900/90 border border-slate-800 p-5 rounded-2xl shadow-xl space-y-4">
-              <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+            <div className="bg-white border border-slate-200 p-5 rounded-2xl shadow-xs space-y-4">
+              <div className="flex items-center justify-between border-b border-slate-100 pb-3">
                 <div className="space-y-0.5">
-                  <h3 className="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-2">
-                    <Sparkles className="w-3.5 h-3.5 text-brand-400" />
+                  <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider flex items-center gap-2">
+                    <Sparkles className="w-3.5 h-3.5 text-brand-600" />
                     3. Column Discovery & Preview
                   </h3>
-                  <span className="text-[10px] text-slate-400 font-mono">
+                  <span className="text-[10px] text-slate-500 font-mono">
                     {discoveryData.filename} • {discoveryData.estimated_row_count} items detected
                   </span>
                 </div>
-                <span className="text-[10px] bg-brand-500/10 text-brand-400 border border-brand-500/20 px-2 py-0.5 rounded">
+                <span className="text-[10px] bg-brand-50 text-brand-700 border border-brand-200 px-2 py-0.5 rounded font-semibold">
                   Format: {discoveryData.file_type}
                 </span>
               </div>
 
               {/* Sample Rows Preview Table */}
               <div className="space-y-2">
-                <span className="text-[11px] font-semibold text-slate-300">Catalog Preview (Top 5 Records):</span>
-                <div className="overflow-x-auto rounded-xl border border-slate-800 bg-slate-950">
+                <span className="text-[11px] font-semibold text-slate-700">Catalog Preview (Top 5 Records):</span>
+                <div className="overflow-x-auto rounded-xl border border-slate-200 bg-white">
                   <table className="w-full text-left text-[11px]">
-                    <thead className="bg-slate-900 text-slate-400 font-semibold border-b border-slate-800">
+                    <thead className="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
                       <tr>
                         {discoveryData.detected_columns.map((col) => (
                           <th key={col} className="p-2.5 whitespace-nowrap">
@@ -426,9 +417,9 @@ BHEL-MTR-103,HIGH VOLTAGE INDUCTION MOTOR 350KW 6.6KV 1000RPM,NOS,FABRICATED STE
                         ))}
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-slate-900 text-slate-300">
+                    <tbody className="divide-y divide-slate-100 text-slate-700">
                       {discoveryData.sample_rows.slice(0, 4).map((row, idx) => (
-                        <tr key={idx} className="hover:bg-slate-900/40">
+                        <tr key={idx} className="hover:bg-slate-50">
                           {discoveryData.detected_columns.map((col) => (
                             <td key={col} className="p-2.5 whitespace-nowrap font-mono text-[10px]">
                               {String(row[col] ?? '')}
@@ -446,7 +437,7 @@ BHEL-MTR-103,HIGH VOLTAGE INDUCTION MOTOR 350KW 6.6KV 1000RPM,NOS,FABRICATED STE
                 <button
                   onClick={handleStartIngestion}
                   disabled={uploading || pollingActive}
-                  className="w-full py-3 px-4 bg-brand-600 hover:bg-brand-500 text-white font-bold rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer text-xs"
+                  className="w-full py-3 px-4 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl shadow-sm transition-all flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer text-xs"
                 >
                   {uploading || pollingActive ? (
                     <>
@@ -463,9 +454,9 @@ BHEL-MTR-103,HIGH VOLTAGE INDUCTION MOTOR 350KW 6.6KV 1000RPM,NOS,FABRICATED STE
               </div>
             </div>
           ) : (
-            <div className="bg-slate-900/40 border border-slate-800/80 p-12 rounded-2xl flex flex-col items-center justify-center text-center space-y-3">
-              <Database className="w-10 h-10 text-slate-700" />
-              <p className="text-xs font-semibold text-slate-400">No Catalog File Selected</p>
+            <div className="bg-white border border-slate-200 p-12 rounded-2xl flex flex-col items-center justify-center text-center space-y-3 shadow-xs">
+              <Database className="w-10 h-10 text-slate-400" />
+              <p className="text-xs font-bold text-slate-800">No Catalog File Selected</p>
               <p className="text-[11px] text-slate-500 max-w-sm">
                 Upload a CSV or Excel file or click one of the <strong>1-Click Demo Catalogs</strong> on top to preview the schema.
               </p>
@@ -474,48 +465,48 @@ BHEL-MTR-103,HIGH VOLTAGE INDUCTION MOTOR 350KW 6.6KV 1000RPM,NOS,FABRICATED STE
 
           {/* 4. Ingestion Job Execution Status & Results */}
           {jobStatus && (
-            <div className="bg-slate-900/90 border border-slate-800 p-5 rounded-2xl shadow-xl space-y-4 animate-fadeIn">
-              <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+            <div className="bg-white border border-slate-200 p-5 rounded-2xl shadow-xs space-y-4 animate-fadeIn">
+              <div className="flex items-center justify-between border-b border-slate-100 pb-3">
                 <div className="flex items-center gap-2">
                   {jobStatus.status === 'COMPLETED' ? (
-                    <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600" />
                   ) : jobStatus.status === 'FAILED' ? (
-                    <XCircle className="w-4 h-4 text-rose-400" />
+                    <XCircle className="w-4 h-4 text-rose-600" />
                   ) : (
-                    <RefreshCw className="w-4 h-4 text-brand-400 animate-spin" />
+                    <RefreshCw className="w-4 h-4 text-brand-600 animate-spin" />
                   )}
-                  <h3 className="text-xs font-bold text-white uppercase tracking-wider">
+                  <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
                     Ingestion Status: {jobStatus.status}
                   </h3>
                 </div>
-                <span className="text-[10px] font-mono bg-slate-800 text-slate-300 px-2 py-0.5 rounded">
+                <span className="text-[10px] font-mono bg-slate-100 text-slate-700 px-2 py-0.5 rounded font-semibold">
                   Job ID: {jobStatus.job_id.slice(0, 8)}...
                 </span>
               </div>
 
               {/* Progress Summary Cards */}
               <div className="grid grid-cols-3 gap-3">
-                <div className="p-3 bg-slate-950 rounded-xl border border-slate-800 text-center">
+                <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 text-center">
                   <span className="text-[10px] text-slate-500 block uppercase font-semibold">Total Items</span>
-                  <span className="text-base font-bold text-white">{jobStatus.total_rows}</span>
+                  <span className="text-base font-bold text-slate-900">{jobStatus.total_rows}</span>
                 </div>
-                <div className="p-3 bg-emerald-950/40 rounded-xl border border-emerald-800/40 text-center">
-                  <span className="text-[10px] text-emerald-400 block uppercase font-semibold">Processed</span>
-                  <span className="text-base font-bold text-emerald-300">{jobStatus.processed_rows}</span>
+                <div className="p-3 bg-emerald-50 rounded-xl border border-emerald-200 text-center">
+                  <span className="text-[10px] text-emerald-700 block uppercase font-semibold">Processed</span>
+                  <span className="text-base font-bold text-emerald-800">{jobStatus.processed_rows}</span>
                 </div>
-                <div className="p-3 bg-rose-950/30 rounded-xl border border-rose-800/30 text-center">
-                  <span className="text-[10px] text-rose-400 block uppercase font-semibold">Errors / Failed</span>
-                  <span className="text-base font-bold text-rose-300">{jobStatus.failed_rows}</span>
+                <div className="p-3 bg-rose-50 rounded-xl border border-rose-200 text-center">
+                  <span className="text-[10px] text-rose-700 block uppercase font-semibold">Errors / Failed</span>
+                  <span className="text-base font-bold text-rose-800">{jobStatus.failed_rows}</span>
                 </div>
               </div>
 
               {jobStatus.status === 'COMPLETED' && (
                 <div className="space-y-3 pt-2">
-                  <div className="p-3 bg-emerald-500/10 border border-emerald-500/20 rounded-xl text-emerald-300 text-xs flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                  <div className="p-3 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-800 text-xs flex items-start gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
                     <div>
                       <strong>Ingestion & AI Normalization Complete!</strong>
-                      <p className="text-[11px] text-emerald-400/80 mt-0.5">
+                      <p className="text-[11px] text-emerald-700 mt-0.5">
                         All materials have been normalized, technical attributes extracted, and candidate matching pipelines triggered.
                       </p>
                     </div>
@@ -525,7 +516,7 @@ BHEL-MTR-103,HIGH VOLTAGE INDUCTION MOTOR 350KW 6.6KV 1000RPM,NOS,FABRICATED STE
                     {onNavigateToWorkspace && (
                       <button
                         onClick={onNavigateToWorkspace}
-                        className="flex-1 py-2.5 px-3 bg-brand-600 hover:bg-brand-500 text-white font-bold rounded-xl text-xs transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+                        className="flex-1 py-2.5 px-3 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl text-xs transition-colors flex items-center justify-center gap-1.5 cursor-pointer shadow-xs"
                       >
                         <span>Open CNMC Workspace</span>
                         <ArrowRight className="w-3.5 h-3.5" />
@@ -534,7 +525,7 @@ BHEL-MTR-103,HIGH VOLTAGE INDUCTION MOTOR 350KW 6.6KV 1000RPM,NOS,FABRICATED STE
                     {onNavigateToAnalytics && (
                       <button
                         onClick={onNavigateToAnalytics}
-                        className="flex-1 py-2.5 px-3 bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold rounded-xl text-xs transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+                        className="flex-1 py-2.5 px-3 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold rounded-xl text-xs transition-colors flex items-center justify-center gap-1.5 cursor-pointer border border-slate-300"
                       >
                         <span>View Analytics Matrix</span>
                         <ArrowRight className="w-3.5 h-3.5" />
@@ -547,7 +538,7 @@ BHEL-MTR-103,HIGH VOLTAGE INDUCTION MOTOR 350KW 6.6KV 1000RPM,NOS,FABRICATED STE
           )}
 
           {jobError && (
-            <div className="p-3 bg-rose-500/10 border border-rose-500/30 rounded-xl text-rose-400 text-xs flex items-center gap-2">
+            <div className="p-3 bg-rose-50 border border-rose-200 rounded-xl text-rose-700 text-xs flex items-center gap-2">
               <AlertCircle className="w-4 h-4 shrink-0" />
               <span>{jobError}</span>
             </div>

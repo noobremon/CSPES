@@ -212,19 +212,28 @@ async def upload_ingestion_file(
 
 
 @router.post(
+    "/process",
+    summary="Submit column mapping and trigger ingestion pipeline",
+    description="Submits the column mapping dictionary and triggers row validation, raw preservation, normalization, and attribute extraction."
+)
+@router.post(
     "/{job_id}/process",
     summary="Submit column mapping and trigger ingestion pipeline",
     description="Submits the column mapping dictionary and triggers row validation, raw preservation, normalization, and attribute extraction. Large files (>250 rows) mandate background Celery processing."
 )
 async def process_ingestion_job(
-    job_id: uuid.UUID,
     payload: ProcessJobRequest,
+    job_id: Optional[uuid.UUID] = None,
     run_sync: bool = False,
     db: AsyncSession = Depends(get_db)
 ):
-    job = (await db.execute(select(IngestionJob).where(IngestionJob.id == job_id))).scalars().first()
+    target_job_id = job_id or payload.job_id
+    if not target_job_id:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="job_id is required in path or request body.")
+
+    job = (await db.execute(select(IngestionJob).where(IngestionJob.id == target_job_id))).scalars().first()
     if not job:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"IngestionJob with ID {job_id} not found.")
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"IngestionJob with ID {target_job_id} not found.")
 
     if job.status not in ["QUEUED", "FAILED", "PARTIALLY_COMPLETED"]:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"Job is already in '{job.status}' state.")
@@ -236,22 +245,22 @@ async def process_ingestion_job(
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail=f"Synchronous processing is limited to {MAX_SYNC_INGESTION_ROWS} rows for web worker safety. This file has {job.total_rows} rows and requires background Celery worker processing."
             )
-        result = await execute_ingestion_job(job_id, payload.column_mapping, db)
+        result = await execute_ingestion_job(target_job_id, payload.column_mapping, db)
         return {
             "message": "Ingestion job executed synchronously within safe row threshold.",
-            "job_id": str(job_id),
+            "job_id": str(target_job_id),
             "execution_mode": "SYNCHRONOUS",
             "result": result
         }
 
     # Attempt Celery task dispatch
     try:
-        task = process_ingestion_batch_task.delay(str(job_id), payload.column_mapping)
+        task = process_ingestion_batch_task.delay(str(target_job_id), payload.column_mapping)
         job.status = "PROCESSING"
         await db.commit()
         return {
             "message": "Ingestion job queued for background Celery worker execution.",
-            "job_id": str(job_id),
+            "job_id": str(target_job_id),
             "celery_task_id": task.id,
             "execution_mode": "CELERY_BACKGROUND"
         }
@@ -262,10 +271,10 @@ async def process_ingestion_job(
                 status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
                 detail=f"Background Celery worker is offline and file exceeds maximum synchronous processing limit of {MAX_SYNC_INGESTION_ROWS} rows (total: {job.total_rows}). Please start Redis and Celery worker."
             )
-        result = await execute_ingestion_job(job_id, payload.column_mapping, db)
+        result = await execute_ingestion_job(target_job_id, payload.column_mapping, db)
         return {
             "message": f"Celery broker unavailable; executed synchronously as fallback (within {MAX_SYNC_INGESTION_ROWS} row limit).",
-            "job_id": str(job_id),
+            "job_id": str(target_job_id),
             "execution_mode": "FALLBACK_DIRECT",
             "result": result
         }

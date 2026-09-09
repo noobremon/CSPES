@@ -382,7 +382,7 @@ export async function processIngestionJob(
   jobId: string,
   columnMapping?: Record<string, string>
 ): Promise<any> {
-  const response = await fetch(`${API_BASE_URL}/ingestion/process`, {
+  const response = await fetch(`${API_BASE_URL}/ingestion/${jobId}/process`, {
     method: 'POST',
     headers: getHeaders({ 'Content-Type': 'application/json' }),
     body: JSON.stringify({

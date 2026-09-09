@@ -44,36 +44,36 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, pending
   };
 
   return (
-    <header className="border-b border-slate-800 bg-slate-900/90 backdrop-blur-md sticky top-0 z-50 px-6 py-3.5">
+    <header className="border-b border-slate-200 bg-white/95 backdrop-blur-md sticky top-0 z-50 px-6 py-3.5 shadow-xs">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
         {/* Brand & Platform Identity */}
         <div className="flex items-center space-x-3.5">
-          <div className="p-2.5 bg-brand-600/20 text-brand-400 rounded-xl border border-brand-500/30 shadow-inner">
+          <div className="p-2.5 bg-brand-50 text-brand-600 rounded-xl border border-brand-200 shadow-inner">
             <Layers className="w-6 h-6" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h1 className="text-base font-bold text-white tracking-tight sm:text-lg">
+              <h1 className="text-base font-bold text-slate-900 tracking-tight sm:text-lg">
                 National Unified Material Master Framework
               </h1>
-              <span className="text-[10px] uppercase font-semibold px-2 py-0.5 rounded bg-brand-500/10 text-brand-400 border border-brand-500/20">
-                Phase 10
+              <span className="text-[10px] uppercase font-bold px-2 py-0.5 rounded bg-brand-50 text-brand-700 border border-brand-200">
+                SIH 2026
               </span>
             </div>
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-slate-500">
               Smart India Hackathon (SIH) 2026 • “One Nation – One Common Material Code”
             </p>
           </div>
         </div>
 
         {/* Enterprise Navigation Tabs */}
-        <nav className="flex items-center space-x-1 bg-slate-950/60 p-1 rounded-xl border border-slate-800 text-xs font-medium">
+        <nav className="flex items-center space-x-1 bg-slate-100 p-1 rounded-xl border border-slate-200 text-xs font-medium">
           <button
             onClick={() => setActiveTab('ingestion')}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all ${
               activeTab === 'ingestion'
-                ? 'bg-brand-600 text-white shadow-md font-semibold'
-                : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900/50'
+                ? 'bg-brand-600 text-white shadow-xs font-semibold'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-white/80'
             }`}
           >
             <UploadCloud className="w-3.5 h-3.5" />
@@ -84,8 +84,8 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, pending
             onClick={() => setActiveTab('workspace')}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all ${
               activeTab === 'workspace'
-                ? 'bg-brand-600 text-white shadow-md font-semibold'
-                : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900/50'
+                ? 'bg-brand-600 text-white shadow-xs font-semibold'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-white/80'
             }`}
           >
             <FileText className="w-3.5 h-3.5" />
@@ -96,14 +96,14 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, pending
             onClick={() => setActiveTab('queue')}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all relative ${
               activeTab === 'queue'
-                ? 'bg-brand-600 text-white shadow-md font-semibold'
-                : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900/50'
+                ? 'bg-brand-600 text-white shadow-xs font-semibold'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-white/80'
             }`}
           >
             <CheckSquare className="w-3.5 h-3.5" />
             Governance Queue
             {pendingCount > 0 && (
-              <span className="ml-1 px-1.5 py-0.2 text-[10px] font-bold bg-amber-500/20 text-amber-400 border border-amber-500/30 rounded-full">
+              <span className="ml-1 px-1.5 py-0.2 text-[10px] font-bold bg-amber-100 text-amber-800 border border-amber-300 rounded-full">
                 {pendingCount}
               </span>
             )}
@@ -113,8 +113,8 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, pending
             onClick={() => setActiveTab('mappings')}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all ${
               activeTab === 'mappings'
-                ? 'bg-brand-600 text-white shadow-md font-semibold'
-                : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900/50'
+                ? 'bg-brand-600 text-white shadow-xs font-semibold'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-white/80'
             }`}
           >
             <GitCompare className="w-3.5 h-3.5" />
@@ -125,11 +125,11 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, pending
             onClick={() => setActiveTab('analytics')}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all ${
               activeTab === 'analytics'
-                ? 'bg-brand-600 text-white shadow-md font-semibold'
-                : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900/50'
+                ? 'bg-brand-600 text-white shadow-xs font-semibold'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-white/80'
             }`}
           >
-            <ShieldCheck className="w-3.5 h-3.5 text-brand-400" />
+            <ShieldCheck className="w-3.5 h-3.5 text-brand-600" />
             National Analytics
           </button>
 
@@ -137,8 +137,8 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, pending
             onClick={() => setActiveTab('health')}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all ${
               activeTab === 'health'
-                ? 'bg-brand-600 text-white shadow-md font-semibold'
-                : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900/50'
+                ? 'bg-brand-600 text-white shadow-xs font-semibold'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-white/80'
             }`}
           >
             <Info className="w-3.5 h-3.5" />
@@ -149,14 +149,14 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, pending
         {/* Authenticated User Profile & Logout */}
         <div className="flex items-center space-x-3 text-xs">
           {user ? (
-            <div className="flex items-center gap-2.5 bg-slate-800/80 px-3 py-1.5 rounded-xl border border-slate-700/60 shadow-xs">
+            <div className="flex items-center gap-2.5 bg-slate-100 px-3 py-1.5 rounded-xl border border-slate-200 shadow-xs">
               <div className="flex flex-col text-left">
                 <div className="flex items-center gap-1.5">
-                  <span className="font-bold text-white text-[11px] truncate max-w-[130px]" title={user.full_name}>
+                  <span className="font-bold text-slate-900 text-[11px] truncate max-w-[130px]" title={user.full_name}>
                     {user.full_name}
                   </span>
                   {user.organization_code && (
-                    <span className="px-1.5 py-0.2 bg-blue-500/20 text-blue-300 border border-blue-500/30 rounded text-[10px] font-mono font-semibold">
+                    <span className="px-1.5 py-0.2 bg-blue-100 text-blue-800 border border-blue-200 rounded text-[10px] font-mono font-semibold">
                       {user.organization_code}
                     </span>
                   )}
@@ -169,14 +169,14 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, pending
               <button
                 onClick={() => logout()}
                 title="Sign Out of Portal"
-                className="p-1.5 rounded-lg text-slate-400 hover:text-rose-300 hover:bg-rose-500/10 transition-colors ml-1"
+                className="p-1.5 rounded-lg text-slate-500 hover:text-rose-600 hover:bg-rose-50 transition-colors ml-1 cursor-pointer"
               >
                 <LogOut className="w-4 h-4" />
               </button>
             </div>
           ) : (
-            <div className="flex items-center space-x-1.5 text-slate-400 text-xs">
-              <ShieldCheck className="w-4 h-4 text-brand-400" />
+            <div className="flex items-center space-x-1.5 text-slate-500 text-xs">
+              <ShieldCheck className="w-4 h-4 text-brand-600" />
               <span>Unauthenticated</span>
             </div>
           )}

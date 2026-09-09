@@ -27,8 +27,9 @@ class IngestionUploadResponse(BaseModel):
 
 
 class ProcessJobRequest(BaseModel):
+    job_id: Optional[uuid.UUID] = None
     column_mapping: Dict[str, str] = Field(
-        ...,
+        default_factory=dict,
         description="Mapping from canonical field names to file column headers. Required: 'material_code', 'description'",
         json_schema_extra={
             "example": {

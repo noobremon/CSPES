@@ -69,7 +69,7 @@ const MainAppContent: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-950 text-slate-100 selection:bg-brand-500 selection:text-white">
+    <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900 selection:bg-brand-500 selection:text-white">
       <Header
         activeTab={activeTab}
         setActiveTab={setActiveTab}
@@ -78,43 +78,42 @@ const MainAppContent: React.FC = () => {
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-6 py-6 space-y-6">
         {/* Top Level Platform Overview Banner */}
-        <div className="rounded-2xl border border-brand-500/30 bg-gradient-to-r from-brand-950/60 via-slate-900/80 to-slate-900/60 p-6 shadow-2xl relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-brand-500/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="rounded-2xl border border-brand-200 bg-gradient-to-r from-brand-50/80 via-white to-indigo-50/60 p-6 shadow-xs relative overflow-hidden">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div className="space-y-2 max-w-3xl">
               <div className="flex items-center gap-2">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-brand-400 bg-brand-500/10 px-2.5 py-1 rounded-md border border-brand-500/20">
-                  Phase 10 • Authenticated Enterprise Portal
+                <span className="text-[10px] font-bold uppercase tracking-wider text-brand-700 bg-brand-100 px-2.5 py-1 rounded-md border border-brand-200">
+                  SIH 2026 • Enterprise Production Prototype
                 </span>
                 {user?.organization_code ? (
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-blue-400 bg-blue-500/10 px-2.5 py-1 rounded-md border border-blue-500/20">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-blue-700 bg-blue-100 px-2.5 py-1 rounded-md border border-blue-200">
                     Tenant: {user.organization_code} ({user.organization_name || 'Assigned CPSE'})
                   </span>
                 ) : (
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-md border border-emerald-500/20">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-100 px-2.5 py-1 rounded-md border border-emerald-200">
                     National Cross-CPSE Scope
                   </span>
                 )}
               </div>
-              <h2 className="text-2xl font-extrabold text-white tracking-tight sm:text-3xl">
+              <h2 className="text-2xl font-extrabold text-slate-900 tracking-tight sm:text-3xl">
                 National Material Code Governance & Analytics Hub
               </h2>
-              <p className="text-xs text-slate-300 leading-relaxed">
+              <p className="text-xs text-slate-600 leading-relaxed">
                 Connects Ingestion → AI Matching → CNMC Recommendation → Human Governance Sign-Off → National Material Intelligence.
                 Protected by server-side Role-Based Access Control and Layer 1 CPSE commercial data isolation.
               </p>
             </div>
 
             {/* Quick Metrics */}
-            <div className="flex items-center gap-3 bg-slate-950/80 p-3 rounded-xl border border-slate-800 shrink-0">
+            <div className="flex items-center gap-3 bg-white p-3 rounded-xl border border-slate-200 shadow-xs shrink-0">
               <div className="text-center px-2">
-                <span className="block text-base font-bold text-white font-mono">4 ROLES</span>
-                <span className="text-[10px] text-slate-400 uppercase">RBAC Model</span>
+                <span className="block text-base font-bold text-slate-900 font-mono">4 ROLES</span>
+                <span className="text-[10px] text-slate-500 uppercase">RBAC Model</span>
               </div>
-              <div className="w-px h-8 bg-slate-800" />
+              <div className="w-px h-8 bg-slate-200" />
               <div className="text-center px-2">
-                <span className="block text-base font-bold text-brand-400 font-mono">JWT</span>
-                <span className="text-[10px] text-slate-400 uppercase">Auth Standard</span>
+                <span className="block text-base font-bold text-brand-600 font-mono">JWT</span>
+                <span className="text-[10px] text-slate-500 uppercase">Auth Standard</span>
               </div>
             </div>
           </div>
