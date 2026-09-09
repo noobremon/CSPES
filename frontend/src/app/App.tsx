@@ -87,7 +87,7 @@ const MainAppContent: React.FC = () => {
         {/* Tab 0: Multi-CPSE Data Ingestion */}
         {activeTab === 'ingestion' && (
           <DataIngestionView
-            onNavigateToWorkspace={(item) => {
+            onNavigateToWorkspace={() => {
               setActiveTab('workspace');
             }}
           />
@@ -98,6 +98,9 @@ const MainAppContent: React.FC = () => {
           <RecommendationWorkspace
             onCandidateCreated={() => {
               setRefreshTrigger((prev) => prev + 1);
+            }}
+            onNavigateToReview={(_candidateId) => {
+              setActiveTab('queue');
             }}
           />
         )}

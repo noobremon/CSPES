@@ -149,7 +149,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, pending
             <div className="flex items-center gap-2.5 bg-slate-50 px-3 py-1.5 rounded-xl border border-slate-200 shadow-2xs">
               <div className="flex flex-col text-left">
                 <div className="flex items-center gap-1.5">
-                  <span className="font-semibold text-slate-900">{user.full_name || user.username}</span>
+                  <span className="font-semibold text-slate-900">{user.full_name || user.email}</span>
                   <span className={`text-[10px] font-bold px-1.5 py-0.2 rounded border ${getRoleBadge(user.role)}`}>
                     {formatRoleName(user.role)}
                   </span>
