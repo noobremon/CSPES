@@ -9,6 +9,7 @@ import { ReviewDetailModal } from '../components/cnmc/ReviewDetailModal';
 import { CPSEMappingView } from '../components/cnmc/CPSEMappingView';
 import { AnalyticsContainer } from '../components/analytics/AnalyticsContainer';
 import { Card } from '../components/ui/Card';
+import { ErrorBoundary } from '../components/common/ErrorBoundary';
 import { CNMCCandidateItem } from '../types';
 import { 
   ShieldCheck, 
@@ -86,41 +87,51 @@ const MainAppContent: React.FC = () => {
 
         {/* Tab 0: Multi-CPSE Data Ingestion */}
         {activeTab === 'ingestion' && (
-          <DataIngestionView
-            onNavigateToWorkspace={() => {
-              setActiveTab('workspace');
-            }}
-          />
+          <ErrorBoundary fallbackTitle="Data Ingestion Portal">
+            <DataIngestionView
+              onNavigateToWorkspace={() => {
+                setActiveTab('workspace');
+              }}
+            />
+          </ErrorBoundary>
         )}
 
         {/* Tab 1: CNMC Recommendation Workspace */}
         {activeTab === 'workspace' && (
-          <RecommendationWorkspace
-            onCandidateCreated={() => {
-              setRefreshTrigger((prev) => prev + 1);
-            }}
-            onNavigateToReview={(_candidateId) => {
-              setActiveTab('queue');
-            }}
-          />
+          <ErrorBoundary fallbackTitle="CNMC Recommendation Workspace">
+            <RecommendationWorkspace
+              onCandidateCreated={() => {
+                setRefreshTrigger((prev) => prev + 1);
+              }}
+              onNavigateToReview={(_candidateId) => {
+                setActiveTab('queue');
+              }}
+            />
+          </ErrorBoundary>
         )}
 
         {/* Tab 2: Governance Review Queue */}
         {activeTab === 'queue' && (
-          <GovernanceReviewQueue
-            onSelectCandidate={handleSelectCandidate}
-            refreshTrigger={refreshTrigger}
-          />
+          <ErrorBoundary fallbackTitle="Governance Review Queue">
+            <GovernanceReviewQueue
+              onSelectCandidate={handleSelectCandidate}
+              refreshTrigger={refreshTrigger}
+            />
+          </ErrorBoundary>
         )}
 
         {/* Tab 3: CPSE ↔ CNMC Cross-Walk Mapping */}
         {activeTab === 'mappings' && (
-          <CPSEMappingView />
+          <ErrorBoundary fallbackTitle="CPSE ↔ CNMC Cross-Walk">
+            <CPSEMappingView />
+          </ErrorBoundary>
         )}
 
         {/* Tab 4: National Material Master Analytics */}
         {activeTab === 'analytics' && (
-          <AnalyticsContainer />
+          <ErrorBoundary fallbackTitle="National Analytics Dashboard">
+            <AnalyticsContainer />
+          </ErrorBoundary>
         )}
 
         {/* Tab 5: System Health & Security Status */}
