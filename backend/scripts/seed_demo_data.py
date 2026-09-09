@@ -42,20 +42,36 @@ async def seed_data(session: AsyncSession) -> dict:
     if res.scalars().first():
         print("  -> Data already seeded. Running in idempotent update mode.")
 
-    # 1. Seed 5 Sample CPSE Organizations
-    print("[2/8] Seeding 5 Sample CPSE Organizations...")
+    # 1. Seed 10 Major Sector CPSE Organizations
+    print("[2/8] Seeding 10 Major Sector CPSE Demonstration Organizations...")
     orgs_data = [
-        {"code": "IOCL", "name": "Indian Oil Corporation Limited", "sector": "Oil & Gas"},
-        {"code": "NTPC", "name": "NTPC Limited", "sector": "Power Generation"},
-        {"code": "SAIL", "name": "Steel Authority of India Limited", "sector": "Steel Manufacturing"},
-        {"code": "CIL", "name": "Coal India Limited", "sector": "Mining & Energy"},
-        {"code": "BHEL", "name": "Bharat Heavy Electricals Limited", "sector": "Heavy Electricals & Engineering"},
+        {"code": "IOCL", "name": "Indian Oil Corporation Limited", "short_name": "IndianOil", "sector": "Oil & Gas", "type": "MAHARATNA", "source": "FUTURE_SAP_CONNECTOR"},
+        {"code": "ONGC", "name": "Oil and Natural Gas Corporation", "short_name": "ONGC", "sector": "Oil & Gas", "type": "MAHARATNA", "source": "FUTURE_SAP_CONNECTOR"},
+        {"code": "GAIL", "name": "GAIL (India) Limited", "short_name": "GAIL", "sector": "Gas Transmission & Petrochemicals", "type": "MAHARATNA", "source": "FUTURE_SAP_CONNECTOR"},
+        {"code": "NTPC", "name": "NTPC Limited", "short_name": "NTPC", "sector": "Power Generation", "type": "MAHARATNA", "source": "FUTURE_ERP_API"},
+        {"code": "PGCIL", "name": "Power Grid Corporation of India Limited", "short_name": "POWERGRID", "sector": "Power Transmission", "type": "MAHARATNA", "source": "FUTURE_SAP_CONNECTOR"},
+        {"code": "SAIL", "name": "Steel Authority of India Limited", "short_name": "SAIL", "sector": "Steel Manufacturing", "type": "MAHARATNA", "source": "MANUAL_XLSX_UPLOAD"},
+        {"code": "CIL", "name": "Coal India Limited", "short_name": "Coal India", "sector": "Coal & Mining", "type": "MAHARATNA", "source": "MANUAL_CSV_UPLOAD"},
+        {"code": "BHEL", "name": "Bharat Heavy Electricals Limited", "short_name": "BHEL", "sector": "Heavy Engineering & Power Equipment", "type": "MAHARATNA", "source": "MANUAL_CSV_UPLOAD"},
+        {"code": "NMDC", "name": "NMDC Limited", "short_name": "NMDC", "sector": "Metals & Mining", "type": "NAVRATNA", "source": "MANUAL_CSV_UPLOAD"},
+        {"code": "BEL", "name": "Bharat Electronics Limited", "short_name": "BEL", "sector": "Defence Electronics & Manufacturing", "type": "NAVRATNA", "source": "FUTURE_ERP_API"},
     ]
     org_map = {}
     for o in orgs_data:
         existing = (await session.execute(select(Organization).where(Organization.code == o["code"]))).scalars().first()
         if not existing:
-            org = Organization(id=uuid.uuid4(), code=o["code"], name=o["name"], sector=o["sector"], status="ACTIVE")
+            org = Organization(
+                id=uuid.uuid4(),
+                code=o["code"],
+                name=o["name"],
+                short_name=o["short_name"],
+                sector=o["sector"],
+                organization_type=o["type"],
+                onboarding_status="ONBOARDED_ACTIVE",
+                demo_status="DEMONSTRATION_PROFILE",
+                data_source_type=o["source"],
+                status="ACTIVE"
+            )
             session.add(org)
             org_map[o["code"]] = org
         else:
@@ -65,11 +81,16 @@ async def seed_data(session: AsyncSession) -> dict:
     # 2. Seed Source Systems for each CPSE
     print("[3/8] Seeding CPSE Source Systems...")
     systems_data = [
-        {"org": "IOCL", "name": "IOCL Refinery SAP ECC", "type": "SAP"},
-        {"org": "NTPC", "name": "NTPC Oracle ERP Material Master", "type": "ORACLE"},
-        {"org": "SAIL", "name": "SAIL Plant Logistics ERP", "type": "SAP"},
+        {"org": "IOCL", "name": "IOCL Refinery SAP S/4HANA MM", "type": "SAP"},
+        {"org": "ONGC", "name": "ONGC Exploration SAP ECC", "type": "SAP"},
+        {"org": "GAIL", "name": "GAIL Gas Pipeline SAP System", "type": "SAP"},
+        {"org": "NTPC", "name": "NTPC Power Generation Oracle ERP", "type": "ORACLE"},
+        {"org": "PGCIL", "name": "POWERGRID Transmission SAP MM", "type": "SAP"},
+        {"org": "SAIL", "name": "SAIL Plant Logistics SAP ERP", "type": "SAP"},
         {"org": "CIL", "name": "CIL Mine Asset Management System", "type": "LEGACY_ERP"},
-        {"org": "BHEL", "name": "BHEL Central Equipment Catalog", "type": "CSV_IMPORT"},
+        {"org": "BHEL", "name": "BHEL Central Manufacturing Catalog", "type": "CSV_IMPORT"},
+        {"org": "NMDC", "name": "NMDC Mining Equipment Catalog", "type": "CSV_IMPORT"},
+        {"org": "BEL", "name": "BEL Defence Electronics Inventory ERP", "type": "ORACLE"},
     ]
     sys_map = {}
     for s in systems_data:

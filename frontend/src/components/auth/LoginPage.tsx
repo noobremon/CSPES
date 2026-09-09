@@ -38,8 +38,9 @@ export const LoginPage: React.FC = () => {
     }
   };
 
-  const handleDemoFill = (demoEmail: string) => {
+  const handleDemoFill = (demoEmail: string, demoPassword: string) => {
     setEmail(demoEmail);
+    setPassword(demoPassword);
     setError(null);
   };
 
@@ -48,6 +49,7 @@ export const LoginPage: React.FC = () => {
       role: 'NATIONAL_MASTER_ADMIN',
       title: 'National Master Admin',
       email: 'national_admin@sih.demo',
+      password: 'DemoAdmin@2026',
       icon: ShieldCheck,
       desc: 'National macro intelligence, cross-CPSE matrix, and governance visibility',
     },
@@ -55,6 +57,7 @@ export const LoginPage: React.FC = () => {
       role: 'CPSE_MATERIAL_MANAGER',
       title: 'CPSE Material Manager (IOCL)',
       email: 'cpse_manager_a@sih.demo',
+      password: 'DemoManager@2026',
       icon: Building2,
       desc: 'Ingestion, catalog deduplication, and cross-walk mappings for IOCL',
     },
@@ -62,6 +65,7 @@ export const LoginPage: React.FC = () => {
       role: 'DOMAIN_REVIEWER',
       title: 'Domain Reviewer',
       email: 'domain_reviewer@sih.demo',
+      password: 'DemoReviewer@2026',
       icon: UserCheck,
       desc: 'Technical specification review, APPROVE / REJECT / MODIFY candidates',
     },
@@ -69,6 +73,7 @@ export const LoginPage: React.FC = () => {
       role: 'AUDITOR',
       title: 'National Auditor',
       email: 'auditor@sih.demo',
+      password: 'DemoAuditor@2026',
       icon: FileCheck2,
       desc: 'Read-only access to immutable audit trails and governance decision logs',
     }
@@ -119,7 +124,7 @@ export const LoginPage: React.FC = () => {
                   <button
                     key={demo.email}
                     type="button"
-                    onClick={() => handleDemoFill(demo.email)}
+                    onClick={() => handleDemoFill(demo.email, demo.password)}
                     className={`p-3 rounded-xl border text-left transition-all ${
                       isSelected
                         ? 'bg-slate-800 border-brand-500/60 shadow-md ring-1 ring-brand-500/40'

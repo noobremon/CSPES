@@ -268,7 +268,7 @@ async def test_seed_demo_data_execution_and_idempotency():
     # First run (Fresh Seed)
     async with AsyncTestSession() as session:
         summary = await seed_data(session)
-        assert summary["organizations"] == 5
+        assert summary["organizations"] == 10
         assert summary["materials"] == 5
         assert summary["matches"] == 3
         assert summary["standards"] == 5
@@ -279,5 +279,5 @@ async def test_seed_demo_data_execution_and_idempotency():
     # Second run (Idempotency Check)
     async with AsyncTestSession() as session:
         summary2 = await seed_data(session)
-        assert summary2["organizations"] == 5
+        assert summary2["organizations"] == 10
         assert summary2["materials"] == 5

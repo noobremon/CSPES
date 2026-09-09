@@ -26,17 +26,26 @@ def evaluate_deterministic_match(
     has_hard_conflict = False
     conflict_reasons: List[str] = []
 
+    from app.services.matching.representation import generate_canonical_signature
+
+    s_sig = source.canonical_attribute_signature or generate_canonical_signature(
+        source.category, source.engineering_term, source.material_grade, source.standard_code, source.technical_attributes
+    )
+    t_sig = target.canonical_attribute_signature or generate_canonical_signature(
+        target.category, target.engineering_term, target.material_grade, target.standard_code, target.technical_attributes
+    )
+
     # 1. Exact Canonical Signature
-    if source.canonical_attribute_signature and target.canonical_attribute_signature:
-        if source.canonical_attribute_signature == target.canonical_attribute_signature:
+    if s_sig and t_sig:
+        if s_sig == t_sig:
             is_exact_signature = True
             signals.append({
                 "rule_id": "EXACT_ATTRIBUTE_SIGNATURE_V1",
                 "name": "Canonical Attribute Signature",
                 "score": 1.0,
                 "status": "EXACT_MATCH",
-                "source_value": source.canonical_attribute_signature,
-                "target_value": target.canonical_attribute_signature,
+                "source_value": s_sig,
+                "target_value": t_sig,
                 "explanation": "Materials share identical canonical category, engineering term, grade, and technical attributes."
             })
         else:
@@ -45,8 +54,8 @@ def evaluate_deterministic_match(
                 "name": "Canonical Attribute Signature",
                 "score": 0.0,
                 "status": "DIFFERENT",
-                "source_value": source.canonical_attribute_signature,
-                "target_value": target.canonical_attribute_signature,
+                "source_value": s_sig,
+                "target_value": t_sig,
                 "explanation": "Canonical attribute signatures differ."
             })
 
@@ -148,7 +157,10 @@ def evaluate_deterministic_match(
     matched_attrs = 0
     total_compared = 0
 
-    critical_dimension_keys = {"diameter", "length", "pressure", "voltage", "schedule", "power_kw", "thread_pitch"}
+    critical_dimension_keys = {
+        "diameter", "length", "pressure", "pressure_class", "pressure_rating",
+        "voltage", "schedule", "power_kw", "power_rating", "thread_pitch", "nominal_size", "speed"
+    }
 
     for key in all_attr_keys:
         s_val = str(source.technical_attributes.get(key, "")).strip().upper()
