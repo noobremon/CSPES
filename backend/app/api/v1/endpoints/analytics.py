@@ -2,13 +2,13 @@
 National Material Intelligence Analytics REST API Endpoints.
 
 Endpoints:
-- GET /api/v1/analytics/dashboard : Macro national KPIs and summary metrics
+- GET /api/v1/analytics/dashboard (and /dashboard/national) : Macro national KPIs and summary metrics
 - GET /api/v1/analytics/duplicates : Duplication density by match type, CPSE, and category
 - GET /api/v1/analytics/duplicates/clusters : Granular duplicate cluster listings
-- GET /api/v1/analytics/cross-cpse-overlap : Dynamic N x N Cross-CPSE Overlap Matrix
-- GET /api/v1/analytics/cnmc-summary : CNMC standardization pipeline & conversion funnel
-- GET /api/v1/analytics/procurement-opportunities : Illustrative procurement opportunity cards
-- GET /api/v1/analytics/rationalization-priorities : Ranked rationalization priority items
+- GET /api/v1/analytics/cross-cpse-overlap (and /matrix/cross-cpse) : Dynamic N x N Cross-CPSE Overlap Matrix
+- GET /api/v1/analytics/cnmc-summary (and /standardization/cnmc) : CNMC standardization pipeline & conversion funnel
+- GET /api/v1/analytics/procurement-opportunities (and /procurement/opportunities) : Illustrative procurement opportunity cards
+- GET /api/v1/analytics/rationalization-priorities (and /rationalization/priorities) : Ranked rationalization priority items
 - GET /api/v1/analytics/categories : Category & taxonomy breakdowns
 - GET /api/v1/analytics/categories/{category_id} : Single category drilldown
 """
@@ -43,6 +43,7 @@ router = APIRouter()
 
 
 @router.get("/dashboard", response_model=DashboardSummaryResponse)
+@router.get("/dashboard/national")
 async def get_national_dashboard_summary(db: AsyncSession = Depends(get_db)):
     """
     Returns high-level national material KPIs, standardization progress, and duplication ratios.
@@ -81,7 +82,11 @@ async def list_duplicate_clusters(
 
 
 @router.get("/cross-cpse-overlap", response_model=CrossCPSEOverlapResponse)
-async def get_cross_cpse_overlap_matrix(db: AsyncSession = Depends(get_db)):
+@router.get("/matrix/cross-cpse")
+async def get_cross_cpse_overlap_matrix(
+    min_overlap: Optional[int] = Query(0, ge=0),
+    db: AsyncSession = Depends(get_db)
+):
     """
     Returns the dynamic pairwise N x N material overlap matrix across all participating CPSEs.
     """
@@ -90,6 +95,7 @@ async def get_cross_cpse_overlap_matrix(db: AsyncSession = Depends(get_db)):
 
 
 @router.get("/cnmc-summary", response_model=CNMCSummaryResponse)
+@router.get("/standardization/cnmc")
 async def get_cnmc_standardization_summary(db: AsyncSession = Depends(get_db)):
     """
     Returns CNMC candidate pipeline metrics, master catalog statistics, and conversion funnel.
@@ -99,6 +105,7 @@ async def get_cnmc_standardization_summary(db: AsyncSession = Depends(get_db)):
 
 
 @router.get("/procurement-opportunities", response_model=List[ProcurementOpportunityResponse])
+@router.get("/procurement/opportunities")
 async def list_procurement_opportunities(
     opportunity_type: Optional[str] = Query(None, description="Filter by opportunity type"),
     priority: Optional[str] = Query(None, description="Filter by priority (HIGH, MEDIUM, LOW)"),
@@ -119,6 +126,7 @@ async def list_procurement_opportunities(
 
 
 @router.get("/rationalization-priorities", response_model=List[RationalizationPriorityResponse])
+@router.get("/rationalization/priorities")
 async def list_rationalization_priorities(
     priority: Optional[str] = Query(None, description="Filter by priority level (HIGH, MEDIUM, LOW)"),
     limit: int = Query(50, ge=1, le=100),

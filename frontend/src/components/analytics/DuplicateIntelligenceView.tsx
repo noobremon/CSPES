@@ -40,11 +40,11 @@ export const DuplicateIntelligenceView: React.FC<DuplicateIntelligenceViewProps>
     );
   }
 
-  const filteredClusters = data.duplicate_clusters.filter((cluster) => {
+  const filteredClusters = (data.duplicate_clusters || []).filter((cluster) => {
     const term = searchTerm.toLowerCase();
     return (
-      cluster.canonical_name.toLowerCase().includes(term) ||
-      cluster.category_code.toLowerCase().includes(term) ||
+      (cluster.canonical_name && cluster.canonical_name.toLowerCase().includes(term)) ||
+      (cluster.category_code && cluster.category_code.toLowerCase().includes(term)) ||
       (cluster.cnmc_code && cluster.cnmc_code.toLowerCase().includes(term))
     );
   });
@@ -96,8 +96,8 @@ export const DuplicateIntelligenceView: React.FC<DuplicateIntelligenceViewProps>
           Duplicate Density by Enterprise (CPSE)
         </h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-          {data.cpse_density_breakdown.map((cpse) => (
-            <div key={cpse.cpse_id} className="p-3 bg-slate-50 rounded-lg border border-slate-200/80 flex items-center justify-between">
+          {(data.cpse_density_breakdown || []).map((cpse) => (
+            <div key={cpse.cpse_id || cpse.cpse_code} className="p-3 bg-slate-50 rounded-lg border border-slate-200/80 flex items-center justify-between">
               <div>
                 <span className="text-xs font-bold text-slate-900">{cpse.cpse_name}</span>
                 <p className="text-xs text-slate-500 font-mono mt-0.5">{cpse.cpse_code} • {cpse.total_materials} materials</p>
