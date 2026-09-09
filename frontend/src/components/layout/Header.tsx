@@ -9,13 +9,14 @@ import {
   Info,
   LogOut,
   Building2,
-  UserCheck
+  UserCheck,
+  UploadCloud
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 
 interface HeaderProps {
-  activeTab: 'workspace' | 'queue' | 'mappings' | 'analytics' | 'health';
-  setActiveTab: (tab: 'workspace' | 'queue' | 'mappings' | 'analytics' | 'health') => void;
+  activeTab: 'ingestion' | 'workspace' | 'queue' | 'mappings' | 'analytics' | 'health';
+  setActiveTab: (tab: 'ingestion' | 'workspace' | 'queue' | 'mappings' | 'analytics' | 'health') => void;
   pendingCount?: number;
 }
 
@@ -67,6 +68,18 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, pending
 
         {/* Enterprise Navigation Tabs */}
         <nav className="flex items-center space-x-1 bg-slate-950/60 p-1 rounded-xl border border-slate-800 text-xs font-medium">
+          <button
+            onClick={() => setActiveTab('ingestion')}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all ${
+              activeTab === 'ingestion'
+                ? 'bg-brand-600 text-white shadow-md font-semibold'
+                : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900/50'
+            }`}
+          >
+            <UploadCloud className="w-3.5 h-3.5" />
+            Data Ingestion
+          </button>
+
           <button
             onClick={() => setActiveTab('workspace')}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all ${

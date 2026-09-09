@@ -54,6 +54,26 @@ global.fetch = vi.fn((url: string) => {
         }),
     });
   }
+  if (url.includes('/ingestion/organizations')) {
+    return Promise.resolve({
+      ok: true,
+      json: () =>
+        Promise.resolve([
+          {
+            id: 'org-001',
+            code: 'IOCL',
+            name: 'Indian Oil Corporation Limited',
+            short_name: 'IndianOil',
+            sector: 'Oil & Gas',
+            organization_type: 'MAHARATNA',
+            onboarding_status: 'ONBOARDED_ACTIVE',
+            demo_status: 'DEMONSTRATION_PROFILE',
+            data_source_type: 'MANUAL_CSV_UPLOAD',
+            status: 'ACTIVE'
+          }
+        ]),
+    });
+  }
   if (url.includes('/cnmc/candidates')) {
     return Promise.resolve({
       ok: true,

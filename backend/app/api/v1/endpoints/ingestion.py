@@ -36,6 +36,33 @@ MAX_FILE_SIZE_BYTES = 50 * 1024 * 1024  # 50 MB
 MAX_SYNC_INGESTION_ROWS = 250  # Safety threshold to prevent blocking web worker on large synchronous jobs
 
 
+@router.get(
+    "/organizations",
+    summary="List all registered CPSE demonstration organizations"
+)
+async def list_cpse_organizations(
+    db: AsyncSession = Depends(get_db)
+):
+    stmt = select(Organization).order_by(Organization.name)
+    res = await db.execute(stmt)
+    orgs = res.scalars().all()
+    return [
+        {
+            "id": str(o.id),
+            "code": o.code,
+            "name": o.name,
+            "short_name": o.short_name,
+            "sector": o.sector,
+            "organization_type": o.organization_type,
+            "onboarding_status": o.onboarding_status,
+            "demo_status": o.demo_status,
+            "data_source_type": o.data_source_type,
+            "status": o.status
+        }
+        for o in orgs
+    ]
+
+
 @router.post(
     "/discover",
     response_model=ColumnDiscoveryResponse,

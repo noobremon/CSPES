@@ -362,3 +362,56 @@ export type ProcurementOpportunityResponse = any;
 export type RationalizationPriorityResponse = any;
 export type RationalizationItem = any;
 export type CategoryAnalyticsResponse = any;
+
+// ==========================================
+// Ingestion & Multi-CPSE Types
+// ==========================================
+
+export interface CPSEOrganization {
+  id: string;
+  code: string;
+  name: string;
+  short_name?: string;
+  sector: string;
+  organization_type: string;
+  onboarding_status: string;
+  demo_status: string;
+  data_source_type: string;
+  status: string;
+}
+
+export interface ColumnDiscoveryData {
+  filename: string;
+  file_type: 'CSV' | 'EXCEL';
+  detected_columns: string[];
+  estimated_row_count: number;
+  sample_rows: Array<Record<string, unknown>>;
+  suggested_mapping: Record<string, string>;
+}
+
+export interface IngestionUploadData {
+  job_id: string;
+  organization_id: string;
+  filename: string;
+  file_type: string;
+  file_hash_sha256: string;
+  status: string;
+  message: string;
+}
+
+export interface IngestionJobStatusData {
+  job_id: string;
+  organization_id: string;
+  source_system_id?: string | null;
+  original_filename: string;
+  file_type: string;
+  status: 'PENDING' | 'VALIDATING' | 'PROCESSING' | 'COMPLETED' | 'FAILED' | 'PARTIAL_SUCCESS' | string;
+  total_rows: number;
+  processed_rows: number;
+  failed_rows: number;
+  column_mapping?: Record<string, string>;
+  error_summary?: Array<Record<string, unknown>>;
+  created_at: string;
+  updated_at: string;
+}
+

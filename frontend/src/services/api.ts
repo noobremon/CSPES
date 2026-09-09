@@ -16,7 +16,11 @@ import {
   CategoryAnalyticsResponse,
   User,
   AuthResponse,
-  LoginCredentials
+  LoginCredentials,
+  CPSEOrganization,
+  ColumnDiscoveryData,
+  IngestionUploadData,
+  IngestionJobStatusData
 } from '../types';
 
 function getApiBaseUrl(): string {
@@ -308,6 +312,112 @@ export async function fetchCategoryAnalytics(): Promise<CategoryAnalyticsRespons
   return response.json();
 }
 
+// ==========================================
+// Ingestion & Multi-CPSE Endpoints
+// ==========================================
+
+export async function fetchOrganizations(): Promise<CPSEOrganization[]> {
+  const response = await fetch(`${API_BASE_URL}/ingestion/organizations`, {
+    headers: getHeaders(),
+  });
+  if (!response.ok) {
+    throw new Error(`Failed to fetch organizations: ${response.statusText}`);
+  }
+  return response.json();
+}
+
+export async function discoverFileColumns(file: File): Promise<ColumnDiscoveryData> {
+  const formData = new FormData();
+  formData.append('file', file);
+
+  const token = getAuthToken();
+  const headers: Record<string, string> = {
+    'Accept': 'application/json',
+  };
+  if (token) headers['Authorization'] = `Bearer ${token}`;
+
+  const response = await fetch(`${API_BASE_URL}/ingestion/discover`, {
+    method: 'POST',
+    headers,
+    body: formData,
+  });
+
+  if (!response.ok) {
+    const err = await response.json().catch(() => ({}));
+    throw new Error(err.detail || 'Failed to inspect file columns. Please ensure a valid .csv or .xlsx file is provided.');
+  }
+  return response.json();
+}
+
+export async function uploadMaterialCatalog(
+  organizationId: string,
+  file: File,
+  sourceSystemId?: string
+): Promise<IngestionUploadData> {
+  const formData = new FormData();
+  formData.append('organization_id', organizationId);
+  if (sourceSystemId) formData.append('source_system_id', sourceSystemId);
+  formData.append('file', file);
+
+  const token = getAuthToken();
+  const headers: Record<string, string> = {
+    'Accept': 'application/json',
+  };
+  if (token) headers['Authorization'] = `Bearer ${token}`;
+
+  const response = await fetch(`${API_BASE_URL}/ingestion/upload`, {
+    method: 'POST',
+    headers,
+    body: formData,
+  });
+
+  if (!response.ok) {
+    const err = await response.json().catch(() => ({}));
+    throw new Error(err.detail || 'Failed to upload material catalog.');
+  }
+  return response.json();
+}
+
+export async function processIngestionJob(
+  jobId: string,
+  columnMapping?: Record<string, string>
+): Promise<any> {
+  const response = await fetch(`${API_BASE_URL}/ingestion/process`, {
+    method: 'POST',
+    headers: getHeaders({ 'Content-Type': 'application/json' }),
+    body: JSON.stringify({
+      job_id: jobId,
+      column_mapping: columnMapping || {},
+    }),
+  });
+
+  if (!response.ok) {
+    const err = await response.json().catch(() => ({}));
+    throw new Error(err.detail || 'Failed to start ingestion processing.');
+  }
+  return response.json();
+}
+
+export async function fetchIngestionJobStatus(jobId: string): Promise<IngestionJobStatusData> {
+  const response = await fetch(`${API_BASE_URL}/ingestion/${jobId}`, {
+    headers: getHeaders(),
+  });
+  if (!response.ok) {
+    throw new Error(`Failed to fetch ingestion job status: ${response.statusText}`);
+  }
+  return response.json();
+}
+
+export async function fetchIngestionJobErrors(jobId: string): Promise<{ job_id: string; total_errors: number; errors: any[] }> {
+  const response = await fetch(`${API_BASE_URL}/ingestion/${jobId}/errors`, {
+    headers: getHeaders(),
+  });
+  if (!response.ok) {
+    throw new Error(`Failed to fetch ingestion errors: ${response.statusText}`);
+  }
+  return response.json();
+}
+
 // Unified API Object for easy consumption
 export const api = {
   login: loginUser,
@@ -327,4 +437,10 @@ export const api = {
   submitReview: submitCNMCReview,
   getCPSEMappings: fetchCPSEMappings,
   getGovernanceReviews: fetchGovernanceReviews,
+  getOrganizations: fetchOrganizations,
+  discoverColumns: discoverFileColumns,
+  uploadCatalog: uploadMaterialCatalog,
+  processJob: processIngestionJob,
+  getJobStatus: fetchIngestionJobStatus,
+  getJobErrors: fetchIngestionJobErrors,
 };

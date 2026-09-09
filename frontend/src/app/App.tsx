@@ -8,13 +8,14 @@ import { GovernanceReviewQueue } from '../components/cnmc/GovernanceReviewQueue'
 import { ReviewDetailModal } from '../components/cnmc/ReviewDetailModal';
 import { CPSEMappingView } from '../components/cnmc/CPSEMappingView';
 import { AnalyticsContainer } from '../components/analytics/AnalyticsContainer';
+import { DataIngestionView } from '../components/ingestion/DataIngestionView';
 import { fetchHealth } from '../services/api';
 import { SystemStatus, CNMCCandidateItem } from '../types';
-import { Server, Database, Cpu, CheckCircle2, AlertCircle, RefreshCw, Layers, ShieldCheck, Tag, GitCompare } from 'lucide-react';
+import { Server, Database, Cpu, CheckCircle2, AlertCircle, RefreshCw, Layers, ShieldCheck, Tag, GitCompare, UploadCloud } from 'lucide-react';
 
 const MainAppContent: React.FC = () => {
   const { isAuthenticated, isLoading, user } = useAuth();
-  const [activeTab, setActiveTab] = useState<'workspace' | 'queue' | 'mappings' | 'analytics' | 'health'>('workspace');
+  const [activeTab, setActiveTab] = useState<'ingestion' | 'workspace' | 'queue' | 'mappings' | 'analytics' | 'health'>('workspace');
   const [selectedCandidate, setSelectedCandidate] = useState<CNMCCandidateItem | null>(null);
   const [refreshTrigger, setRefreshTrigger] = useState<number>(0);
   const [health, setHealth] = useState<SystemStatus | null>(null);
@@ -118,6 +119,14 @@ const MainAppContent: React.FC = () => {
             </div>
           </div>
         </div>
+
+        {/* Tab 0: Multi-CPSE Material Ingestion & Catalog Upload */}
+        {activeTab === 'ingestion' && (
+          <DataIngestionView
+            onNavigateToWorkspace={() => setActiveTab('workspace')}
+            onNavigateToAnalytics={() => setActiveTab('analytics')}
+          />
+        )}
 
         {/* Tab 1: Recommendation Workspace */}
         {activeTab === 'workspace' && (
