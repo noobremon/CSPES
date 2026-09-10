@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { AuthProvider, useAuth } from '../context/AuthContext';
-import { Header, NavTabType } from '../components/layout/Header';
+import { Header } from '../components/layout/Header';
+import { Sidebar, NavTabType } from '../components/layout/Sidebar';
+import { Footer } from '../components/layout/Footer';
 import { LoginPage } from '../components/auth/LoginPage';
 import { NationalDashboardView } from '../components/dashboard/NationalDashboardView';
 import { DataIngestionView } from '../components/ingestion/DataIngestionView';
@@ -50,166 +52,174 @@ const MainAppContent: React.FC = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-[#F8FAFC] text-[#0F172A] selection:bg-[#1E3A8A] selection:text-white">
-      <Header
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
-        pendingCount={2}
-      />
+      {/* 1. Fixed / Consistent Top Header */}
+      <Header />
 
-      <main className="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 space-y-6">
+      {/* 2. Main Body Layout: Left Sidebar + Right Content */}
+      <div className="flex-1 flex overflow-hidden">
         
-        {/* Tab 0: National Material Intelligence Dashboard */}
-        {activeTab === 'dashboard' && (
-          <ErrorBoundary fallbackTitle="National Intelligence Dashboard">
-            <NationalDashboardView
-              onNavigateToWorkspace={() => setActiveTab('workspace')}
-              onNavigateToAnalytics={() => setActiveTab('analytics')}
-            />
-          </ErrorBoundary>
-        )}
+        {/* Left Vertical Sidebar */}
+        <Sidebar
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          pendingCount={2}
+        />
 
-        {/* Tab 1: Multi-CPSE Data Ingestion */}
-        {activeTab === 'ingestion' && (
-          <ErrorBoundary fallbackTitle="Data Ingestion Portal">
-            <DataIngestionView
-              onNavigateToWorkspace={() => setActiveTab('workspace')}
-            />
-          </ErrorBoundary>
-        )}
+        {/* Right Main Content Area */}
+        <main className="flex-1 p-5 overflow-y-auto max-w-[1600px]">
+          
+          {/* Tab 0: National Material Intelligence Dashboard */}
+          {activeTab === 'dashboard' && (
+            <ErrorBoundary fallbackTitle="National Intelligence Dashboard">
+              <NationalDashboardView
+                onNavigateToWorkspace={() => setActiveTab('workspace')}
+                onNavigateToReview={() => setActiveTab('queue')}
+              />
+            </ErrorBoundary>
+          )}
 
-        {/* Tab 2: CNMC Recommendation Workspace */}
-        {activeTab === 'workspace' && (
-          <ErrorBoundary fallbackTitle="CNMC Recommendation Workspace">
-            <RecommendationWorkspace
-              onCandidateCreated={() => setRefreshTrigger((prev) => prev + 1)}
-              onNavigateToReview={(_candidateId) => setActiveTab('queue')}
-            />
-          </ErrorBoundary>
-        )}
+          {/* Tab 1: Multi-CPSE Data Ingestion */}
+          {activeTab === 'ingestion' && (
+            <ErrorBoundary fallbackTitle="Data Ingestion Portal">
+              <DataIngestionView
+                onNavigateToWorkspace={() => setActiveTab('workspace')}
+              />
+            </ErrorBoundary>
+          )}
 
-        {/* Tab 3: Governance Review Queue */}
-        {activeTab === 'queue' && (
-          <ErrorBoundary fallbackTitle="Governance Review Queue">
-            <GovernanceReviewQueue
-              onSelectCandidate={handleSelectCandidate}
-              refreshTrigger={refreshTrigger}
-            />
-          </ErrorBoundary>
-        )}
+          {/* Tab 2: CNMC Recommendation Workspace */}
+          {activeTab === 'workspace' && (
+            <ErrorBoundary fallbackTitle="CNMC Recommendation Workspace">
+              <RecommendationWorkspace
+                onCandidateCreated={() => setRefreshTrigger((prev) => prev + 1)}
+                onNavigateToReview={(_candidateId) => setActiveTab('queue')}
+              />
+            </ErrorBoundary>
+          )}
 
-        {/* Tab 4: CPSE ↔ CNMC Cross-Walk Mapping */}
-        {activeTab === 'mappings' && (
-          <ErrorBoundary fallbackTitle="CPSE ↔ CNMC Cross-Walk">
-            <CPSEMappingView />
-          </ErrorBoundary>
-        )}
+          {/* Tab 3: Governance Review Queue */}
+          {activeTab === 'queue' && (
+            <ErrorBoundary fallbackTitle="Governance Review Queue">
+              <GovernanceReviewQueue
+                onSelectCandidate={handleSelectCandidate}
+                refreshTrigger={refreshTrigger}
+              />
+            </ErrorBoundary>
+          )}
 
-        {/* Tab 5: National Material Master Analytics */}
-        {activeTab === 'analytics' && (
-          <ErrorBoundary fallbackTitle="National Analytics Dashboard">
-            <AnalyticsContainer />
-          </ErrorBoundary>
-        )}
+          {/* Tab 4: CPSE ↔ CNMC Cross-Walk Mapping */}
+          {activeTab === 'mappings' && (
+            <ErrorBoundary fallbackTitle="CPSE ↔ CNMC Cross-Walk">
+              <CPSEMappingView />
+            </ErrorBoundary>
+          )}
 
-        {/* Tab 6: System Health & Security Status */}
-        {activeTab === 'health' && (
-          <div className="space-y-6 text-left">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <Card
-                title="System Operational Status"
-                subtitle="High-availability API & Pipeline Verification"
-                icon={<Activity className="w-5 h-5 text-[#15803D]" />}
-              >
-                <div className="space-y-3 pt-2">
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="text-[#475569]">Core FastAPI Backend</span>
-                    <span className="flex items-center gap-1.5 text-[#15803D] font-semibold">
-                      <CheckCircle2 className="w-4 h-4" /> Healthy (200 OK)
-                    </span>
-                  </div>
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="text-[#475569]">PostgreSQL Vector DB</span>
-                    <span className="flex items-center gap-1.5 text-[#15803D] font-semibold">
-                      <CheckCircle2 className="w-4 h-4" /> Connected & Seeded
-                    </span>
-                  </div>
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="text-[#475569]">Qdrant Vector Engine</span>
-                    <span className="flex items-center gap-1.5 text-[#15803D] font-semibold">
-                      <CheckCircle2 className="w-4 h-4" /> 768-dim Index Ready
-                    </span>
-                  </div>
-                </div>
-              </Card>
+          {/* Tab 5: National Material Master Analytics */}
+          {activeTab === 'analytics' && (
+            <ErrorBoundary fallbackTitle="National Analytics Dashboard">
+              <AnalyticsContainer />
+            </ErrorBoundary>
+          )}
 
-              <Card
-                title="Active Security Profile"
-                subtitle="Cryptographic Token & Access Boundary"
-                icon={<Lock className="w-5 h-5 text-[#2563EB]" />}
-              >
-                <div className="space-y-3 pt-2">
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="text-[#475569]">Authentication Scheme</span>
-                    <span className="text-[#0F172A] font-mono text-[11px] font-semibold">JWT Bearer (HS256)</span>
+          {/* Tab 6: System Health & Security Status */}
+          {activeTab === 'health' && (
+            <div className="space-y-5 text-left">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <Card
+                  title="System Operational Status"
+                  subtitle="High-availability API & Pipeline Verification"
+                  icon={<Activity className="w-5 h-5 text-[#15803D]" />}
+                >
+                  <div className="space-y-3 pt-2">
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="text-[#475569]">Core FastAPI Backend</span>
+                      <span className="flex items-center gap-1.5 text-[#15803D] font-semibold">
+                        <CheckCircle2 className="w-4 h-4" /> Healthy (200 OK)
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="text-[#475569]">PostgreSQL Vector DB</span>
+                      <span className="flex items-center gap-1.5 text-[#15803D] font-semibold">
+                        <CheckCircle2 className="w-4 h-4" /> Connected & Seeded
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="text-[#475569]">Qdrant Vector Engine</span>
+                      <span className="flex items-center gap-1.5 text-[#15803D] font-semibold">
+                        <CheckCircle2 className="w-4 h-4" /> 768-dim Index Ready
+                      </span>
+                    </div>
                   </div>
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="text-[#475569]">Active Tenant Scope</span>
-                    <span className="text-[#0F172A] font-semibold">{user?.organization_code || 'ALL_CPSE'}</span>
-                  </div>
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="text-[#475569]">RBAC Enforcement</span>
-                    <span className="text-[#15803D] font-semibold">STRICT Layer 1 Boundary</span>
-                  </div>
-                </div>
-              </Card>
+                </Card>
 
-              <Card
-                title="Database & Seed Audit"
-                subtitle="Institutional Material Records"
-                icon={<Database className="w-5 h-5 text-[#0F172A]" />}
-              >
-                <div className="space-y-3 pt-2">
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="text-[#475569]">Multi-CPSE Demo Records</span>
-                    <span className="text-[#0F172A] font-semibold">IOCL, ONGC, NTPC, SAIL, CIL</span>
+                <Card
+                  title="Active Security Profile"
+                  subtitle="Cryptographic Token & Access Boundary"
+                  icon={<Lock className="w-5 h-5 text-[#2563EB]" />}
+                >
+                  <div className="space-y-3 pt-2">
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="text-[#475569]">Authentication Scheme</span>
+                      <span className="text-[#0F172A] font-mono text-[11px] font-semibold">JWT Bearer (HS256)</span>
+                    </div>
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="text-[#475569]">Active Tenant Scope</span>
+                      <span className="text-[#0F172A] font-semibold">{user?.organization_code || 'ALL_CPSE'}</span>
+                    </div>
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="text-[#475569]">RBAC Enforcement</span>
+                      <span className="text-[#15803D] font-semibold">STRICT Layer 1 Boundary</span>
+                    </div>
                   </div>
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="text-[#475569]">User Data Model</span>
-                    <span className="text-[#0F172A] font-mono text-[11px] font-semibold">users + organizations</span>
+                </Card>
+
+                <Card
+                  title="Database & Seed Audit"
+                  subtitle="Institutional Material Records"
+                  icon={<Database className="w-5 h-5 text-[#0F172A]" />}
+                >
+                  <div className="space-y-3 pt-2">
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="text-[#475569]">Multi-CPSE Demo Records</span>
+                      <span className="text-[#0F172A] font-semibold">IOCL, ONGC, NTPC, SAIL, CIL</span>
+                    </div>
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="text-[#475569]">User Data Model</span>
+                      <span className="text-[#0F172A] font-mono text-[11px] font-semibold">users + organizations</span>
+                    </div>
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="text-[#475569]">Audit Trail</span>
+                      <span className="text-[#0F172A] font-semibold">Append-Oriented audit_logs</span>
+                    </div>
                   </div>
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="text-[#475569]">Audit Trail</span>
-                    <span className="text-[#0F172A] font-semibold">Append-Oriented audit_logs</span>
-                  </div>
-                </div>
-              </Card>
+                </Card>
+              </div>
+
+              <div className="rounded-xl border border-[#F3D19C] bg-[#FFF7E6] p-5 space-y-2 shadow-2xs">
+                <h3 className="text-xs font-bold text-[#92400E] uppercase tracking-wider">
+                  Phase 10 Governance & Security Non-Negotiable Boundary
+                </h3>
+                <p className="text-xs text-[#78350F] leading-relaxed">
+                  The authentication, RBAC, and CNMC codification implemented in this application are built for the <strong className="text-[#0F172A]">SIH 2026 Prototype Demonstration</strong>.
+                  Approval in this portal indicates <strong className="text-[#0F172A]">"Approved within the SIH MVP demonstration governance workflow"</strong> and does not constitute statutory Government of India gazetted standards.
+                </p>
+              </div>
             </div>
+          )}
 
-            <div className="rounded-2xl border border-[#F3D19C] bg-[#FFF7E6] p-6 space-y-2 shadow-2xs">
-              <h3 className="text-xs font-bold text-[#92400E] uppercase tracking-wider">
-                Phase 10 Governance & Security Non-Negotiable Boundary
-              </h3>
-              <p className="text-xs text-[#78350F] leading-relaxed">
-                The authentication, RBAC, and CNMC codification implemented in this application are built for the <strong className="text-[#0F172A]">SIH 2026 Prototype Demonstration</strong>.
-                Approval in this portal indicates <strong className="text-[#0F172A]">"Approved within the SIH MVP demonstration governance workflow"</strong> and does not constitute statutory Government of India gazetted standards.
-              </p>
-            </div>
-          </div>
-        )}
+          {/* Modal: Review Resolution Modal */}
+          {selectedCandidate && (
+            <ReviewDetailModal
+              candidate={selectedCandidate}
+              onClose={() => setSelectedCandidate(null)}
+              onReviewSubmitted={handleReviewSubmitted}
+            />
+          )}
+        </main>
+      </div>
 
-        {/* Modal: Review Resolution Modal */}
-        {selectedCandidate && (
-          <ReviewDetailModal
-            candidate={selectedCandidate}
-            onClose={() => setSelectedCandidate(null)}
-            onReviewSubmitted={handleReviewSubmitted}
-          />
-        )}
-      </main>
-
-      <footer className="border-t border-[#E2E8F0] bg-white py-4 text-center text-xs text-[#64748B]">
-        AI-Powered National Unified Material Master Framework • SIH 2026 • Phase 10 Authentication & Secure Access
-      </footer>
+      {/* 3. Full-width Institutional Footer */}
+      <Footer />
     </div>
   );
 };

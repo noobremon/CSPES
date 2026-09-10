@@ -2,16 +2,16 @@ import React from 'react';
 
 export const IndiaMapGraphic: React.FC<{ className?: string }> = ({ className = "w-auto h-auto" }) => {
   return (
-    <div className={`flex items-center gap-3.5 ${className}`}>
-      {/* Accurate and Beautiful Silhouette Vector Map of India */}
+    <div className={`flex items-center gap-3.5 bg-slate-50/60 p-2.5 rounded-2xl border border-[#E2E8F0] ${className}`}>
+      {/* Accurate & Crisp Vector Map of India */}
       <div className="relative w-16 h-20 shrink-0">
         <svg
           viewBox="0 0 100 120"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className="w-full h-full drop-shadow-xs"
+          className="w-full h-full drop-shadow-2xs"
         >
-          {/* Detailed geographic outline path of India */}
+          {/* Outer boundary of India */}
           <path
             d="M48 4 
                C52 4 55 7 57 11 
@@ -41,7 +41,7 @@ export const IndiaMapGraphic: React.FC<{ className?: string }> = ({ className = 
             stroke="#93C5FD"
             strokeWidth="1.2"
           />
-          {/* Internal soft shade */}
+          {/* Inner shade */}
           <path
             d="M48 8 
                C51 8 54 11 55 14 
@@ -74,18 +74,21 @@ export const IndiaMapGraphic: React.FC<{ className?: string }> = ({ className = 
       </div>
 
       {/* Label and Tricolor Bar */}
-      <div className="flex flex-col text-left">
-        <span className="text-xs font-extrabold text-[#0E7490] tracking-tight leading-tight">
-          Standard Materials
+      <div className="flex flex-col text-left leading-tight">
+        <span className="text-[11px] font-extrabold text-[#0E7490] tracking-tight">
+          Standardized
         </span>
-        <span className="text-xs font-extrabold text-[#0E7490] tracking-tight leading-tight">
-          Stronger India
+        <span className="text-[11px] font-extrabold text-[#0E7490] tracking-tight">
+          Materials
+        </span>
+        <span className="text-[11px] font-extrabold text-[#0E7490] tracking-tight">
+          Stronger Bharat
         </span>
         {/* Tricolor underline accent */}
-        <div className="flex items-center w-14 h-1 rounded-full overflow-hidden mt-1.5 shadow-2xs">
-          <div className="flex-1 h-full bg-[#F97316]" />
-          <div className="w-1.5 h-full bg-white" />
-          <div className="flex-1 h-full bg-[#16A34A]" />
+        <div className="flex items-center w-12 h-1 rounded-full overflow-hidden mt-1 shadow-2xs">
+          <div className="flex-1 h-full bg-[#FF9933]" />
+          <div className="w-1 h-full bg-white" />
+          <div className="flex-1 h-full bg-[#128807]" />
         </div>
       </div>
     </div>
