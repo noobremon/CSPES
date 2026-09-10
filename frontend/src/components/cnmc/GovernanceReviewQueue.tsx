@@ -27,7 +27,7 @@ const INITIAL_DEMO_CANDIDATES: CNMCCandidateItem[] = [
     id: 'cand-001',
     proposed_cnmc: 'IN-IND-MECH-BLT-00492',
     candidate_group_name: 'Hexagon Head Bolt, M16 x 50 mm, Grade SS304 (IS 1363)',
-    proposed_description: 'MVP Prototype Master Specification: Hexagon Head Bolt, M16 x 50 mm, Grade SS304 (IS 1363) [Standard: IS 1363] [Grade: SS304]',
+    proposed_description: 'National Master Specification: Hexagon Head Bolt, M16 x 50 mm, Grade SS304 (IS 1363) [Standard: IS 1363] [Grade: SS304]',
     confidence_score: 0.95,
     generation_source: 'ENGINE_V1_TAXONOMY_RULE_BASED',
     status: 'PENDING_REVIEW',
@@ -37,13 +37,13 @@ const INITIAL_DEMO_CANDIDATES: CNMCCandidateItem[] = [
       outcome: 'NEW_CNMC_CANDIDATE',
       recommendation_strength: 'HIGH',
       generation_method: 'TAXONOMY_RULE_BASED',
-      format_version: 'MVP_CNMC_V1',
-      recommendation_reason: "Generated new prototype CNMC candidate 'IN-IND-MECH-BLT-00492' from sector 'IND', category 'MECH', type 'BLT'.",
+      format_version: 'CNMC_V1',
+      recommendation_reason: "Generated new CNMC candidate 'IN-IND-MECH-BLT-00492' from sector 'IND', category 'MECH', type 'BLT'.",
       taxonomy_signals: { sector: 'IND', category: 'MECH', material_type: 'BLT' },
       matching_signals: { top_match_type: 'EXACT_MATCH_CANDIDATE', composite_confidence: 0.98 },
-      warnings: ['Prototype recommendation generated within SIH 2026 MVP demonstration governance workflow.'],
+      warnings: ['Recommendation generated within national demonstration governance workflow.'],
       missing_information: [],
-      governance_notice: 'Recommended within the SIH MVP demonstration governance workflow. Does not constitute official Government of India national standard approval.'
+      governance_notice: 'Recommended within the demonstration governance workflow. Does not constitute official Government of India national standard approval.'
     },
     source_materials: [
       {
@@ -58,7 +58,7 @@ const INITIAL_DEMO_CANDIDATES: CNMCCandidateItem[] = [
       {
         material_id: 'mat-002',
         organization_code: 'ONGC',
-        organization_name: 'ONGC Limited',
+        organization_name: 'Oil and Natural Gas Corp',
         canonical_description: 'Hexagon Head Bolt, M16 x 50 mm, Grade SS304 (IS 1363)',
         uom: 'EA',
         material_grade: 'SS304',
@@ -70,7 +70,7 @@ const INITIAL_DEMO_CANDIDATES: CNMCCandidateItem[] = [
     id: 'cand-002',
     proposed_cnmc: 'IN-IND-MECH-BLT-47854',
     candidate_group_name: 'Hexagon Head Bolt, M20 x 70 mm, Grade 8.8 Carbon Steel',
-    proposed_description: 'MVP Prototype Master Specification: Hexagon Head Bolt, M20 x 70 mm, Grade 8.8 Carbon Steel [Standard: IS 1363] [Grade: 8.8]',
+    proposed_description: 'National Master Specification: Hexagon Head Bolt, M20 x 70 mm, Grade 8.8 Carbon Steel [Standard: IS 1363] [Grade: 8.8]',
     confidence_score: 0.90,
     generation_source: 'ENGINE_V1_TAXONOMY_RULE_BASED',
     status: 'PENDING_REVIEW',
@@ -80,13 +80,13 @@ const INITIAL_DEMO_CANDIDATES: CNMCCandidateItem[] = [
       outcome: 'NEW_CNMC_CANDIDATE',
       recommendation_strength: 'HIGH',
       generation_method: 'TAXONOMY_RULE_BASED',
-      format_version: 'MVP_CNMC_V1',
-      recommendation_reason: "Generated prototype CNMC candidate 'IN-IND-MECH-BLT-47854' for Grade 8.8 structural bolt.",
+      format_version: 'CNMC_V1',
+      recommendation_reason: "Generated CNMC candidate 'IN-IND-MECH-BLT-47854' for Grade 8.8 structural bolt.",
       taxonomy_signals: { sector: 'IND', category: 'MECH', material_type: 'BLT' },
       matching_signals: {},
       warnings: [],
       missing_information: [],
-      governance_notice: 'Recommended within the SIH MVP demonstration governance workflow.'
+      governance_notice: 'Recommended within the demonstration governance workflow.'
     },
     source_materials: [
       {
@@ -223,7 +223,7 @@ export const GovernanceReviewQueue: React.FC<GovernanceReviewQueueProps> = ({
           <table className="w-full text-left text-xs text-[#475569]">
             <thead className="bg-[#F8FAFC] border-y border-[#E2E8F0] text-[#475569] text-[11px] font-bold uppercase tracking-wider">
               <tr>
-                <th className="py-3 px-6">Proposed Prototype CNMC</th>
+                <th className="py-3 px-6">Proposed CNMC</th>
                 <th className="py-3 px-4">Material Cluster Title</th>
                 <th className="py-3 px-4">Generation Source</th>
                 <th className="py-3 px-4">Confidence / Strength</th>

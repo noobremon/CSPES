@@ -9,8 +9,6 @@ export const Footer: React.FC = () => {
           <span>© 2026 National Unified Material Master Framework</span>
           <span className="text-slate-300">|</span>
           <span className="font-semibold text-[#0F172A]">Government of India</span>
-          <span className="text-slate-300">|</span>
-          <span className="text-[#2563EB] font-bold">SIH 2026</span>
         </div>
 
         {/* Middle: Standard Links */}

@@ -30,7 +30,7 @@ const INITIAL_DEMO_MAPPINGS: CPSEMappingItem[] = [
     mapping_type: 'DIRECT_MATCH',
     confidence_score: 1.0,
     status: 'ACTIVE',
-    approved_by: 'domain_reviewer_01@sih.gov.in',
+    approved_by: 'domain_reviewer_01@gov.in',
     created_at: '2026-09-08T10:35:00Z',
     effective_from: '2026-09-08T10:35:00Z'
   },
@@ -48,7 +48,7 @@ const INITIAL_DEMO_MAPPINGS: CPSEMappingItem[] = [
     mapping_type: 'NORMALIZED_MATCH',
     confidence_score: 0.98,
     status: 'ACTIVE',
-    approved_by: 'domain_reviewer_01@sih.gov.in',
+    approved_by: 'domain_reviewer_01@gov.in',
     created_at: '2026-09-08T10:36:00Z',
     effective_from: '2026-09-08T10:36:00Z'
   }
@@ -105,7 +105,7 @@ export const CPSEMappingView: React.FC = () => {
           <code className="bg-white border border-[#E2E8F0] px-1.5 py-0.5 rounded text-gov-navy font-mono font-semibold">
             BOLT-778
           </code>
-          ) are permanently preserved in Layer 1 and are <span className="font-bold text-[#0F172A]">NEVER overwritten</span> in source ERPs. The platform establishes an immutable cross-walk binding to the governed prototype CNMC.
+          ) are permanently preserved in Layer 1 and are <span className="font-bold text-[#0F172A]">NEVER overwritten</span> in source ERPs. The platform establishes an immutable cross-walk binding to the governed CNMC.
         </div>
       </div>
 
@@ -134,7 +134,7 @@ export const CPSEMappingView: React.FC = () => {
 
       {/* Mappings Table */}
       <Card
-        title="Active CPSE ↔ Governed Prototype CNMC Cross-Walk Mappings"
+        title="Active CPSE ↔ Governed CNMC Cross-Walk Mappings"
         subtitle={`Showing ${filteredMappings.length} approved cross-walk record(s).`}
         icon={<GitCompare className="w-5 h-5 text-gov-navy" />}
       >
@@ -142,7 +142,7 @@ export const CPSEMappingView: React.FC = () => {
           <table className="w-full text-left text-xs text-[#475569]">
             <thead className="bg-[#F8FAFC] border-y border-[#E2E8F0] text-[#475569] text-[11px] font-bold uppercase tracking-wider">
               <tr>
-                <th className="py-3 px-6">Governed Prototype CNMC</th>
+                <th className="py-3 px-6">Governed CNMC</th>
                 <th className="py-3 px-4">CPSE Enterprise</th>
                 <th className="py-3 px-4">Preserved Local Code</th>
                 <th className="py-3 px-4">Standardized Title</th>

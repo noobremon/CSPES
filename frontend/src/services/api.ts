@@ -161,7 +161,7 @@ export async function fetchCandidateDetail(candidateId: string): Promise<CNMCCan
 export async function generateCNMCRecommendation(
   materialId: string,
   persistCandidate: boolean = true,
-  demoReviewer: string = 'demo_reviewer@sih.gov.in'
+  demoReviewer: string = 'demo_reviewer@gov.in'
 ): Promise<CNMCRecommendation> {
   const response = await fetch(`${API_BASE_URL}/cnmc/recommend`, {
     method: 'POST',
@@ -184,7 +184,7 @@ export async function generateCNMCRecommendation(
 export async function submitCNMCReview(
   candidateId: string,
   submission: CNMCReviewSubmission,
-  demoReviewer: string = 'demo_domain_reviewer@sih.gov.in'
+  demoReviewer: string = 'demo_domain_reviewer@gov.in'
 ): Promise<CNMCReviewResult> {
   const response = await fetch(`${API_BASE_URL}/cnmc/candidates/${candidateId}/review`, {
     method: 'POST',

@@ -141,7 +141,7 @@ export const NationalDashboardView: React.FC<NationalDashboardViewProps> = ({
               <span className="text-[8px] text-[#64748B] font-medium block">RBAC Enabled</span>
             </div>
             <div className="px-2.5 py-1 bg-[#EFF6FF] border border-blue-200 rounded-lg text-[#1D4ED8] text-[10px] font-bold tracking-tight text-center">
-              SIH MVP Prototype
+              Enterprise Master
             </div>
           </div>
         </div>
@@ -154,11 +154,11 @@ export const NationalDashboardView: React.FC<NationalDashboardViewProps> = ({
         </div>
         <div className="leading-relaxed text-[11px]">
           <strong className="text-[#92400E] font-bold">MANDATORY GOVERNANCE SCOPE NOTICE:</strong>{' '}
-          All Common National Material Codes (CNMCs) generated in this MVP use the{' '}
+          All Common National Material Codes (CNMCs) generated in this framework use the{' '}
           <span className="bg-[#FEF3C7] border border-[#FCD34D] px-1 py-0.5 rounded text-[#92400E] font-mono font-bold">
             {current.proposed_cnmc}
           </span>{' '}
-          CNMC Reference Format for SIH 2026 evaluation. Approval is strictly within the demonstration governance workflow and does not constitute official Government of India or DPE statutory codification.
+          CNMC Reference Format for cross-CPSE standardization evaluation. Approval is strictly within the demonstration governance workflow and does not constitute official Government of India or DPE statutory codification.
         </div>
       </div>
 
@@ -392,7 +392,7 @@ export const NationalDashboardView: React.FC<NationalDashboardViewProps> = ({
           </div>
         </div>
 
-        {/* COLUMN 3: 3. PROTOTYPE CNMC RECOMMENDATION */}
+        {/* COLUMN 3: 3. CNMC RECOMMENDATION */}
         <div className="bg-white border border-[#E2E8F0] rounded-xl p-4 shadow-2xs flex flex-col justify-between">
           <div className="space-y-3 text-xs">
             {/* Header */}
@@ -402,10 +402,10 @@ export const NationalDashboardView: React.FC<NationalDashboardViewProps> = ({
               </div>
               <div>
                 <h3 className="text-xs font-extrabold text-[#0F172A] tracking-tight">
-                  3. PROTOTYPE CNMC RECOMMENDATION
+                  3. CNMC RECOMMENDATION
                 </h3>
                 <p className="text-[10px] text-[#64748B]">
-                  MVP Reference Format Output
+                  National Reference Format Output
                 </p>
               </div>
             </div>

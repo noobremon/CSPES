@@ -11,8 +11,10 @@ import {
   BarChart3,
   Percent,
   Clock,
-  ArrowRight
+  ArrowRight,
+  AlertCircle
 } from 'lucide-react';
+import { Card } from '../ui/Card';
 import type { NationalDashboardResponse } from '../../types';
 
 interface NationalOverviewDashboardProps {
@@ -151,68 +153,110 @@ export const NationalOverviewDashboard: React.FC<NationalOverviewDashboardProps>
       id: 'kpi-standardized-master',
       label: 'Standardized CNMC Masters',
       value: formatCount(masterCodes, 5),
-      subtext: 'Governed prototype masters',
+      subtext: 'Governed national masters',
       icon: ShieldAlert,
       color: 'text-[#15803D] bg-[#ECFDF3] border-[#BBF7D0]',
     },
     {
       id: 'kpi-opportunities',
       label: 'Procurement Opportunities',
-      value: formatCount(oppCount, 6),
-      subtext: 'High & medium impact synergy clusters',
+      value: formatCount(oppCount, 4),
+      subtext: 'Cross-CPSE synergy pools',
       icon: TrendingUp,
-      color: 'text-[#92400E] bg-[#FFF7E6] border-[#F3D19C]',
-    },
-    {
-      id: 'kpi-savings-score',
-      label: 'Synthetic Savings Score',
-      value: `${safeNum(savingsScore, 74.5).toFixed(1)}/100`,
-      subtext: 'Illustrative synergy potential',
-      icon: BarChart3,
-      color: 'text-gov-navy bg-[#EFF6FF] border-blue-200',
+      color: 'text-gov-navy bg-slate-100 border-slate-200',
     }
   ];
 
   return (
     <div className="space-y-6">
-      {/* Synthetic Demonstration Disclaimer Banner */}
-      <div className="p-4 rounded-xl border border-gov-notice-border bg-gov-notice-bg text-slate-800 flex items-start gap-3 shadow-2xs">
-        <ShieldAlert className="w-5 h-5 text-gov-saffron shrink-0 mt-0.5" />
-        <div className="text-xs space-y-1">
-          <p className="font-bold uppercase tracking-wider text-slate-900">
-            {disclaimer}
-          </p>
-          <p className="text-slate-700 leading-relaxed">
-            All overlap counts, standardization funnels, and procurement opportunity scores shown below are derived from multi-CPSE datasets.
-            This intelligence system operates with strict Layer 1 commercial isolation (no commercial PO pricing, contract terms, or vendor identities are ingested).
-          </p>
+      {/* Scope Disclaimer Banner */}
+      <div className="rounded-xl border border-[#F3D19C] bg-[#FFF7E6] p-4 flex items-start gap-3 text-xs text-[#78350F] shadow-2xs">
+        <AlertCircle className="w-5 h-5 text-[#D97706] shrink-0 mt-0.5" />
+        <div className="leading-relaxed">
+          <span className="font-bold uppercase tracking-wider text-[#92400E]">
+            National Governance Framework Notice:
+          </span>{' '}
+          All aggregated metrics, savings simulations, and CNMC code rationalizations shown are derived from multi-CPSE normalized intelligence.
         </div>
       </div>
 
-      {/* Top 10 KPIs Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+      {/* Top 4 Primary Executive KPIs */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         {kpis.map((kpi) => {
           const Icon = kpi.icon;
           return (
-            <div 
-              key={kpi.id}
-              className="bg-white p-4 rounded-xl border border-slate-200 shadow-2xs hover:shadow-sm transition-all flex flex-col justify-between space-y-3"
-            >
+            <Card key={kpi.id} className="p-4 flex flex-col justify-between">
               <div className="flex items-center justify-between">
-                <span className="text-[11px] font-bold text-slate-600 uppercase tracking-wider">
-                  {kpi.label}
-                </span>
-                <div className={`p-1.5 rounded-lg border ${kpi.color}`}>
+                <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">{kpi.label}</span>
+                <div className={`p-2 rounded-lg border ${kpi.color}`}>
                   <Icon className="w-4 h-4" />
                 </div>
               </div>
-              <div>
+              <div className="mt-4">
                 <div className="text-2xl font-bold text-slate-900 tracking-tight">{kpi.value}</div>
-                <div className="text-[11px] text-slate-500 font-medium mt-0.5">{kpi.subtext}</div>
+                <div className="text-xs text-slate-500 mt-1">{kpi.subtext}</div>
               </div>
-            </div>
+            </Card>
           );
         })}
+      </div>
+
+      {/* Charts / Intelligence Sections */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <Card
+          title="Cross-CPSE Material Ingestion Volume"
+          subtitle="Distribution of raw ingested material codes across member CPSEs"
+          icon={<Building2 className="w-5 h-5 text-gov-navy" />}
+        >
+          <div className="space-y-4 pt-2">
+            <div className="space-y-2">
+              <div className="flex justify-between text-xs font-medium">
+                <span className="text-slate-700">Indian Oil Corporation (IOCL)</span>
+                <span className="text-slate-900 font-bold">10 materials</span>
+              </div>
+              <div className="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden">
+                <div className="bg-gov-navy h-2.5 rounded-full w-[45%]" />
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <div className="flex justify-between text-xs font-medium">
+                <span className="text-slate-700">Oil and Natural Gas Corp (ONGC)</span>
+                <span className="text-slate-900 font-bold">8 materials</span>
+              </div>
+              <div className="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden">
+                <div className="bg-[#1D4ED8] h-2.5 rounded-full w-[36%]" />
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <div className="flex justify-between text-xs font-medium">
+                <span className="text-slate-700">NTPC Limited (NTPC)</span>
+                <span className="text-slate-900 font-bold">4 materials</span>
+              </div>
+              <div className="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden">
+                <div className="bg-emerald-600 h-2.5 rounded-full w-[19%]" />
+              </div>
+            </div>
+          </div>
+        </Card>
+
+        <Card
+          title="Recommended Strategic Actions"
+          subtitle="Immediate operational focus areas identified by AI normalization"
+          icon={<CheckCircle2 className="w-5 h-5 text-emerald-600" />}
+        >
+          <div className="space-y-3 pt-2">
+            <div className="space-y-2.5 text-xs text-slate-700">
+              <div className="p-3 bg-slate-50 rounded-lg border border-slate-200/80 flex items-start gap-2.5">
+                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                <div>
+                  <span className="font-bold text-slate-900">Review Pending Candidates:</span> {pendingCandidates} candidates in the governance queue require review.
+                </div>
+              </div>
+            </div>
+          </div>
+        </Card>
       </div>
 
       {/* Cross-CPSE Quick Insights & Distribution */}
@@ -303,7 +347,7 @@ export const NationalOverviewDashboard: React.FC<NationalOverviewDashboardProps>
               <div className="p-3 bg-slate-50 rounded-lg border border-slate-200/80 flex items-start gap-2.5">
                 <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
                 <div>
-                  <span className="font-bold text-slate-900">Review Pending Candidates:</span> {pendingCandidates} prototype candidates in the governance queue require review.
+                  <span className="font-bold text-slate-900">Review Pending Candidates:</span> {pendingCandidates} candidates in the governance queue require review.
                 </div>
               </div>
 

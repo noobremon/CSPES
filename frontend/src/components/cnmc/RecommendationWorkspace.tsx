@@ -101,7 +101,7 @@ export const RecommendationWorkspace: React.FC<RecommendationWorkspaceProps> = (
           outcome: outcome,
           proposed_cnmc: `IN-IND-MECH-BLT-${seq}`,
           candidate_group_name: selectedMat.canonical,
-          proposed_description: `MVP Prototype Master Specification: ${selectedMat.canonical}`,
+          proposed_description: `National Master Specification: ${selectedMat.canonical}`,
           recommendation_strength: 'HIGH',
           strength_score: selectedMatIndex === 1 ? 0.98 : 0.92,
           is_existing_candidate: false,
@@ -110,11 +110,11 @@ export const RecommendationWorkspace: React.FC<RecommendationWorkspaceProps> = (
             outcome: outcome,
             recommendation_strength: 'HIGH',
             generation_method: method,
-            format_version: 'MVP_CNMC_V1',
+            format_version: 'CNMC_V1',
             recommendation_reason:
               selectedMatIndex === 1
                 ? `Matched existing governed cluster for CNMC 'IN-IND-MECH-BLT-00492' via structural similarity (score: 0.98).`
-                : `Generated new prototype CNMC candidate 'IN-IND-MECH-BLT-${seq}' derived from sector 'IND', category 'MECH', and type 'BLT'.`,
+                : `Generated new CNMC candidate 'IN-IND-MECH-BLT-${seq}' derived from sector 'IND', category 'MECH', and type 'BLT'.`,
             taxonomy_signals: {
               sector: 'IND',
               category: 'MECH',
@@ -123,11 +123,11 @@ export const RecommendationWorkspace: React.FC<RecommendationWorkspaceProps> = (
             },
             matching_signals: selectedMat.matches.length > 0 ? { top_match_score: 0.98, top_match_type: 'EXACT_MATCH_CANDIDATE' } : {},
             warnings: [
-              'Prototype recommendation generated within SIH 2026 MVP demonstration governance workflow.'
+              'Recommendation generated within national demonstration governance workflow.'
             ],
             missing_information: [],
             governance_notice:
-              'Recommended within the SIH MVP demonstration governance workflow. Does not constitute official Government of India national standard approval.'
+              'Recommended within the demonstration governance workflow. Does not constitute official Government of India national standard approval.'
           }
         };
       }
@@ -158,10 +158,10 @@ export const RecommendationWorkspace: React.FC<RecommendationWorkspaceProps> = (
             Mandatory Governance Scope Notice:
           </span>{' '}
           All Common National Material Codes (CNMCs) generated in this platform use the{' '}
-          <span className="font-bold text-[#0F172A]">MVP Prototype CNMC Reference Format</span> (e.g.{' '}
+          <span className="font-bold text-[#0F172A]">CNMC Reference Format</span> (e.g.{' '}
           <code className="bg-[#FFFBEB] border border-[#F3D19C] px-1.5 py-0.5 rounded text-[#78350F] font-mono font-semibold">
             IN-IND-MECH-BLT-00492
-          </code>) for SIH 2026 evaluation. Approvals are strictly valid within the demonstration governance workflow and do not constitute official Government of India or DPE statutory codification.
+          </code>) for national standardization evaluation. Approvals are strictly valid within the demonstration governance workflow and do not constitute official Government of India or DPE statutory codification.
         </div>
       </div>
 
@@ -360,8 +360,8 @@ export const RecommendationWorkspace: React.FC<RecommendationWorkspaceProps> = (
 
         {/* RIGHT COLUMN: CNMC Recommendation Card */}
         <Card
-          title="3. Prototype CNMC Recommendation"
-          subtitle="MVP Reference Format Output"
+          title="3. CNMC Recommendation"
+          subtitle="National Reference Format Output"
           icon={<Tag className="w-5 h-5 text-[#15803D]" />}
         >
           {recommendation ? (
@@ -369,7 +369,7 @@ export const RecommendationWorkspace: React.FC<RecommendationWorkspaceProps> = (
               {/* Proposed Code Banner */}
               <div className="p-4 rounded-xl bg-[#F0FDF4] border border-[#BBF7D0] space-y-1.5">
                 <span className="text-[10px] font-bold uppercase tracking-widest text-[#166534]">
-                  Recommended Prototype CNMC
+                  Recommended CNMC
                 </span>
                 <div className="text-xl font-mono font-extrabold text-[#0F172A] tracking-wider">
                   {recommendation.proposed_cnmc}

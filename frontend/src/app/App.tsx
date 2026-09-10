@@ -200,8 +200,8 @@ const MainAppContent: React.FC = () => {
                   Phase 10 Governance & Security Non-Negotiable Boundary
                 </h3>
                 <p className="text-xs text-[#78350F] leading-relaxed">
-                  The authentication, RBAC, and CNMC codification implemented in this application are built for the <strong className="text-[#0F172A]">SIH 2026 Prototype Demonstration</strong>.
-                  Approval in this portal indicates <strong className="text-[#0F172A]">"Approved within the SIH MVP demonstration governance workflow"</strong> and does not constitute statutory Government of India gazetted standards.
+                  The authentication, RBAC, and CNMC codification implemented in this application are built for the <strong className="text-[#0F172A]">National Standardization Framework</strong>.
+                  Approval in this portal indicates <strong className="text-[#0F172A]">"Approved within the demonstration governance workflow"</strong> and does not constitute statutory Government of India gazetted standards.
                 </p>
               </div>
             </div>

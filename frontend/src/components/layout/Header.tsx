@@ -27,7 +27,7 @@ export const Header: React.FC = () => {
             </h1>
           </div>
           <p className="text-[11px] text-[#64748B] font-medium">
-            SIH 2026 • Material Intelligence Platform
+            National Material Intelligence Platform
           </p>
         </div>
       </div>
@@ -84,7 +84,7 @@ export const Header: React.FC = () => {
             <div className="absolute right-0 mt-2 w-56 bg-white border border-[#E2E8F0] rounded-2xl shadow-lg p-2 z-50 text-left">
               <div className="p-2.5 border-b border-slate-100">
                 <div className="text-xs font-bold text-[#0F172A]">{user?.full_name || 'Dr. Rajesh Sharma'}</div>
-                <div className="text-[10px] text-[#64748B] font-mono truncate">{user?.email || 'national_admin@sih.demo'}</div>
+                <div className="text-[10px] text-[#64748B] font-mono truncate">{user?.email || 'national_admin@gov.in'}</div>
               </div>
               <button
                 onClick={() => {

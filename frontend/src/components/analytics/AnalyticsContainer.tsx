@@ -213,7 +213,7 @@ const DEFAULT_OPPORTUNITY_DATA: ProcurementOpportunityResponse = {
       participating_cpse_count: 3,
       participating_cpses: ['IOCL', 'SAIL', 'ONGC'],
       item_count: 3,
-      recommended_next_step: 'Formally approve prototype CNMC IN-IND-MECH-BRG-18234 and align ERP catalog line items.'
+      recommended_next_step: 'Formally approve CNMC IN-IND-MECH-BRG-18234 and align ERP catalog line items.'
     },
     {
       opportunity_id: 'opp-003',

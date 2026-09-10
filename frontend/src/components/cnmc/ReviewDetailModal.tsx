@@ -46,7 +46,7 @@ export const ReviewDetailModal: React.FC<ReviewDetailModalProps> = ({
     try {
       const submission: CNMCReviewSubmission = {
         action: activeAction,
-        reviewer_reference: 'domain_reviewer_01@sih.gov.in',
+        reviewer_reference: 'domain_reviewer_01@gov.in',
         comments: comments,
         modified_cnmc: activeAction === 'MODIFY' ? modifiedCNMC : undefined,
         modified_group_name: activeAction === 'MODIFY' ? modifiedTitle : undefined,
@@ -108,7 +108,7 @@ export const ReviewDetailModal: React.FC<ReviewDetailModalProps> = ({
           <div className="p-3.5 bg-[#FFF7E6] border border-[#F3D19C] rounded-xl text-[#78350F] flex items-start gap-2.5 shadow-2xs">
             <AlertTriangle className="w-4 h-4 text-[#D97706] shrink-0 mt-0.5" />
             <div className="leading-relaxed text-[11px]">
-              <span className="font-bold uppercase text-[#92400E]">Statutory Notice:</span> Approvals made in this console are strictly valid within the SIH MVP demonstration governance workflow and do not constitute Government of India or national policy approval.
+              <span className="font-bold uppercase text-[#92400E]">Statutory Notice:</span> Approvals made in this console are strictly valid within the demonstration governance workflow and do not constitute Government of India statutory codification.
             </div>
           </div>
 
@@ -116,7 +116,7 @@ export const ReviewDetailModal: React.FC<ReviewDetailModalProps> = ({
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="p-4 bg-[#F8FAFC] rounded-xl border border-[#E2E8F0] space-y-2">
               <span className="text-[10px] font-bold text-[#475569] uppercase tracking-wider">
-                Proposed Prototype CNMC
+                Proposed CNMC
               </span>
               <div className="text-lg font-mono font-bold text-gov-navy">{candidate.proposed_cnmc}</div>
               <div className="text-[#0F172A] font-semibold pt-1">{candidate.candidate_group_name}</div>

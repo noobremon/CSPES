@@ -71,7 +71,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
       {/* Bottom Secondary Navigation (Help & Logout) - Flush to footer */}
       <div className="p-3 border-t border-[#1E3A8A]/40 space-y-1.5">
         <button
-          onClick={() => alert('National Unified Material Master Framework — SIH 2026 Help & Support Portal')}
+          onClick={() => alert('National Unified Material Master Framework — Help & Support Portal')}
           className="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-[#BFDBFE] hover:bg-white/10 hover:text-white transition-colors cursor-pointer"
         >
           <HelpCircle className="w-4 h-4 text-[#93C5FD]" />

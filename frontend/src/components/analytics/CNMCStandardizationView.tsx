@@ -105,8 +105,8 @@ export const CNMCStandardizationView: React.FC<CNMCStandardizationViewProps> = (
             Standardization Governance Boundary
           </span>
           <p className="mt-1 text-slate-700 leading-relaxed">
-            All CNMC codes reflect the <em>MVP Prototype CNMC Reference Format</em> for demonstration and governance testing.
-            Candidate approval requires explicit human governance review in Phase 8 workflows.
+            All CNMC codes reflect the <em>National CNMC Reference Format</em> for demonstration and governance testing.
+            Candidate approval requires explicit human governance review in standardization workflows.
           </p>
         </div>
       </div>
