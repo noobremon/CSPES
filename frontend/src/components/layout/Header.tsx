@@ -1,29 +1,37 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { 
   Layers, 
-  ShieldCheck, 
   FileText, 
   CheckSquare, 
   GitCompare, 
   Info,
   LogOut,
-  UploadCloud
+  UploadCloud,
+  LayoutDashboard,
+  BarChart3,
+  Search,
+  Bell,
+  User,
+  ChevronDown
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 
+export type NavTabType = 'dashboard' | 'ingestion' | 'workspace' | 'queue' | 'mappings' | 'analytics' | 'health';
+
 interface HeaderProps {
-  activeTab: 'ingestion' | 'workspace' | 'queue' | 'mappings' | 'analytics' | 'health';
-  setActiveTab: (tab: 'ingestion' | 'workspace' | 'queue' | 'mappings' | 'analytics' | 'health') => void;
+  activeTab: NavTabType;
+  setActiveTab: (tab: NavTabType) => void;
   pendingCount?: number;
 }
 
-export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, pendingCount = 0 }) => {
+export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, pendingCount = 2 }) => {
   const { user, logout } = useAuth();
+  const [showProfileMenu, setShowProfileMenu] = useState(false);
 
   const getRoleBadge = (role?: string) => {
     switch (role) {
       case 'NATIONAL_MASTER_ADMIN':
-        return 'bg-gov-navy text-white border-gov-navy';
+        return 'bg-[#0F172A] text-white border-[#0F172A]';
       case 'CPSE_MATERIAL_MANAGER':
         return 'bg-[#EFF6FF] text-[#1D4ED8] border-blue-200';
       case 'DOMAIN_REVIEWER':
@@ -35,42 +43,73 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, pending
     }
   };
 
-  const formatRoleName = (role?: string) => {
-    if (!role) return 'Authenticated User';
-    return role.replace(/_/g, ' ');
+  const getDisplayName = () => {
+    if (!user) return 'Demo User';
+    if (user.role === 'NATIONAL_MASTER_ADMIN') return 'Dr. Rajesh Sharma';
+    if (user.role === 'CPSE_MATERIAL_MANAGER') return 'S. K. Verma (IOCL)';
+    if (user.role === 'DOMAIN_REVIEWER') return 'Ananya Roy (Reviewer)';
+    if (user.role === 'AUDITOR') return 'P. N. Murthy (Auditor)';
+    return user.full_name || user.email;
+  };
+
+  const getRoleDisplayTitle = () => {
+    if (!user) return 'NATIONAL MASTER ADMIN';
+    return (user.role || 'NATIONAL MASTER ADMIN').replace(/_/g, ' ');
   };
 
   return (
-    <header className="border-b border-[#E2E8F0] bg-white sticky top-0 z-50 px-6 py-3.5 shadow-2xs">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+    <header className="border-b border-[#E2E8F0] bg-white sticky top-0 z-50 px-4 sm:px-6 py-3 shadow-2xs">
+      <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-3">
+        
         {/* Brand & Platform Identity */}
-        <div className="flex items-center space-x-3.5">
-          <div className="p-2 bg-gov-navy text-white rounded-lg shadow-2xs">
-            <Layers className="w-5 h-5" />
-          </div>
-          <div>
-            <div className="flex items-center gap-2">
-              <h1 className="text-sm font-bold text-gov-navy tracking-tight sm:text-base">
-                National Unified Material Master Framework
-              </h1>
-              <span className="text-[10px] uppercase font-bold px-2 py-0.5 rounded bg-[#EFF6FF] text-gov-blue border border-blue-200">
-                SIH 2026
-              </span>
+        <div className="flex items-center space-x-3 w-full lg:w-auto justify-between lg:justify-start">
+          <div className="flex items-center space-x-3">
+            <div className="p-2 bg-[#0F172A] text-white rounded-xl shadow-xs">
+              <Layers className="w-5 h-5" />
             </div>
-            <p className="text-[11px] text-[#64748B] font-medium">
-              Smart India Hackathon 2026 • Unified Material Intelligence Platform
-            </p>
+            <div>
+              <div className="flex items-center gap-2">
+                <h1 className="text-sm font-extrabold text-[#0F172A] tracking-tight sm:text-base">
+                  National Unified Material Master Framework
+                </h1>
+                <span className="text-[10px] uppercase font-bold px-2 py-0.5 rounded bg-[#EFF6FF] text-[#2563EB] border border-blue-200">
+                  SIH 2026
+                </span>
+              </div>
+              <p className="text-[11px] text-[#64748B] font-medium text-left">
+                Unified Material Intelligence Platform
+              </p>
+            </div>
+          </div>
+
+          {/* Quick Icons (Search, Notifications, Profile) for Mobile / Desktop */}
+          <div className="flex items-center gap-2 lg:hidden">
+            <button className="p-2 text-[#64748B] hover:text-[#0F172A] rounded-lg">
+              <Bell className="w-4 h-4" />
+            </button>
           </div>
         </div>
 
         {/* Enterprise Navigation Tabs */}
-        <nav className="flex items-center space-x-1 bg-[#F8FAFC] p-1 rounded-xl border border-[#E2E8F0] text-xs font-medium">
+        <nav className="flex items-center space-x-1 bg-[#F8FAFC] p-1 rounded-2xl border border-[#CBD5E1] text-xs font-medium overflow-x-auto max-w-full">
+          <button
+            onClick={() => setActiveTab('dashboard')}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl transition-all focus:outline-hidden focus:ring-2 focus:ring-[#2563EB] cursor-pointer whitespace-nowrap ${
+              activeTab === 'dashboard'
+                ? 'bg-[#0F172A] text-white shadow-xs font-bold'
+                : 'text-[#475569] hover:text-[#0F172A] hover:bg-white'
+            }`}
+          >
+            <LayoutDashboard className="w-3.5 h-3.5" />
+            Dashboard
+          </button>
+
           <button
             onClick={() => setActiveTab('ingestion')}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all focus:outline-hidden focus:ring-2 focus:ring-[#2563EB] cursor-pointer ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl transition-all focus:outline-hidden focus:ring-2 focus:ring-[#2563EB] cursor-pointer whitespace-nowrap ${
               activeTab === 'ingestion'
-                ? 'bg-gov-navy text-white shadow-2xs font-semibold'
-                : 'text-[#475569] hover:text-gov-navy hover:bg-white'
+                ? 'bg-[#0F172A] text-white shadow-xs font-bold'
+                : 'text-[#475569] hover:text-[#0F172A] hover:bg-white'
             }`}
           >
             <UploadCloud className="w-3.5 h-3.5" />
@@ -79,10 +118,10 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, pending
 
           <button
             onClick={() => setActiveTab('workspace')}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all focus:outline-hidden focus:ring-2 focus:ring-[#2563EB] cursor-pointer ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl transition-all focus:outline-hidden focus:ring-2 focus:ring-[#2563EB] cursor-pointer whitespace-nowrap ${
               activeTab === 'workspace'
-                ? 'bg-gov-navy text-white shadow-2xs font-semibold'
-                : 'text-[#475569] hover:text-gov-navy hover:bg-white'
+                ? 'bg-[#0F172A] text-white shadow-xs font-bold'
+                : 'text-[#475569] hover:text-[#0F172A] hover:bg-white'
             }`}
           >
             <FileText className="w-3.5 h-3.5" />
@@ -91,16 +130,16 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, pending
 
           <button
             onClick={() => setActiveTab('queue')}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all relative focus:outline-hidden focus:ring-2 focus:ring-[#2563EB] cursor-pointer ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl transition-all relative focus:outline-hidden focus:ring-2 focus:ring-[#2563EB] cursor-pointer whitespace-nowrap ${
               activeTab === 'queue'
-                ? 'bg-gov-navy text-white shadow-2xs font-semibold'
-                : 'text-[#475569] hover:text-gov-navy hover:bg-white'
+                ? 'bg-[#0F172A] text-white shadow-xs font-bold'
+                : 'text-[#475569] hover:text-[#0F172A] hover:bg-white'
             }`}
           >
             <CheckSquare className="w-3.5 h-3.5" />
             Governance Queue
             {pendingCount > 0 && (
-              <span className="ml-1 px-1.5 py-0.2 text-[10px] font-bold bg-[#FFF7E6] text-[#92400E] border border-[#F3D19C] rounded-full">
+              <span className="ml-1 px-1.5 py-0.2 text-[10px] font-bold bg-[#F59E0B] text-white rounded-full">
                 {pendingCount}
               </span>
             )}
@@ -108,10 +147,10 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, pending
 
           <button
             onClick={() => setActiveTab('mappings')}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all focus:outline-hidden focus:ring-2 focus:ring-[#2563EB] cursor-pointer ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl transition-all focus:outline-hidden focus:ring-2 focus:ring-[#2563EB] cursor-pointer whitespace-nowrap ${
               activeTab === 'mappings'
-                ? 'bg-gov-navy text-white shadow-2xs font-semibold'
-                : 'text-[#475569] hover:text-gov-navy hover:bg-white'
+                ? 'bg-[#0F172A] text-white shadow-xs font-bold'
+                : 'text-[#475569] hover:text-[#0F172A] hover:bg-white'
             }`}
           >
             <GitCompare className="w-3.5 h-3.5" />
@@ -120,22 +159,22 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, pending
 
           <button
             onClick={() => setActiveTab('analytics')}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all focus:outline-hidden focus:ring-2 focus:ring-[#2563EB] cursor-pointer ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl transition-all focus:outline-hidden focus:ring-2 focus:ring-[#2563EB] cursor-pointer whitespace-nowrap ${
               activeTab === 'analytics'
-                ? 'bg-gov-navy text-white shadow-2xs font-semibold'
-                : 'text-[#475569] hover:text-gov-navy hover:bg-white'
+                ? 'bg-[#0F172A] text-white shadow-xs font-bold'
+                : 'text-[#475569] hover:text-[#0F172A] hover:bg-white'
             }`}
           >
-            <ShieldCheck className="w-3.5 h-3.5 text-gov-blue" />
+            <BarChart3 className="w-3.5 h-3.5 text-[#2563EB]" />
             National Analytics
           </button>
 
           <button
             onClick={() => setActiveTab('health')}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all focus:outline-hidden focus:ring-2 focus:ring-[#2563EB] cursor-pointer ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl transition-all focus:outline-hidden focus:ring-2 focus:ring-[#2563EB] cursor-pointer whitespace-nowrap ${
               activeTab === 'health'
-                ? 'bg-gov-navy text-white shadow-2xs font-semibold'
-                : 'text-[#475569] hover:text-gov-navy hover:bg-white'
+                ? 'bg-[#0F172A] text-white shadow-xs font-bold'
+                : 'text-[#475569] hover:text-[#0F172A] hover:bg-white'
             }`}
           >
             <Info className="w-3.5 h-3.5" />
@@ -143,29 +182,76 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, pending
           </button>
         </nav>
 
-        {/* Authenticated User Profile & Logout */}
-        <div className="flex items-center space-x-3 text-xs">
-          {user ? (
-            <div className="flex items-center gap-2.5 bg-[#F8FAFC] px-3 py-1.5 rounded-xl border border-[#E2E8F0] shadow-2xs">
-              <div className="flex flex-col text-left">
-                <div className="flex items-center gap-1.5">
-                  <span className="font-semibold text-[#0F172A]">{user.full_name || user.email}</span>
-                  <span className={`text-[10px] font-bold px-1.5 py-0.2 rounded border ${getRoleBadge(user.role)}`}>
-                    {formatRoleName(user.role)}
-                  </span>
-                </div>
-                <span className="text-[10px] text-[#64748B] font-mono">
-                  {user.organization_code || 'ALL_CPSE'} • {user.email}
-                </span>
-              </div>
+        {/* Header Right Actions: Search, Notifications & Profile */}
+        <div className="hidden lg:flex items-center space-x-3 text-xs">
+          
+          {/* Search Button */}
+          <button
+            className="p-2 text-[#64748B] hover:text-[#0F172A] hover:bg-[#F1F5F9] rounded-xl transition-colors cursor-pointer"
+            title="Global Search"
+          >
+            <Search className="w-4 h-4" />
+          </button>
 
+          {/* Notification Bell with Badge */}
+          <div className="relative">
+            <button
+              className="p-2 text-[#64748B] hover:text-[#0F172A] hover:bg-[#F1F5F9] rounded-xl transition-colors cursor-pointer"
+              title="Notifications"
+            >
+              <Bell className="w-4 h-4" />
+            </button>
+            <span className="absolute top-1 right-1 w-4 h-4 bg-[#EF4444] text-white text-[9px] font-bold rounded-full flex items-center justify-center">
+              4
+            </span>
+          </div>
+
+          {/* Authenticated User Profile Dropdown Pill */}
+          {user ? (
+            <div className="relative">
               <button
-                onClick={logout}
-                title="Sign Out of Portal"
-                className="p-1.5 text-[#64748B] hover:text-[#B91C1C] hover:bg-[#F1F5F9] focus:outline-hidden focus:ring-2 focus:ring-[#2563EB] rounded-lg transition-colors ml-1 cursor-pointer"
+                onClick={() => setShowProfileMenu(!showProfileMenu)}
+                className="flex items-center gap-2.5 bg-[#F8FAFC] hover:bg-white px-3 py-1.5 rounded-2xl border border-[#CBD5E1] shadow-2xs transition-all cursor-pointer"
               >
-                <LogOut className="w-4 h-4" />
+                <div className="w-7 h-7 rounded-full bg-[#EFF6FF] text-[#2563EB] border border-blue-200 flex items-center justify-center">
+                  <User className="w-4 h-4" />
+                </div>
+                <div className="flex flex-col text-left">
+                  <div className="flex items-center gap-1.5">
+                    <span className="font-bold text-[#0F172A] text-[11px]">
+                      {getDisplayName()}
+                    </span>
+                    <span className="text-[10px] text-[#64748B]">
+                      ({user.role === 'NATIONAL_MASTER_ADMIN' ? 'National Admin' : user.role})
+                    </span>
+                  </div>
+                  <div>
+                    <span className={`text-[9px] font-mono font-bold px-1.5 py-0.2 rounded border uppercase ${getRoleBadge(user.role)}`}>
+                      {getRoleDisplayTitle()}
+                    </span>
+                  </div>
+                </div>
+                <ChevronDown className="w-3.5 h-3.5 text-[#64748B] ml-1" />
               </button>
+
+              {showProfileMenu && (
+                <div className="absolute right-0 mt-2 w-56 bg-white border border-[#E2E8F0] rounded-2xl shadow-lg p-2 z-50 text-left">
+                  <div className="p-2.5 border-b border-slate-100">
+                    <div className="text-xs font-bold text-[#0F172A]">{getDisplayName()}</div>
+                    <div className="text-[10px] text-[#64748B] font-mono truncate">{user.email}</div>
+                  </div>
+                  <button
+                    onClick={() => {
+                      setShowProfileMenu(false);
+                      logout();
+                    }}
+                    className="w-full mt-1 flex items-center gap-2 px-3 py-2 text-xs font-semibold text-[#B91C1C] hover:bg-[#FEF2F2] rounded-xl transition-colors cursor-pointer"
+                  >
+                    <LogOut className="w-3.5 h-3.5" />
+                    <span>Sign Out of Platform</span>
+                  </button>
+                </div>
+              )}
             </div>
           ) : (
             <div className="text-[#64748B] text-xs italic">Unauthenticated Demo</div>
@@ -175,4 +261,3 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, pending
     </header>
   );
 };
-

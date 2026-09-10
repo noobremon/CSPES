@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { AuthProvider, useAuth } from '../context/AuthContext';
-import { Header } from '../components/layout/Header';
+import { Header, NavTabType } from '../components/layout/Header';
 import { LoginPage } from '../components/auth/LoginPage';
+import { NationalDashboardView } from '../components/dashboard/NationalDashboardView';
 import { DataIngestionView } from '../components/ingestion/DataIngestionView';
 import { RecommendationWorkspace } from '../components/cnmc/RecommendationWorkspace';
 import { GovernanceReviewQueue } from '../components/cnmc/GovernanceReviewQueue';
@@ -12,20 +13,15 @@ import { Card } from '../components/ui/Card';
 import { ErrorBoundary } from '../components/common/ErrorBoundary';
 import { CNMCCandidateItem } from '../types';
 import { 
-  ShieldCheck, 
   Activity, 
-  Layers, 
   Database, 
   Lock, 
-  CheckCircle2, 
-  AlertCircle,
-  Building2,
-  Sparkles
+  CheckCircle2
 } from 'lucide-react';
 
 const MainAppContent: React.FC = () => {
   const { user, isAuthenticated, isLoading } = useAuth();
-  const [activeTab, setActiveTab] = useState<'ingestion' | 'workspace' | 'queue' | 'mappings' | 'analytics' | 'health'>('workspace');
+  const [activeTab, setActiveTab] = useState<NavTabType>('dashboard');
   const [selectedCandidate, setSelectedCandidate] = useState<CNMCCandidateItem | null>(null);
   const [refreshTrigger, setRefreshTrigger] = useState<number>(0);
 
@@ -40,7 +36,7 @@ const MainAppContent: React.FC = () => {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-[#F8FAFC] flex flex-col items-center justify-center space-y-4">
-        <div className="w-10 h-10 border-4 border-gov-navy/20 border-t-gov-navy rounded-full animate-spin" />
+        <div className="w-10 h-10 border-4 border-[#0F172A]/20 border-t-[#0F172A] rounded-full animate-spin" />
         <span className="text-xs font-semibold text-[#475569] tracking-wider uppercase">
           Verifying National Unified Portal Session...
         </span>
@@ -53,64 +49,45 @@ const MainAppContent: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#F8FAFC] text-[#0F172A] selection:bg-gov-navy selection:text-white">
+    <div className="min-h-screen flex flex-col bg-[#F8FAFC] text-[#0F172A] selection:bg-[#1E3A8A] selection:text-white">
       <Header
         activeTab={activeTab}
         setActiveTab={setActiveTab}
         pendingCount={2}
       />
 
-      <main className="flex-1 max-w-7xl w-full mx-auto p-6 space-y-6">
-        {/* National Material Intelligence Header Banner */}
-        <div className="bg-white border border-[#E2E8F0] rounded-xl p-5 shadow-2xs flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-          <div className="space-y-1">
-            <div className="flex items-center gap-2">
-              <span className="inline-block w-2.5 h-2.5 rounded-full bg-[#15803D] animate-pulse" />
-              <h2 className="text-base font-bold text-gov-navy uppercase tracking-wider">
-                National Material Intelligence
-              </h2>
-            </div>
-            <p className="text-xs text-[#475569] max-w-3xl leading-relaxed">
-              Unified material analysis, AI-assisted matching, CNMC recommendation, and human governance for cross-CPSE material standardization.
-            </p>
-          </div>
+      <main className="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 space-y-6">
+        
+        {/* Tab 0: National Material Intelligence Dashboard */}
+        {activeTab === 'dashboard' && (
+          <ErrorBoundary fallbackTitle="National Intelligence Dashboard">
+            <NationalDashboardView
+              onNavigateToWorkspace={() => setActiveTab('workspace')}
+              onNavigateToAnalytics={() => setActiveTab('analytics')}
+            />
+          </ErrorBoundary>
+        )}
 
-          <div className="flex items-center gap-3 text-xs shrink-0 self-stretch md:self-auto justify-end">
-            <div className="px-3 py-1.5 bg-[#F8FAFC] border border-[#E2E8F0] rounded-lg text-[#475569]">
-              <span className="font-bold text-gov-navy">4 Roles</span> RBAC Enabled
-            </div>
-            <div className="px-3 py-1.5 bg-[#EFF6FF] border border-blue-200 rounded-lg text-[#1D4ED8] font-semibold">
-              SIH MVP Prototype
-            </div>
-          </div>
-        </div>
-
-        {/* Tab 0: Multi-CPSE Data Ingestion */}
+        {/* Tab 1: Multi-CPSE Data Ingestion */}
         {activeTab === 'ingestion' && (
           <ErrorBoundary fallbackTitle="Data Ingestion Portal">
             <DataIngestionView
-              onNavigateToWorkspace={() => {
-                setActiveTab('workspace');
-              }}
+              onNavigateToWorkspace={() => setActiveTab('workspace')}
             />
           </ErrorBoundary>
         )}
 
-        {/* Tab 1: CNMC Recommendation Workspace */}
+        {/* Tab 2: CNMC Recommendation Workspace */}
         {activeTab === 'workspace' && (
           <ErrorBoundary fallbackTitle="CNMC Recommendation Workspace">
             <RecommendationWorkspace
-              onCandidateCreated={() => {
-                setRefreshTrigger((prev) => prev + 1);
-              }}
-              onNavigateToReview={(_candidateId) => {
-                setActiveTab('queue');
-              }}
+              onCandidateCreated={() => setRefreshTrigger((prev) => prev + 1)}
+              onNavigateToReview={(_candidateId) => setActiveTab('queue')}
             />
           </ErrorBoundary>
         )}
 
-        {/* Tab 2: Governance Review Queue */}
+        {/* Tab 3: Governance Review Queue */}
         {activeTab === 'queue' && (
           <ErrorBoundary fallbackTitle="Governance Review Queue">
             <GovernanceReviewQueue
@@ -120,23 +97,23 @@ const MainAppContent: React.FC = () => {
           </ErrorBoundary>
         )}
 
-        {/* Tab 3: CPSE ↔ CNMC Cross-Walk Mapping */}
+        {/* Tab 4: CPSE ↔ CNMC Cross-Walk Mapping */}
         {activeTab === 'mappings' && (
           <ErrorBoundary fallbackTitle="CPSE ↔ CNMC Cross-Walk">
             <CPSEMappingView />
           </ErrorBoundary>
         )}
 
-        {/* Tab 4: National Material Master Analytics */}
+        {/* Tab 5: National Material Master Analytics */}
         {activeTab === 'analytics' && (
           <ErrorBoundary fallbackTitle="National Analytics Dashboard">
             <AnalyticsContainer />
           </ErrorBoundary>
         )}
 
-        {/* Tab 5: System Health & Security Status */}
+        {/* Tab 6: System Health & Security Status */}
         {activeTab === 'health' && (
-          <div className="space-y-6">
+          <div className="space-y-6 text-left">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <Card
                 title="System Operational Status"
@@ -189,7 +166,7 @@ const MainAppContent: React.FC = () => {
               <Card
                 title="Database & Seed Audit"
                 subtitle="Institutional Material Records"
-                icon={<Database className="w-5 h-5 text-gov-navy" />}
+                icon={<Database className="w-5 h-5 text-[#0F172A]" />}
               >
                 <div className="space-y-3 pt-2">
                   <div className="flex items-center justify-between text-xs">
@@ -208,7 +185,7 @@ const MainAppContent: React.FC = () => {
               </Card>
             </div>
 
-            <div className="rounded-xl border border-[#F3D19C] bg-[#FFF7E6] p-6 space-y-2 shadow-2xs">
+            <div className="rounded-2xl border border-[#F3D19C] bg-[#FFF7E6] p-6 space-y-2 shadow-2xs">
               <h3 className="text-xs font-bold text-[#92400E] uppercase tracking-wider">
                 Phase 10 Governance & Security Non-Negotiable Boundary
               </h3>
