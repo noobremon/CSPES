@@ -38,9 +38,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
   ];
 
   return (
-    <aside className="w-64 bg-gradient-to-b from-[#0F294A] via-[#0D233F] to-[#0A1A30] border-r border-[#1E3A8A]/40 text-white flex flex-col justify-between shrink-0 h-[calc(100vh-3.75rem)] sticky top-[3.75rem] z-30 select-none shadow-md">
-      {/* Top Main Navigation Items */}
-      <div className="p-3 space-y-1.5">
+    <aside className="w-64 bg-gradient-to-b from-[#0F294A] via-[#0D233F] to-[#0A1A30] border-r border-[#1E3A8A]/40 text-white flex flex-col justify-between shrink-0 self-stretch min-h-full z-30 select-none shadow-md">
+      {/* Top Main Navigation Items - Flush to header */}
+      <div className="p-3 pt-3.5 space-y-1.5">
         {navItems.map((item) => {
           const Icon = item.icon;
           const isActive = activeTab === item.id;
@@ -68,7 +68,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
         })}
       </div>
 
-      {/* Bottom Secondary Navigation (Help & Logout) */}
+      {/* Bottom Secondary Navigation (Help & Logout) - Flush to footer */}
       <div className="p-3 border-t border-[#1E3A8A]/40 space-y-1.5">
         <button
           onClick={() => alert('National Unified Material Master Framework — SIH 2026 Help & Support Portal')}
