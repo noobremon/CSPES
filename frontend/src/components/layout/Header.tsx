@@ -58,132 +58,32 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, pending
   };
 
   return (
-    <header className="border-b border-[#E2E8F0] bg-white sticky top-0 z-50 px-4 sm:px-6 py-3 shadow-2xs">
-      <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-3">
+    <header className="border-b border-[#E2E8F0] bg-white sticky top-0 z-50 shadow-2xs">
+      {/* Top Header Row */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-4">
         
         {/* Brand & Platform Identity */}
-        <div className="flex items-center space-x-3 w-full lg:w-auto justify-between lg:justify-start">
-          <div className="flex items-center space-x-3">
-            <div className="p-2 bg-[#0F172A] text-white rounded-xl shadow-xs">
-              <Layers className="w-5 h-5" />
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <h1 className="text-sm font-extrabold text-[#0F172A] tracking-tight sm:text-base">
-                  National Unified Material Master Framework
-                </h1>
-                <span className="text-[10px] uppercase font-bold px-2 py-0.5 rounded bg-[#EFF6FF] text-[#2563EB] border border-blue-200">
-                  SIH 2026
-                </span>
-              </div>
-              <p className="text-[11px] text-[#64748B] font-medium text-left">
-                Unified Material Intelligence Platform
-              </p>
-            </div>
+        <div className="flex items-center space-x-3">
+          <div className="p-2.5 bg-[#0F172A] text-white rounded-xl shadow-xs shrink-0">
+            <Layers className="w-5 h-5" />
           </div>
-
-          {/* Quick Icons (Search, Notifications, Profile) for Mobile / Desktop */}
-          <div className="flex items-center gap-2 lg:hidden">
-            <button className="p-2 text-[#64748B] hover:text-[#0F172A] rounded-lg">
-              <Bell className="w-4 h-4" />
-            </button>
+          <div className="text-left">
+            <div className="flex items-center gap-2">
+              <h1 className="text-sm sm:text-base font-extrabold text-[#0F172A] tracking-tight">
+                National Unified Material Master Framework
+              </h1>
+              <span className="text-[10px] uppercase font-bold px-2 py-0.5 rounded bg-[#EFF6FF] text-[#2563EB] border border-blue-200">
+                SIH 2026
+              </span>
+            </div>
+            <p className="text-[11px] text-[#64748B] font-medium">
+              Unified Material Intelligence Platform
+            </p>
           </div>
         </div>
 
-        {/* Enterprise Navigation Tabs */}
-        <nav className="flex items-center space-x-1 bg-[#F8FAFC] p-1 rounded-2xl border border-[#CBD5E1] text-xs font-medium overflow-x-auto max-w-full">
-          <button
-            onClick={() => setActiveTab('dashboard')}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl transition-all focus:outline-hidden focus:ring-2 focus:ring-[#2563EB] cursor-pointer whitespace-nowrap ${
-              activeTab === 'dashboard'
-                ? 'bg-[#0F172A] text-white shadow-xs font-bold'
-                : 'text-[#475569] hover:text-[#0F172A] hover:bg-white'
-            }`}
-          >
-            <LayoutDashboard className="w-3.5 h-3.5" />
-            Dashboard
-          </button>
-
-          <button
-            onClick={() => setActiveTab('ingestion')}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl transition-all focus:outline-hidden focus:ring-2 focus:ring-[#2563EB] cursor-pointer whitespace-nowrap ${
-              activeTab === 'ingestion'
-                ? 'bg-[#0F172A] text-white shadow-xs font-bold'
-                : 'text-[#475569] hover:text-[#0F172A] hover:bg-white'
-            }`}
-          >
-            <UploadCloud className="w-3.5 h-3.5" />
-            Data Ingestion
-          </button>
-
-          <button
-            onClick={() => setActiveTab('workspace')}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl transition-all focus:outline-hidden focus:ring-2 focus:ring-[#2563EB] cursor-pointer whitespace-nowrap ${
-              activeTab === 'workspace'
-                ? 'bg-[#0F172A] text-white shadow-xs font-bold'
-                : 'text-[#475569] hover:text-[#0F172A] hover:bg-white'
-            }`}
-          >
-            <FileText className="w-3.5 h-3.5" />
-            CNMC Workspace
-          </button>
-
-          <button
-            onClick={() => setActiveTab('queue')}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl transition-all relative focus:outline-hidden focus:ring-2 focus:ring-[#2563EB] cursor-pointer whitespace-nowrap ${
-              activeTab === 'queue'
-                ? 'bg-[#0F172A] text-white shadow-xs font-bold'
-                : 'text-[#475569] hover:text-[#0F172A] hover:bg-white'
-            }`}
-          >
-            <CheckSquare className="w-3.5 h-3.5" />
-            Governance Queue
-            {pendingCount > 0 && (
-              <span className="ml-1 px-1.5 py-0.2 text-[10px] font-bold bg-[#F59E0B] text-white rounded-full">
-                {pendingCount}
-              </span>
-            )}
-          </button>
-
-          <button
-            onClick={() => setActiveTab('mappings')}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl transition-all focus:outline-hidden focus:ring-2 focus:ring-[#2563EB] cursor-pointer whitespace-nowrap ${
-              activeTab === 'mappings'
-                ? 'bg-[#0F172A] text-white shadow-xs font-bold'
-                : 'text-[#475569] hover:text-[#0F172A] hover:bg-white'
-            }`}
-          >
-            <GitCompare className="w-3.5 h-3.5" />
-            CPSE ↔ CNMC Cross-Walk
-          </button>
-
-          <button
-            onClick={() => setActiveTab('analytics')}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl transition-all focus:outline-hidden focus:ring-2 focus:ring-[#2563EB] cursor-pointer whitespace-nowrap ${
-              activeTab === 'analytics'
-                ? 'bg-[#0F172A] text-white shadow-xs font-bold'
-                : 'text-[#475569] hover:text-[#0F172A] hover:bg-white'
-            }`}
-          >
-            <BarChart3 className="w-3.5 h-3.5 text-[#2563EB]" />
-            National Analytics
-          </button>
-
-          <button
-            onClick={() => setActiveTab('health')}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl transition-all focus:outline-hidden focus:ring-2 focus:ring-[#2563EB] cursor-pointer whitespace-nowrap ${
-              activeTab === 'health'
-                ? 'bg-[#0F172A] text-white shadow-xs font-bold'
-                : 'text-[#475569] hover:text-[#0F172A] hover:bg-white'
-            }`}
-          >
-            <Info className="w-3.5 h-3.5" />
-            System Status
-          </button>
-        </nav>
-
         {/* Header Right Actions: Search, Notifications & Profile */}
-        <div className="hidden lg:flex items-center space-x-3 text-xs">
+        <div className="flex items-center space-x-3 text-xs">
           
           {/* Search Button */}
           <button
@@ -222,11 +122,11 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, pending
                       {getDisplayName()}
                     </span>
                     <span className="text-[10px] text-[#64748B]">
-                      ({user.role === 'NATIONAL_MASTER_ADMIN' ? 'National Admin' : user.role})
+                      (National Admin)
                     </span>
                   </div>
                   <div>
-                    <span className={`text-[9px] font-mono font-bold px-1.5 py-0.2 rounded border uppercase ${getRoleBadge(user.role)}`}>
+                    <span className={`text-[8px] font-mono font-bold px-1.5 py-0.2 rounded border uppercase ${getRoleBadge(user.role)}`}>
                       {getRoleDisplayTitle()}
                     </span>
                   </div>
@@ -256,6 +156,100 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, pending
           ) : (
             <div className="text-[#64748B] text-xs italic">Unauthenticated Demo</div>
           )}
+        </div>
+      </div>
+
+      {/* Sub Header Navbar: 7 Full Width Tabs Matching Reference UI */}
+      <div className="border-t border-[#F1F5F9] bg-[#FAFAFA] px-4 sm:px-6 py-2">
+        <div className="max-w-7xl mx-auto flex items-center justify-start gap-2 overflow-x-auto text-xs font-medium">
+          <button
+            onClick={() => setActiveTab('dashboard')}
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all cursor-pointer whitespace-nowrap ${
+              activeTab === 'dashboard'
+                ? 'bg-[#0F172A] text-white shadow-xs font-bold'
+                : 'text-[#475569] hover:text-[#0F172A] hover:bg-white'
+            }`}
+          >
+            <LayoutDashboard className="w-4 h-4" />
+            <span>Dashboard</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab('ingestion')}
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all cursor-pointer whitespace-nowrap ${
+              activeTab === 'ingestion'
+                ? 'bg-[#0F172A] text-white shadow-xs font-bold'
+                : 'text-[#475569] hover:text-[#0F172A] hover:bg-white'
+            }`}
+          >
+            <UploadCloud className="w-4 h-4" />
+            <span>Data Ingestion</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab('workspace')}
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all cursor-pointer whitespace-nowrap ${
+              activeTab === 'workspace'
+                ? 'bg-[#0F172A] text-white shadow-xs font-bold'
+                : 'text-[#475569] hover:text-[#0F172A] hover:bg-white'
+            }`}
+          >
+            <FileText className="w-4 h-4" />
+            <span>CNMC Workspace</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab('queue')}
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all relative cursor-pointer whitespace-nowrap ${
+              activeTab === 'queue'
+                ? 'bg-[#0F172A] text-white shadow-xs font-bold'
+                : 'text-[#475569] hover:text-[#0F172A] hover:bg-white'
+            }`}
+          >
+            <CheckSquare className="w-4 h-4" />
+            <span>Governance Queue</span>
+            {pendingCount > 0 && (
+              <span className="ml-1 w-5 h-5 text-[10px] font-bold bg-[#F59E0B] text-white rounded-full flex items-center justify-center">
+                {pendingCount}
+              </span>
+            )}
+          </button>
+
+          <button
+            onClick={() => setActiveTab('mappings')}
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all cursor-pointer whitespace-nowrap ${
+              activeTab === 'mappings'
+                ? 'bg-[#0F172A] text-white shadow-xs font-bold'
+                : 'text-[#475569] hover:text-[#0F172A] hover:bg-white'
+            }`}
+          >
+            <GitCompare className="w-4 h-4" />
+            <span>CPSE ↔ CNMC Cross-Walk</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab('analytics')}
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all cursor-pointer whitespace-nowrap ${
+              activeTab === 'analytics'
+                ? 'bg-[#0F172A] text-white shadow-xs font-bold'
+                : 'text-[#475569] hover:text-[#0F172A] hover:bg-white'
+            }`}
+          >
+            <BarChart3 className="w-4 h-4" />
+            <span>National Analytics</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab('health')}
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all cursor-pointer whitespace-nowrap ${
+              activeTab === 'health'
+                ? 'bg-[#0F172A] text-white shadow-xs font-bold'
+                : 'text-[#475569] hover:text-[#0F172A] hover:bg-white'
+            }`}
+          >
+            <Info className="w-4 h-4" />
+            <span>System Status</span>
+          </button>
         </div>
       </div>
     </header>
