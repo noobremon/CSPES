@@ -189,10 +189,10 @@ export const ReviewDetailModal: React.FC<ReviewDetailModalProps> = ({
               <button
                 type="button"
                 onClick={() => setActiveAction('APPROVE')}
-                className={`py-2 px-3 rounded-lg font-semibold flex items-center justify-center gap-2 border transition-all cursor-pointer ${
+                className={`py-2 px-3 rounded-lg font-semibold flex items-center justify-center gap-2 border transition-all focus:outline-hidden focus:ring-2 focus:ring-[#15803D] cursor-pointer ${
                   activeAction === 'APPROVE'
                     ? 'bg-[#15803D] border-[#166534] text-white shadow-xs'
-                    : 'bg-white border-[#CBD5E1] text-[#475569] hover:bg-slate-100'
+                    : 'bg-white border-[#CBD5E1] text-[#475569] hover:bg-[#F8FAFC] hover:text-[#15803D] hover:border-[#BBF7D0]'
                 }`}
               >
                 <CheckCircle2 className="w-4 h-4" />
@@ -202,10 +202,10 @@ export const ReviewDetailModal: React.FC<ReviewDetailModalProps> = ({
               <button
                 type="button"
                 onClick={() => setActiveAction('REJECT')}
-                className={`py-2 px-3 rounded-lg font-semibold flex items-center justify-center gap-2 border transition-all cursor-pointer ${
+                className={`py-2 px-3 rounded-lg font-semibold flex items-center justify-center gap-2 border transition-all focus:outline-hidden focus:ring-2 focus:ring-[#B91C1C] cursor-pointer ${
                   activeAction === 'REJECT'
                     ? 'bg-[#B91C1C] border-[#991B1B] text-white shadow-xs'
-                    : 'bg-white border-[#CBD5E1] text-[#475569] hover:bg-slate-100'
+                    : 'bg-white border-[#CBD5E1] text-[#475569] hover:bg-[#F8FAFC] hover:text-[#B91C1C] hover:border-[#FECACA]'
                 }`}
               >
                 <XCircle className="w-4 h-4" />
@@ -215,10 +215,10 @@ export const ReviewDetailModal: React.FC<ReviewDetailModalProps> = ({
               <button
                 type="button"
                 onClick={() => setActiveAction('MODIFY')}
-                className={`py-2 px-3 rounded-lg font-semibold flex items-center justify-center gap-2 border transition-all cursor-pointer ${
+                className={`py-2 px-3 rounded-lg font-semibold flex items-center justify-center gap-2 border transition-all focus:outline-hidden focus:ring-2 focus:ring-[#2563EB] cursor-pointer ${
                   activeAction === 'MODIFY'
                     ? 'bg-gov-navy border-gov-navy text-white shadow-xs'
-                    : 'bg-white border-[#CBD5E1] text-[#475569] hover:bg-slate-100'
+                    : 'bg-white border-[#CBD5E1] text-[#475569] hover:bg-[#F8FAFC] hover:text-gov-navy hover:border-slate-400'
                 }`}
               >
                 <Edit3 className="w-4 h-4" />
@@ -238,7 +238,7 @@ export const ReviewDetailModal: React.FC<ReviewDetailModalProps> = ({
                     type="text"
                     value={modifiedCNMC}
                     onChange={(e) => setModifiedCNMC(e.target.value)}
-                    className="w-full p-2 bg-white border border-[#CBD5E1] rounded-lg text-[#0F172A] font-mono text-xs focus:ring-1 focus:ring-[#2563EB] focus:border-[#2563EB]"
+                    className="w-full p-2 bg-white border border-[#CBD5E1] rounded-lg text-[#0F172A] font-mono text-xs hover:border-slate-400 focus:outline-hidden focus:ring-2 focus:ring-[#2563EB]/20 focus:border-[#2563EB]"
                   />
                 </div>
                 <div className="space-y-1.5">
@@ -247,7 +247,7 @@ export const ReviewDetailModal: React.FC<ReviewDetailModalProps> = ({
                     type="text"
                     value={modifiedTitle}
                     onChange={(e) => setModifiedTitle(e.target.value)}
-                    className="w-full p-2 bg-white border border-[#CBD5E1] rounded-lg text-[#0F172A] text-xs focus:ring-1 focus:ring-[#2563EB] focus:border-[#2563EB]"
+                    className="w-full p-2 bg-white border border-[#CBD5E1] rounded-lg text-[#0F172A] text-xs hover:border-slate-400 focus:outline-hidden focus:ring-2 focus:ring-[#2563EB]/20 focus:border-[#2563EB]"
                   />
                 </div>
               </div>
@@ -267,7 +267,7 @@ export const ReviewDetailModal: React.FC<ReviewDetailModalProps> = ({
                 }
                 value={comments}
                 onChange={(e) => setComments(e.target.value)}
-                className="w-full p-2.5 bg-white border border-[#CBD5E1] rounded-lg text-[#0F172A] placeholder-[#64748B] focus:outline-none focus:ring-1 focus:ring-[#2563EB] focus:border-[#2563EB] text-xs"
+                className="w-full p-2.5 bg-white border border-[#CBD5E1] rounded-lg text-[#0F172A] placeholder-[#64748B] hover:border-slate-400 focus:outline-hidden focus:ring-2 focus:ring-[#2563EB]/20 focus:border-[#2563EB] text-xs"
               />
             </div>
 
@@ -285,7 +285,7 @@ export const ReviewDetailModal: React.FC<ReviewDetailModalProps> = ({
           <button
             type="button"
             onClick={onClose}
-            className="px-4 py-2 rounded-xl bg-white border border-[#CBD5E1] hover:bg-slate-50 text-[#475569] font-semibold transition-colors text-xs shadow-2xs cursor-pointer"
+            className="px-4 py-2 rounded-xl bg-white border border-[#CBD5E1] hover:bg-[#F8FAFC] hover:border-slate-400 text-[#475569] hover:text-gov-navy font-semibold transition-colors text-xs shadow-2xs focus:outline-hidden focus:ring-2 focus:ring-[#2563EB] cursor-pointer"
           >
             Cancel
           </button>
@@ -293,7 +293,7 @@ export const ReviewDetailModal: React.FC<ReviewDetailModalProps> = ({
             type="button"
             onClick={handleSubmit}
             disabled={submitting}
-            className="px-5 py-2 rounded-xl bg-gov-navy hover:bg-gov-navy-dark text-white font-semibold flex items-center gap-2 shadow-xs transition-all text-xs disabled:opacity-50 cursor-pointer"
+            className="px-5 py-2 rounded-xl bg-gov-navy hover:bg-gov-navy-dark text-white font-semibold flex items-center gap-2 shadow-xs transition-all text-xs focus:outline-hidden focus:ring-2 focus:ring-[#2563EB] disabled:opacity-50 cursor-pointer"
           >
             {submitting ? <RefreshCw className="w-4 h-4 animate-spin" /> : <ShieldCheck className="w-4 h-4" />}
             <span>Confirm & Submit Decision</span>
@@ -303,3 +303,4 @@ export const ReviewDetailModal: React.FC<ReviewDetailModalProps> = ({
     </div>
   );
 };
+

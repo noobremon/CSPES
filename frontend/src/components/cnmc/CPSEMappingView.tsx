@@ -118,13 +118,13 @@ export const CPSEMappingView: React.FC = () => {
             placeholder="Search by CNMC code, CPSE, or local item code..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-9 pr-3 py-1.5 text-xs bg-white rounded-lg border border-[#CBD5E1] text-[#0F172A] placeholder-[#64748B] focus:outline-none focus:ring-1 focus:ring-[#2563EB] focus:border-[#2563EB] transition-all"
+            className="w-full pl-9 pr-3 py-1.5 text-xs bg-white rounded-lg border border-[#CBD5E1] text-[#0F172A] placeholder-[#64748B] hover:border-slate-400 focus:outline-hidden focus:ring-2 focus:ring-[#2563EB]/20 focus:border-[#2563EB] transition-all"
           />
         </div>
 
         <button
           onClick={loadMappings}
-          className="p-2 bg-white border border-[#CBD5E1] rounded-lg text-[#475569] hover:text-gov-navy hover:border-slate-400 flex items-center gap-1.5 text-xs px-3 shadow-2xs transition-all cursor-pointer"
+          className="p-2 bg-white border border-[#CBD5E1] rounded-lg text-[#475569] hover:text-gov-navy hover:bg-[#F8FAFC] hover:border-slate-400 focus:outline-hidden focus:ring-2 focus:ring-[#2563EB] flex items-center gap-1.5 text-xs px-3 shadow-2xs transition-all cursor-pointer"
           title="Refresh Mappings"
         >
           <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
@@ -153,7 +153,7 @@ export const CPSEMappingView: React.FC = () => {
             <tbody className="divide-y divide-[#E2E8F0]">
               {filteredMappings.length > 0 ? (
                 filteredMappings.map((m) => (
-                  <tr key={m.id} className="hover:bg-slate-50/80 transition-colors">
+                  <tr key={m.id} className="hover:bg-[#F8FAFC] transition-colors">
                     <td className="py-3.5 px-6 font-mono font-bold text-gov-navy flex items-center gap-2">
                       <Tag className="w-3.5 h-3.5 text-[#2563EB] shrink-0" />
                       <span>{m.cnmc_code}</span>
@@ -194,3 +194,4 @@ export const CPSEMappingView: React.FC = () => {
     </div>
   );
 };
+

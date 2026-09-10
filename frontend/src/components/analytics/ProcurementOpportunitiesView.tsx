@@ -104,13 +104,13 @@ export const ProcurementOpportunitiesView: React.FC<ProcurementOpportunitiesView
   const getPriorityBadge = (priority: string) => {
     switch (priority) {
       case 'HIGH':
-        return 'bg-rose-50 text-rose-800 border-rose-200';
+        return 'bg-[#FEF2F2] text-[#B91C1C] border-[#FECACA]';
       case 'MEDIUM':
-        return 'bg-amber-50 text-amber-800 border-amber-200';
+        return 'bg-[#FFF7E6] text-[#92400E] border-[#F3D19C]';
       case 'LOW':
-        return 'bg-blue-50 text-blue-800 border-blue-200';
+        return 'bg-[#EFF6FF] text-[#1D4ED8] border-blue-200';
       default:
-        return 'bg-slate-100 text-slate-700 border-slate-200';
+        return 'bg-[#F8FAFC] text-[#475569] border-[#E2E8F0]';
     }
   };
 
@@ -161,14 +161,14 @@ export const ProcurementOpportunitiesView: React.FC<ProcurementOpportunitiesView
         </div>
 
         <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-2xs">
-          <span className="text-xs font-bold text-rose-700 uppercase tracking-wider">High Priority Synergies</span>
-          <div className="text-2xl font-bold text-rose-800 mt-2">{highPriorityCount}</div>
+          <span className="text-xs font-bold text-[#B91C1C] uppercase tracking-wider">High Priority Synergies</span>
+          <div className="text-2xl font-bold text-[#B91C1C] mt-2">{highPriorityCount}</div>
           <p className="text-xs text-slate-500 mt-1">≥ 3 CPSEs or high duplicate density</p>
         </div>
 
         <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-2xs">
-          <span className="text-xs font-bold text-cyan-800 uppercase tracking-wider">Demonstration Synergy Potential</span>
-          <div className="text-2xl font-bold text-cyan-900 mt-2">HIGH POTENTIAL ({opportunities.length} Synergy Clusters)</div>
+          <span className="text-xs font-bold text-gov-navy uppercase tracking-wider">Demonstration Synergy Potential</span>
+          <div className="text-2xl font-bold text-gov-navy mt-2">HIGH POTENTIAL ({opportunities.length} Clusters)</div>
           <p className="text-xs text-slate-500 mt-1">Relative opportunity indicator</p>
         </div>
       </div>
@@ -183,7 +183,7 @@ export const ProcurementOpportunitiesView: React.FC<ProcurementOpportunitiesView
           <select
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
-            className="text-xs bg-slate-50 border border-slate-300 rounded-lg px-3 py-1.5 text-slate-900 focus:outline-none focus:ring-2 focus:ring-gov-navy/20 focus:border-gov-navy transition-all"
+            className="text-xs bg-white border border-[#CBD5E1] rounded-lg px-3 py-1.5 text-slate-900 hover:border-slate-400 focus:outline-hidden focus:ring-2 focus:ring-[#2563EB]/20 focus:border-[#2563EB] transition-all"
           >
             <option value="ALL">All Opportunity Types</option>
             <option value="CROSS_CPSE_COMMON_DEMAND">Cross-CPSE Demand Aggregation</option>
@@ -199,7 +199,7 @@ export const ProcurementOpportunitiesView: React.FC<ProcurementOpportunitiesView
           <select
             value={selectedPriority}
             onChange={(e) => setSelectedPriority(e.target.value)}
-            className="text-xs bg-slate-50 border border-slate-300 rounded-lg px-3 py-1.5 text-slate-900 focus:outline-none focus:ring-2 focus:ring-gov-navy/20 focus:border-gov-navy transition-all"
+            className="text-xs bg-white border border-[#CBD5E1] rounded-lg px-3 py-1.5 text-slate-900 hover:border-slate-400 focus:outline-hidden focus:ring-2 focus:ring-[#2563EB]/20 focus:border-[#2563EB] transition-all"
           >
             <option value="ALL">All Priorities</option>
             <option value="HIGH">High Priority</option>
@@ -218,7 +218,7 @@ export const ProcurementOpportunitiesView: React.FC<ProcurementOpportunitiesView
         {filteredOpportunities.map((opp) => (
           <div 
             key={opp.opportunity_id}
-            className="bg-white p-5 rounded-xl border border-slate-200 shadow-2xs hover:shadow-sm transition-all flex flex-col justify-between space-y-4"
+            className="bg-white hover:bg-[#F8FAFC]/50 p-5 rounded-xl border border-slate-200 shadow-2xs hover:shadow-sm transition-all flex flex-col justify-between space-y-4"
           >
             <div className="space-y-2">
               <div className="flex items-start justify-between gap-2">
@@ -248,8 +248,8 @@ export const ProcurementOpportunitiesView: React.FC<ProcurementOpportunitiesView
               </div>
 
               {opp.recommended_next_step && (
-                <div className="p-2.5 bg-slate-50 rounded-lg border border-slate-200/80 flex items-start gap-2">
-                  <Lightbulb className="w-3.5 h-3.5 text-amber-600 shrink-0 mt-0.5" />
+                <div className="p-2.5 bg-[#F8FAFC] rounded-lg border border-slate-200 flex items-start gap-2">
+                  <Lightbulb className="w-3.5 h-3.5 text-[#D97706] shrink-0 mt-0.5" />
                   <span className="text-[11px] text-slate-700 leading-tight">
                     <strong className="text-slate-900">Next Action:</strong> {opp.recommended_next_step}
                   </span>
@@ -262,3 +262,4 @@ export const ProcurementOpportunitiesView: React.FC<ProcurementOpportunitiesView
     </div>
   );
 };
+

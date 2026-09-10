@@ -115,10 +115,10 @@ export const DuplicateIntelligenceView: React.FC<DuplicateIntelligenceViewProps>
 
       {/* Clusters List & Detail Modal/Drawer */}
       <div className="bg-white rounded-xl border border-slate-200 shadow-2xs overflow-hidden">
-        <div className="p-4 border-b border-slate-200 bg-slate-50/50 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div className="p-4 border-b border-slate-200 bg-[#F8FAFC] flex flex-col sm:flex-row items-center justify-between gap-3">
           <div>
-            <h3 className="text-base font-bold text-slate-900">Identified Duplicate & Equivalence Clusters</h3>
-            <p className="text-xs text-slate-500">Cross-enterprise material groups with high spec overlap</p>
+            <h3 className="text-sm font-bold uppercase tracking-wider text-slate-900">Identified Duplicate & Equivalence Clusters</h3>
+            <p className="text-xs text-slate-500 mt-0.5">Cross-enterprise material groups with high spec overlap</p>
           </div>
           <div className="relative w-full sm:w-72">
             <Search className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
@@ -127,7 +127,7 @@ export const DuplicateIntelligenceView: React.FC<DuplicateIntelligenceViewProps>
               placeholder="Search cluster name or CNMC..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-9 pr-3 py-1.5 text-xs bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gov-navy/20 focus:border-gov-navy text-slate-900 placeholder-slate-400 transition-all"
+              className="w-full pl-9 pr-3 py-1.5 text-xs bg-white border border-[#CBD5E1] rounded-lg hover:border-slate-400 focus:outline-hidden focus:ring-2 focus:ring-[#2563EB]/20 focus:border-[#2563EB] text-[#0F172A] placeholder-[#64748B] transition-all"
             />
           </div>
         </div>
@@ -141,7 +141,7 @@ export const DuplicateIntelligenceView: React.FC<DuplicateIntelligenceViewProps>
             filteredClusters.map((cluster) => (
               <div 
                 key={cluster.cluster_id} 
-                className="p-4 hover:bg-slate-50/80 transition-colors flex flex-col md:flex-row items-start md:items-center justify-between gap-4 cursor-pointer"
+                className="p-4 hover:bg-[#F8FAFC] transition-colors flex flex-col md:flex-row items-start md:items-center justify-between gap-4 cursor-pointer"
                 onClick={() => setSelectedCluster(cluster)}
               >
                 <div className="space-y-1">
@@ -151,7 +151,7 @@ export const DuplicateIntelligenceView: React.FC<DuplicateIntelligenceViewProps>
                       {cluster.category_code}
                     </span>
                     {cluster.cnmc_code && (
-                      <span className="text-[11px] font-mono font-bold px-2 py-0.5 rounded bg-gov-navy/10 text-gov-navy border border-gov-navy/20">
+                      <span className="text-[11px] font-mono font-bold px-2 py-0.5 rounded bg-[#EFF6FF] text-gov-navy border border-blue-200">
                         {cluster.cnmc_code}
                       </span>
                     )}
@@ -176,7 +176,7 @@ export const DuplicateIntelligenceView: React.FC<DuplicateIntelligenceViewProps>
                   }`}>
                     {cluster.match_type.replace(/_/g, ' ')}
                   </span>
-                  <button className="text-slate-400 hover:text-gov-navy p-1">
+                  <button className="text-slate-400 hover:text-gov-navy focus:outline-hidden focus:ring-2 focus:ring-[#2563EB] rounded p-1">
                     <ChevronRight className="w-4 h-4" />
                   </button>
                 </div>
@@ -198,18 +198,18 @@ export const DuplicateIntelligenceView: React.FC<DuplicateIntelligenceViewProps>
               </div>
               <button 
                 onClick={() => setSelectedCluster(null)}
-                className="text-slate-400 hover:text-slate-700 font-bold text-lg px-2"
+                className="text-slate-400 hover:text-slate-700 focus:outline-hidden focus:ring-2 focus:ring-[#2563EB] rounded font-bold text-lg px-2 cursor-pointer"
               >
                 &times;
               </button>
             </div>
 
             <div className="grid grid-cols-2 gap-3 text-xs">
-              <div className="p-3 bg-slate-50 rounded-lg border border-slate-200/80">
+              <div className="p-3 bg-[#F8FAFC] rounded-lg border border-[#E2E8F0]">
                 <span className="text-slate-500">Participating Enterprises</span>
                 <div className="font-bold text-slate-900 mt-1">{selectedCluster.participating_cpses.join(', ')}</div>
               </div>
-              <div className="p-3 bg-slate-50 rounded-lg border border-slate-200/80">
+              <div className="p-3 bg-[#F8FAFC] rounded-lg border border-[#E2E8F0]">
                 <span className="text-slate-500">Equivalence Method</span>
                 <div className="font-bold text-slate-900 mt-1">{selectedCluster.match_type.replace(/_/g, ' ')}</div>
               </div>
@@ -221,19 +221,19 @@ export const DuplicateIntelligenceView: React.FC<DuplicateIntelligenceViewProps>
               </h5>
               <div className="border border-slate-200 rounded-lg overflow-hidden">
                 <table className="w-full text-xs text-left">
-                  <thead className="bg-slate-50 border-b border-slate-200 text-slate-700 text-[10px] uppercase font-bold">
+                  <thead className="bg-[#F8FAFC] border-b border-slate-200 text-slate-700 text-[10px] uppercase font-bold">
                     <tr>
-                      <th className="p-2">CPSE</th>
-                      <th className="p-2">Local Item Code</th>
-                      <th className="p-2">Description</th>
+                      <th className="p-2.5">CPSE</th>
+                      <th className="p-2.5">Local Item Code</th>
+                      <th className="p-2.5">Description</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-slate-200 text-slate-700">
                     {selectedCluster.items.map((item, i) => (
-                      <tr key={i} className="hover:bg-slate-50/60">
-                        <td className="p-2 font-bold text-gov-navy">{item.cpse_code}</td>
-                        <td className="p-2 font-mono font-semibold text-slate-900">{item.local_material_code}</td>
-                        <td className="p-2 text-slate-600">{item.description}</td>
+                      <tr key={i} className="hover:bg-[#F8FAFC]">
+                        <td className="p-2.5 font-bold text-gov-navy">{item.cpse_code}</td>
+                        <td className="p-2.5 font-mono font-semibold text-slate-900">{item.local_material_code}</td>
+                        <td className="p-2.5 text-slate-600">{item.description}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -244,7 +244,7 @@ export const DuplicateIntelligenceView: React.FC<DuplicateIntelligenceViewProps>
             <div className="flex justify-end pt-3 border-t border-slate-100">
               <button
                 onClick={() => setSelectedCluster(null)}
-                className="px-4 py-2 bg-gov-navy text-white text-xs font-semibold rounded-lg hover:bg-gov-navy-dark transition-all shadow-2xs"
+                className="px-4 py-2 bg-gov-navy text-white text-xs font-semibold rounded-lg hover:bg-gov-navy-dark focus:outline-hidden focus:ring-2 focus:ring-[#2563EB] transition-all shadow-2xs cursor-pointer"
               >
                 Close Drawer
               </button>
@@ -255,3 +255,4 @@ export const DuplicateIntelligenceView: React.FC<DuplicateIntelligenceViewProps>
     </div>
   );
 };
+

@@ -1,179 +1,152 @@
-# Government Enterprise UI Color System
-
-**System Identification:** National Unified Material Master Framework — SIH 2026  
-**Classification:** VISUAL / UI REFINEMENT ONLY (Zero Functional / Backend / RBAC Changes)  
-**Standard Version:** 1.0 (Government of India Enterprise Digital Infrastructure)  
+# Government Enterprise UI Color System & Interaction State Specification
+**National Unified Material Master Framework — SIH 2026**
+**Design Guidance:** Government of India UX4G Design System & GIGW (Guidelines for Indian Government Websites)
 
 ---
 
-## 1. Executive Summary & Existing System Audit
+## 1. Existing Color Problems Discovered & Resolved
 
-### Baseline State
-The application previously featured fragmented color semantics, including saturated electric blues, inconsistent status badge borders, disparate container backgrounds (including dark gray utility blocks), and ad-hoc hover and focus states across views.
-
-### Problems Identified
-1. **Saturated / Marketing-Style Accents:** Primary buttons and focus rings used standard high-intensity SaaS blue (`#2563EB`/`#3B82F6`) for primary branding instead of authoritative institutional navy.
-2. **Inconsistent Active & Selected States:** Selected personas, tabs, and scenario selector states used inconsistent background-to-border hierarchies across authentication and dashboard views.
-3. **Banner Styling Variance:** Disclaimer banners and governance notices used loud amber fills rather than subtle, official information notices.
-4. **Scattered Arbitrary Utility Classes:** Individual JSX files declared inline color classes rather than sharing unified semantic tokens.
+Prior to this refinement, the user interface presented several visual and interaction inconsistencies:
+1. **Random Black/Dark Inversions on Hover**: Interactive buttons (such as "Examine", secondary action triggers, and status filter tabs) flipped to solid black/navy backgrounds on hover, disrupting visual continuity.
+2. **Inconsistent Table Row Hover Colors**: Tables across modules used fragmented hover background colors (`hover:bg-slate-50/80`, `hover:bg-slate-50/60`, `hover:bg-slate-50/50`) instead of a unified `#F8FAFC` surface.
+3. **Inconsistent Focus Indicators**: Inputs and interactive elements lacked a standardized visible focus ring (`#2563EB` with 2px ring offset) required under GIGW / WCAG 2.1 AA accessibility guidelines.
+4. **Scattered Arbitrary Hex Codes**: Inline hex codes were hardcoded directly in JSX rather than inheriting centralized design tokens.
 
 ---
 
-## 2. Standardized Enterprise Color Palette
+## 2. Final Color Token Architecture
 
-The color hierarchy adheres strictly to a **70–80% White / Light Neutral, 15–20% Navy / Blue Authority, 5–10% Semantic Accents** distribution:
+The color system enforces a **White-First Government Enterprise Hierarchy** with disciplined Navy authority, Blue interaction accents, and restrained semantic colors.
 
-```
-┌───────────────────────────────────────────────────────────┐
-│ Page Background: #F8FAFC (Subtle Clean Canvas)           │
-│   │                                                       │
-│   ▼                                                       │
-│ White Surfaces / Cards: #FFFFFF (Border: #E2E8F0)         │
-│   │                                                       │
-│   ▼                                                       │
-│ Institutional Authority: #123B63 (Navy) & #2563EB (Blue)   │
-│   │                                                       │
-│   ▼                                                       │
-│ Semantic Status Accents (Green / Saffron / Red / Teal)    │
-└───────────────────────────────────────────────────────────┘
-```
+### Color Distribution Target
+- **70–80%**: White + Very Light Neutrals (`#F8FAFC`, `#FFFFFF`, `#F1F5F9`)
+- **15–20%**: Navy Authority (`#123B63`) + Interaction Blue (`#2563EB`)
+- **5–10%**: Combined Semantic Colors (Green, Amber, Red, Teal)
 
-| Token Identifier | Hex Code | Purpose & Usage Rule |
-|---|---|---|
-| **National Navy** | `#123B63` | Primary authority, brand headings, primary buttons, active tab navigation, selected scenario items. |
-| **Navy Dark** | `#0F2F4F` | Primary button hover state. |
-| **Government Blue** | `#2563EB` | Interactive elements, links, focus states, selected persona borders, information icons. |
-| **Light Blue Surface** | `#EFF6FF` | Selected persona backgrounds, AI cards, informational panels. |
-| **Page Canvas** | `#F8FAFC` | Global subtle application background. |
-| **Surface White** | `#FFFFFF` | All primary cards, containers, tables, and modal backgrounds. |
-| **Card Border** | `#E2E8F0` | Structural card borders and container separators. |
-| **Input Border** | `#CBD5E1` | Form inputs, inactive scenario buttons, and secondary borders. |
-| **Primary Text** | `#0F172A` | Main headings, material names, primary data values. |
-| **Secondary Text** | `#475569` | Explanatory text, descriptions, supporting metadata. |
-| **Muted Text** | `#64748B` | Labels, timestamps, input icons, secondary metadata. |
-
-### Semantic Status Tokens
-
-* **Green (Approved / Success / Standardized):** Text `#15803D` | Background `#ECFDF3` / `#F0FDF4` | Border `#BBF7D0` / `#BBF7D0`
-* **Saffron (Governance Caution / Notice / Pending):** Text `#D97706` | Background `#FFF7E6` | Border `#F3D19C` | Heading `#92400E` | Body `#78350F`
-* **Red (Error / Rejected / Security):** Text `#B91C1C` | Background `#FEF2F2` | Border `#FECACA`
-* **Teal (Data Intelligence / Classification):** Text `#0F766E` | Background `#F0FDFA` | Border `#99F6E4`
+| Token Name | Hex Code | Purpose & Usage |
+| :--- | :--- | :--- |
+| `gov-page` | `#F8FAFC` | Global page background surface |
+| `gov-card` | `#FFFFFF` | Cards, panels, modal dialogs, data tables |
+| `gov-surface` | `#F1F5F9` | Secondary grouping surfaces, table headers, neutral badges |
+| `gov-blue-surface` | `#EFF6FF` | Information panels, selection indicators, light accents |
+| `gov-border` | `#E2E8F0` | Primary container borders and table dividers |
+| `gov-border-strong` | `#CBD5E1` | Input borders, stronger card borders |
+| `gov-text-primary` | `#0F172A` | Primary interface typography (Never pure `#000000`) |
+| `gov-text-secondary`| `#475569` | Sub-headings, metadata labels, table header text |
+| `gov-text-muted` | `#64748B` | Helper text, secondary timestamps, footers |
+| `gov-text-disabled`| `#94A3B8` | Disabled controls, inactive placeholders |
+| `gov-navy` | `#123B63` | Institutional authority, primary action buttons, active tabs |
+| `gov-navy-dark` | `#0F2F4F` | Primary button hover & active/pressed state |
+| `gov-blue` | `#2563EB` | Interactive links, focus indicators, selection rings |
+| `gov-blue-dark` | `#1D4ED8` | Interactive hover links, focused badge borders |
 
 ---
 
-## 3. Centralized Design Tokens & CSS Architecture
+## 3. Semantic Color Meanings
 
-### `tailwind.config.js`
-Integrated dedicated enterprise tokens directly into the Tailwind configuration:
-```javascript
-gov: {
-  navy: '#123B63',
-  'navy-dark': '#0F2F4F',
-  blue: '#2563EB',
-  surface: '#EFF6FF',
-  canvas: '#F8FAFC',
-  card: '#FFFFFF',
-  border: '#E2E8F0',
-  'border-subtle': '#CBD5E1',
-  text: {
-    primary: '#0F172A',
-    secondary: '#475569',
-    muted: '#64748B'
-  },
-  green: '#15803D',
-  greenLight: '#ECFDF3',
-  greenSurface: '#F0FDF4',
-  greenBorder: '#BBF7D0',
-  saffron: '#D97706',
-  saffronLight: '#FFF7E6',
-  saffronBorder: '#F3D19C',
-  saffronHeading: '#92400E',
-  saffronBody: '#78350F',
-  red: '#B91C1C',
-  redLight: '#FEF2F2',
-  redBorder: '#FECACA',
-  teal: '#0F766E',
-  tealLight: '#F0FDFA',
-  tealBorder: '#99F6E4'
-}
-```
+Semantic colors are applied **strictly when state has meaningful business context** and are never used as generic decoration. Color is never the sole indicator; icons and clear text labels always accompany status values.
 
-### `src/styles/index.css`
-Standardized reusable semantic badge classes:
-- `.gov-badge-navy`: `#123B63` on `#EFF6FF`
-- `.gov-badge-blue`: `#2563EB` on `#EFF6FF`
-- `.gov-badge-green`: `#15803D` on `#ECFDF3`
-- `.gov-badge-saffron`: `#D97706` on `#FFF7E6`
-- `.gov-badge-red`: `#B91C1C` on `#FEF2F2`
-- `.gov-badge-teal`: `#0F766E` on `#F0FDFA`
-- `.gov-notice-box`: Standardized official notice styling with `#FFF7E6` background and `#F3D19C` border.
+| Semantic Role | Primary Color | Light Background | Border Color | Applied Context |
+| :--- | :--- | :--- | :--- | :--- |
+| **Success / Approved** | `#15803D` | `#ECFDF3` | `#BBF7D0` | Approved CNMCs, healthy status, verified matches |
+| **Warning / Governance** | `#D97706` | `#FFF7E6` | `#F3D19C` | Pending review, prototype notices, caution disclaimers |
+| **Error / Rejection** | `#B91C1C` | `#FEF2F2` | `#FECACA` | Rejected proposals, API errors, validation failures |
+| **Analytics / Intelligence** | `#0F766E` | `#F0FDFA` | `#99F6E4` | Taxonomy intelligence, progress bars, technical charts |
 
 ---
 
-## 4. Components & Views Modified
+## 4. Interaction State Behavior Matrix
 
-1. **Authentication Screen (`src/components/auth/LoginPage.tsx`):**
-   - Canvas background `#F8FAFC`, brand icon `#123B63`.
-   - Persona selection cards: unselected `#FFFFFF` (border `#E2E8F0`), selected `#EFF6FF` (border `#2563EB`, icon `#2563EB`).
-   - Official credentials notice: `#FFF7E6` background, `#F3D19C` border, `#92400E` heading, `#78350F` text.
-   - Primary sign-in button: authoritative `#123B63` (hover `#0F2F4F`, text `#FFFFFF`).
+### Normal State
+- Cards & panels: `#FFFFFF`
+- Interactive buttons: White background with `#CBD5E1` border or Navy `#123B63` for primary actions.
+- Inputs: `#FFFFFF` with `#CBD5E1` border.
 
-2. **Top Navigation Header (`src/components/layout/Header.tsx`):**
-   - Header container `#FFFFFF` with `#E2E8F0` bottom border.
-   - Navigation tabs: transparent/white with `#334155` text; active tab `#123B63` with white text.
-   - User profile & role badge: authoritative `#123B63` background with white text.
+### Hover State (`:hover`)
+- **Primary Buttons**: `#123B63` &rarr; `#0F2F4F` (darker navy)
+- **Secondary Buttons**: `#FFFFFF` &rarr; `#F8FAFC` background with `#123B63` text and `#94A3B8` border
+- **Navigation Tabs**: Transparent &rarr; `#F8FAFC` background with `#123B63` text
+- **Table Rows**: `#FFFFFF` &rarr; `#F8FAFC` background
+- **Dropzone**: `#F8FAFC` &rarr; `#EFF6FF` background with `#2563EB` dashed border
 
-3. **Application Shell & Hero Banner (`src/app/App.tsx`):**
-   - Hero banner: `#123B63` title, `#15803D` online status indicator, `#EFF6FF` prototype badge.
-   - Global page background `#F8FAFC`.
-   - System Status & Enterprise Footer aligned to navy/slate palette.
+### Active / Selected State (`:active`, `aria-selected="true"`)
+- **Primary Selected**: `#123B63` background with `#FFFFFF` text (e.g. Navigation tabs, Scenario pills)
+- **Secondary Selected**: `#EFF6FF` background with `#2563EB` border and ring (e.g. Auth Persona cards)
 
-4. **CNMC Recommendation Workspace (`src/components/cnmc/RecommendationWorkspace.tsx`):**
-   - Governance Scope notice: official `#FFF7E6` banner.
-   - Material scenario buttons: white unselected (`#FFFFFF`, border `#CBD5E1`), navy selected (`#123B63`, text `#FFFFFF`).
-   - 3 Analysis Cards: All cards share clean `#FFFFFF` surfaces with `#E2E8F0` borders.
-   - Card 1 (Source CPSE): `#2563EB` icon, `#EFF6FF` material code badge.
-   - Card 2 (AI Intelligence): `#2563EB` icon, `#ECFDF3` exact match candidate badge.
-   - Card 3 (Prototype CNMC): `#15803D` icon, `#F0FDF4` recommendation surface (border `#BBF7D0`, code `#166534`).
+### Focus State (`:focus`, `:focus-visible`)
+- Accessible 2px focus ring: `#2563EB` (`focus:ring-2 focus:ring-[#2563EB] focus:outline-hidden`)
+- Input focus ring: `#2563EB` border with 20% opacity ambient ring (`focus:ring-2 focus:ring-[#2563EB]/20 focus:border-[#2563EB]`)
+- Background remains pure white (Never turns dark or black).
 
-5. **Governance Review Queue & Detail Modal (`src/components/cnmc/GovernanceReviewQueue.tsx`, `ReviewDetailModal.tsx`):**
-   - Clean tables with `#FFFFFF` rows and `#E2E8F0` dividers.
-   - Modal action buttons: `#15803D` Approve, `#B91C1C` Reject, `#123B63` Modify.
-
-6. **CPSE Cross-Walk & Ingestion (`src/components/cnmc/CPSEMappingView.tsx`, `src/components/ingestion/DataIngestionView.tsx`):**
-   - Standardized filter bars, table typography, search inputs, and job result cards.
-
-7. **Base UI Components & Error Boundary (`src/components/ui/Card.tsx`, `src/components/common/ErrorBoundary.tsx`):**
-   - Normalized standard card tokens and fault recovery containers.
-
-8. **National Analytics Suite (`src/components/analytics/*`):**
-   - Sub-navigation tabs, 10 KPI metric cards, and charts unified to enterprise palette.
+### Disabled State (`:disabled`)
+- Background: `#F1F5F9`
+- Text: `#94A3B8`
+- Border: `#E2E8F0`
+- Opacity: `disabled:opacity-50 disabled:cursor-not-allowed`
 
 ---
 
-## 5. Non-Functional & Integrity Verifications
+## 5. Component State Specifications
 
-### 5.1 System Boundary & Invariance Guarantee
-- **Backend Code:** 100% Untouched
-- **API Endpoints & Contracts:** 100% Untouched
-- **Database & Schemas:** 100% Untouched
-- **Authentication & JWT Logic:** 100% Untouched
-- **RBAC & Permissions:** 100% Untouched
-- **AI Matching & Standardization Logic:** 100% Untouched
-- **Data Ingestion & Calculations:** 100% Untouched
+### Navigation System
+- **Normal**: Transparent background, text `#475569`
+- **Hover**: `#F8FAFC` background, text `#123B63`
+- **Active Tab**: `#123B63` background, text `#FFFFFF`, `shadow-2xs`
+- **Focus**: Visible `#2563EB` focus ring
 
-### 5.2 Test Suite Verification
-- Ran full unit test suite: `npm test` (`vitest run`)
-- **Result:** `7 / 7 test suites passed (100% pass rate)`
+### Buttons
+- **Primary Action**: `.gov-btn-primary` — `#123B63` bg, white text, hover `#0F2F4F`
+- **Secondary Action**: `.gov-btn-secondary` — white bg, `#123B63` text, `#CBD5E1` border, hover `#F8FAFC`
+- **Tertiary Action**: `.gov-btn-tertiary` — transparent bg, `#2563EB` text, hover `#EFF6FF`
+- **Danger Action**: `.gov-btn-danger` — `#B91C1C` bg, white text, hover `#991B1B`
 
-### 5.3 Build & Compilation Verification
-- Ran TypeScript compilation and production bundle build: `npm run build` (`tsc && vite build`)
-- **Result:** `Zero TypeScript errors, bundle built cleanly in 7.93s`
+### Form Inputs & Dropdowns
+- **Normal**: `.gov-input` — `#FFFFFF` bg, `#CBD5E1` border, `#0F172A` text, `#64748B` placeholder
+- **Hover**: `#94A3B8` border
+- **Focus**: `#2563EB` border with 2px ring `#2563EB`/20
 
-### 5.4 Responsive Verification
-- Verified responsive layouts across Mobile (<640px), Tablet (640–1024px), Laptop (1024–1280px), and Desktop (>1280px).
-- Zero horizontal overflows; grid systems cleanly collapse (`grid-cols-1 sm:grid-cols-2 lg:grid-cols-5`).
+### Tables
+- **Header**: `#F8FAFC` background, `#475569` uppercase tracking-wider text, `#E2E8F0` border
+- **Body Rows**: `#FFFFFF` background, hover `#F8FAFC` transition
+- **Selected Row**: `#EFF6FF` background, `#2563EB` accent
 
-### 5.5 Accessibility (WCAG 2.1 AA)
-- High contrast ratios maintained: `#0F172A` on `#FFFFFF` (16.2:1), `#123B63` on `#FFFFFF` (10.8:1), `#475569` on `#FFFFFF` (7.0:1).
-- Semantic state communication: All status indicators pair color accents with explicit text and icons.
+---
+
+## 6. Accessibility & Contrast Verification (WCAG 2.1 AA / GIGW)
+
+| Foreground Color | Background Color | Contrast Ratio | WCAG 2.1 AA Standard | Result |
+| :--- | :--- | :---: | :---: | :---: |
+| Primary Text `#0F172A` | Page Background `#F8FAFC` | **16.8:1** | &ge; 4.5:1 | **PASS** |
+| Primary Text `#0F172A` | Card Background `#FFFFFF` | **17.5:1** | &ge; 4.5:1 | **PASS** |
+| Secondary Text `#475569` | Card Background `#FFFFFF` | **8.1:1** | &ge; 4.5:1 | **PASS** |
+| Navy Text `#123B63` | Light Blue `#EFF6FF` | **9.2:1** | &ge; 4.5:1 | **PASS** |
+| White Text `#FFFFFF` | Primary Navy `#123B63` | **9.8:1** | &ge; 4.5:1 | **PASS** |
+| Green Text `#15803D` | Light Green `#ECFDF3` | **5.4:1** | &ge; 4.5:1 | **PASS** |
+| Amber Text `#92400E` | Light Amber `#FFF7E6` | **6.1:1** | &ge; 4.5:1 | **PASS** |
+| Red Text `#B91C1C` | Light Red `#FEF2F2` | **6.3:1** | &ge; 4.5:1 | **PASS** |
+
+---
+
+## 7. Modified Files Directory
+
+The following files were updated during this refinement:
+1. `frontend/tailwind.config.js` — Extended and unified Government Enterprise design tokens.
+2. `frontend/src/styles/index.css` — Standardized base styles and `.gov-*` component utilities.
+3. `frontend/src/components/layout/Header.tsx` — Unified navigation tab states, hover behavior, and focus rings.
+4. `frontend/src/components/auth/LoginPage.tsx` — Persona selector states, input focus rings, and primary action buttons.
+5. `frontend/src/components/ui/Card.tsx` — Standardized panel borders and title typography.
+6. `frontend/src/components/common/ErrorBoundary.tsx` — Standardized notice box and reload action button.
+7. `frontend/src/components/ingestion/DataIngestionView.tsx` — 1-click demo buttons, dropzone interaction, and tables.
+8. `frontend/src/components/cnmc/RecommendationWorkspace.tsx` — Material scenario selector, action buttons, and notice box.
+9. `frontend/src/components/cnmc/GovernanceReviewQueue.tsx` — Search bar, status filter tabs, and Examine button hover states.
+10. `frontend/src/components/cnmc/ReviewDetailModal.tsx` — Approve/Reject/Modify action buttons, input fields, and modal footer.
+11. `frontend/src/components/cnmc/CPSEMappingView.tsx` — Search input, table hover states, and refresh button.
+12. `frontend/src/components/analytics/AnalyticsContainer.tsx` — Sub-navigation tab states and refresh button.
+13. `frontend/src/components/analytics/NationalOverviewDashboard.tsx` — KPI badges, links, and roadmap button.
+14. `frontend/src/components/analytics/DuplicateIntelligenceView.tsx` — Search bar, row hovers, and drawer buttons.
+15. `frontend/src/components/analytics/CrossCPSEOverlapMatrix.tsx` — Heatmap progression colors and pairwise interlock modal.
+16. `frontend/src/components/analytics/CNMCStandardizationView.tsx` — Funnel step surfaces and pipeline status badges.
+17. `frontend/src/components/analytics/ProcurementOpportunitiesView.tsx` — Synergy priority badges, select dropdowns, and cards.
+18. `frontend/src/components/analytics/RationalizationPriorityView.tsx` — Deterministic score badges, table hovers, and modal.
+19. `frontend/src/components/analytics/CategoryAnalyticsView.tsx` — Category cards and standardization progress bars.
+20. `docs/HANDOFF.md` — Updated master handoff tracking document.

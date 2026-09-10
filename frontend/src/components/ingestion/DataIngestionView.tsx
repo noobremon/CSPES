@@ -244,19 +244,19 @@ BHEL-MTR-103,HIGH VOLTAGE INDUCTION MOTOR 350KW 6.6KV 1000RPM,NOS,FABRICATED STE
           <div className="flex flex-wrap gap-1.5">
             <button
               onClick={() => loadDemoCatalog('fasteners')}
-              className="px-2.5 py-1 text-[11px] bg-white hover:bg-[#F8FAFC] text-[#0F172A] font-medium rounded-lg border border-[#CBD5E1] shadow-2xs transition-colors flex items-center gap-1 cursor-pointer"
+              className="px-2.5 py-1 text-[11px] bg-white hover:bg-[#F8FAFC] hover:text-gov-navy hover:border-slate-400 text-[#0F172A] font-medium rounded-lg border border-[#CBD5E1] shadow-2xs transition-colors flex items-center gap-1 focus:outline-hidden focus:ring-2 focus:ring-[#2563EB] cursor-pointer"
             >
               🔩 Fasteners
             </button>
             <button
               onClick={() => loadDemoCatalog('valves')}
-              className="px-2.5 py-1 text-[11px] bg-white hover:bg-[#F8FAFC] text-[#0F172A] font-medium rounded-lg border border-[#CBD5E1] shadow-2xs transition-colors flex items-center gap-1 cursor-pointer"
+              className="px-2.5 py-1 text-[11px] bg-white hover:bg-[#F8FAFC] hover:text-gov-navy hover:border-slate-400 text-[#0F172A] font-medium rounded-lg border border-[#CBD5E1] shadow-2xs transition-colors flex items-center gap-1 focus:outline-hidden focus:ring-2 focus:ring-[#2563EB] cursor-pointer"
             >
               🚰 Valves
             </button>
             <button
               onClick={() => loadDemoCatalog('motors')}
-              className="px-2.5 py-1 text-[11px] bg-white hover:bg-[#F8FAFC] text-[#0F172A] font-medium rounded-lg border border-[#CBD5E1] shadow-2xs transition-colors flex items-center gap-1 cursor-pointer"
+              className="px-2.5 py-1 text-[11px] bg-white hover:bg-[#F8FAFC] hover:text-gov-navy hover:border-slate-400 text-[#0F172A] font-medium rounded-lg border border-[#CBD5E1] shadow-2xs transition-colors flex items-center gap-1 focus:outline-hidden focus:ring-2 focus:ring-[#2563EB] cursor-pointer"
             >
               ⚡ Motors
             </button>
@@ -291,7 +291,7 @@ BHEL-MTR-103,HIGH VOLTAGE INDUCTION MOTOR 350KW 6.6KV 1000RPM,NOS,FABRICATED STE
                 value={selectedOrgId}
                 onChange={(e) => setSelectedOrgId(e.target.value)}
                 disabled={Boolean(user?.organization_id)}
-                className="w-full bg-white border border-[#CBD5E1] text-[#0F172A] rounded-xl p-3 text-xs focus:border-[#2563EB] focus:outline-hidden font-medium"
+                className="w-full bg-white border border-[#CBD5E1] text-[#0F172A] rounded-xl p-3 text-xs hover:border-slate-400 focus:border-[#2563EB] focus:ring-2 focus:ring-[#2563EB]/20 focus:outline-hidden font-medium"
               >
                 {orgList.map((org) => (
                   <option key={org.id} value={org.id}>
@@ -319,10 +319,10 @@ BHEL-MTR-103,HIGH VOLTAGE INDUCTION MOTOR 350KW 6.6KV 1000RPM,NOS,FABRICATED STE
               onDragOver={handleDragOver}
               onDragLeave={handleDragLeave}
               onDrop={handleDrop}
-              className={`border-2 border-dashed rounded-2xl p-8 text-center transition-all cursor-pointer ${
+              className={`border-2 border-dashed rounded-2xl p-8 text-center transition-all cursor-pointer focus:outline-hidden focus:ring-2 focus:ring-[#2563EB] ${
                 isDragging
                   ? 'border-[#2563EB] bg-[#EFF6FF]'
-                  : 'border-[#CBD5E1] hover:border-[#2563EB] bg-[#F8FAFC] hover:bg-slate-50'
+                  : 'border-[#CBD5E1] hover:border-[#2563EB] bg-[#F8FAFC] hover:bg-[#EFF6FF]/40'
               }`}
               onClick={() => document.getElementById('catalog-file-input')?.click()}
             >
@@ -437,7 +437,7 @@ BHEL-MTR-103,HIGH VOLTAGE INDUCTION MOTOR 350KW 6.6KV 1000RPM,NOS,FABRICATED STE
                 <button
                   onClick={handleStartIngestion}
                   disabled={uploading || pollingActive}
-                  className="w-full py-3 px-4 bg-gov-navy hover:bg-gov-navy-dark text-white font-bold rounded-xl shadow-xs transition-all flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer text-xs"
+                  className="w-full py-3 px-4 bg-gov-navy hover:bg-gov-navy-dark text-white font-bold rounded-xl shadow-xs transition-all flex items-center justify-center gap-2 focus:outline-hidden focus:ring-2 focus:ring-[#2563EB] disabled:opacity-50 cursor-pointer text-xs"
                 >
                   {uploading || pollingActive ? (
                     <>
@@ -516,7 +516,7 @@ BHEL-MTR-103,HIGH VOLTAGE INDUCTION MOTOR 350KW 6.6KV 1000RPM,NOS,FABRICATED STE
                     {onNavigateToWorkspace && (
                       <button
                         onClick={onNavigateToWorkspace}
-                        className="flex-1 py-2.5 px-3 bg-gov-navy hover:bg-gov-navy-dark text-white font-bold rounded-xl text-xs transition-colors flex items-center justify-center gap-1.5 cursor-pointer shadow-xs"
+                        className="flex-1 py-2.5 px-3 bg-gov-navy hover:bg-gov-navy-dark text-white font-bold rounded-xl text-xs transition-colors flex items-center justify-center gap-1.5 focus:outline-hidden focus:ring-2 focus:ring-[#2563EB] cursor-pointer shadow-xs"
                       >
                         <span>Open CNMC Workspace</span>
                         <ArrowRight className="w-3.5 h-3.5" />
@@ -525,7 +525,7 @@ BHEL-MTR-103,HIGH VOLTAGE INDUCTION MOTOR 350KW 6.6KV 1000RPM,NOS,FABRICATED STE
                     {onNavigateToAnalytics && (
                       <button
                         onClick={onNavigateToAnalytics}
-                        className="flex-1 py-2.5 px-3 bg-[#F8FAFC] hover:bg-slate-100 text-[#0F172A] font-bold rounded-xl text-xs transition-colors flex items-center justify-center gap-1.5 cursor-pointer border border-[#CBD5E1]"
+                        className="flex-1 py-2.5 px-3 bg-white hover:bg-[#F8FAFC] hover:border-slate-400 text-[#0F172A] hover:text-gov-navy font-bold rounded-xl text-xs transition-colors flex items-center justify-center gap-1.5 focus:outline-hidden focus:ring-2 focus:ring-[#2563EB] cursor-pointer border border-[#CBD5E1]"
                       >
                         <span>View Analytics Matrix</span>
                         <ArrowRight className="w-3.5 h-3.5" />
@@ -548,3 +548,4 @@ BHEL-MTR-103,HIGH VOLTAGE INDUCTION MOTOR 350KW 6.6KV 1000RPM,NOS,FABRICATED STE
     </div>
   );
 };
+

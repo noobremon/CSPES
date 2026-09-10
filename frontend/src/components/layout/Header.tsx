@@ -67,10 +67,10 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, pending
         <nav className="flex items-center space-x-1 bg-[#F8FAFC] p-1 rounded-xl border border-[#E2E8F0] text-xs font-medium">
           <button
             onClick={() => setActiveTab('ingestion')}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all focus:outline-hidden focus:ring-2 focus:ring-[#2563EB] cursor-pointer ${
               activeTab === 'ingestion'
                 ? 'bg-gov-navy text-white shadow-2xs font-semibold'
-                : 'text-[#475569] hover:text-[#0F172A] hover:bg-white'
+                : 'text-[#475569] hover:text-gov-navy hover:bg-white'
             }`}
           >
             <UploadCloud className="w-3.5 h-3.5" />
@@ -79,10 +79,10 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, pending
 
           <button
             onClick={() => setActiveTab('workspace')}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all focus:outline-hidden focus:ring-2 focus:ring-[#2563EB] cursor-pointer ${
               activeTab === 'workspace'
                 ? 'bg-gov-navy text-white shadow-2xs font-semibold'
-                : 'text-[#475569] hover:text-[#0F172A] hover:bg-white'
+                : 'text-[#475569] hover:text-gov-navy hover:bg-white'
             }`}
           >
             <FileText className="w-3.5 h-3.5" />
@@ -91,10 +91,10 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, pending
 
           <button
             onClick={() => setActiveTab('queue')}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all relative cursor-pointer ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all relative focus:outline-hidden focus:ring-2 focus:ring-[#2563EB] cursor-pointer ${
               activeTab === 'queue'
                 ? 'bg-gov-navy text-white shadow-2xs font-semibold'
-                : 'text-[#475569] hover:text-[#0F172A] hover:bg-white'
+                : 'text-[#475569] hover:text-gov-navy hover:bg-white'
             }`}
           >
             <CheckSquare className="w-3.5 h-3.5" />
@@ -108,10 +108,10 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, pending
 
           <button
             onClick={() => setActiveTab('mappings')}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all focus:outline-hidden focus:ring-2 focus:ring-[#2563EB] cursor-pointer ${
               activeTab === 'mappings'
                 ? 'bg-gov-navy text-white shadow-2xs font-semibold'
-                : 'text-[#475569] hover:text-[#0F172A] hover:bg-white'
+                : 'text-[#475569] hover:text-gov-navy hover:bg-white'
             }`}
           >
             <GitCompare className="w-3.5 h-3.5" />
@@ -120,10 +120,10 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, pending
 
           <button
             onClick={() => setActiveTab('analytics')}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all focus:outline-hidden focus:ring-2 focus:ring-[#2563EB] cursor-pointer ${
               activeTab === 'analytics'
                 ? 'bg-gov-navy text-white shadow-2xs font-semibold'
-                : 'text-[#475569] hover:text-[#0F172A] hover:bg-white'
+                : 'text-[#475569] hover:text-gov-navy hover:bg-white'
             }`}
           >
             <ShieldCheck className="w-3.5 h-3.5 text-gov-blue" />
@@ -132,10 +132,10 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, pending
 
           <button
             onClick={() => setActiveTab('health')}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all focus:outline-hidden focus:ring-2 focus:ring-[#2563EB] cursor-pointer ${
               activeTab === 'health'
                 ? 'bg-gov-navy text-white shadow-2xs font-semibold'
-                : 'text-[#475569] hover:text-[#0F172A] hover:bg-white'
+                : 'text-[#475569] hover:text-gov-navy hover:bg-white'
             }`}
           >
             <Info className="w-3.5 h-3.5" />
@@ -162,7 +162,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, pending
               <button
                 onClick={logout}
                 title="Sign Out of Portal"
-                className="p-1.5 text-[#64748B] hover:text-[#B91C1C] hover:bg-white rounded-lg transition-colors ml-1 cursor-pointer"
+                className="p-1.5 text-[#64748B] hover:text-[#B91C1C] hover:bg-[#F1F5F9] focus:outline-hidden focus:ring-2 focus:ring-[#2563EB] rounded-lg transition-colors ml-1 cursor-pointer"
               >
                 <LogOut className="w-4 h-4" />
               </button>
@@ -175,3 +175,4 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, pending
     </header>
   );
 };
+

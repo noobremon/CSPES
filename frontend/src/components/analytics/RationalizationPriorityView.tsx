@@ -115,9 +115,9 @@ export const RationalizationPriorityView: React.FC<RationalizationPriorityViewPr
   });
 
   const getScoreColor = (score: number) => {
-    if (score >= 70) return 'text-rose-800 bg-rose-50 border-rose-200';
-    if (score >= 40) return 'text-amber-800 bg-amber-50 border-amber-200';
-    return 'text-blue-800 bg-blue-50 border-blue-200';
+    if (score >= 70) return 'text-[#B91C1C] bg-[#FEF2F2] border-[#FECACA]';
+    if (score >= 40) return 'text-[#92400E] bg-[#FFF7E6] border-[#F3D19C]';
+    return 'text-[#1D4ED8] bg-[#EFF6FF] border-blue-200';
   };
 
   return (
@@ -133,17 +133,17 @@ export const RationalizationPriorityView: React.FC<RationalizationPriorityViewPr
         <p className="text-xs text-slate-600 leading-relaxed">
           Materials are prioritized deterministically based on multi-CPSE demand breadth, duplicate cluster density, standardization readiness, and cross-enterprise opportunity score.
         </p>
-        <div className="p-3 bg-slate-50 rounded-lg text-xs font-mono text-slate-800 border border-slate-200 overflow-x-auto">
+        <div className="p-3 bg-[#F8FAFC] rounded-lg text-xs font-mono text-slate-800 border border-slate-200 overflow-x-auto">
           Priority Score = (0.35 &times; CPSE Breadth) + (0.25 &times; Duplicate Density) + (0.25 &times; Standardization Gap) + (0.15 &times; Spec Criticality)
         </div>
       </div>
 
       {/* Priority Rankings Table */}
       <div className="bg-white rounded-xl border border-slate-200 shadow-2xs overflow-hidden">
-        <div className="p-4 border-b border-slate-200 bg-slate-50/50 flex items-center justify-between">
+        <div className="p-4 border-b border-slate-200 bg-[#F8FAFC] flex items-center justify-between">
           <div>
-            <h4 className="text-sm font-bold text-slate-900">National Material Harmonization Priorities</h4>
-            <p className="text-xs text-slate-500">Ranked by calculated national standardization impact</p>
+            <h4 className="text-sm font-bold uppercase tracking-wider text-slate-900">National Material Harmonization Priorities</h4>
+            <p className="text-xs text-slate-500 mt-0.5">Ranked by calculated national standardization impact</p>
           </div>
           <span className="text-xs font-bold text-slate-600">
             {items.length} materials evaluated
@@ -153,7 +153,7 @@ export const RationalizationPriorityView: React.FC<RationalizationPriorityViewPr
         <div className="overflow-x-auto">
           <table className="w-full text-xs text-left">
             <thead>
-              <tr className="bg-slate-50 border-b border-slate-200 text-slate-700 uppercase tracking-wider font-bold text-[11px]">
+              <tr className="bg-[#F8FAFC] border-b border-slate-200 text-slate-700 uppercase tracking-wider font-bold text-[11px]">
                 <th className="p-3.5 text-center w-12">Rank</th>
                 <th className="p-3.5">Material Canonical Concept</th>
                 <th className="p-3.5">Category</th>
@@ -167,7 +167,7 @@ export const RationalizationPriorityView: React.FC<RationalizationPriorityViewPr
               {items.map((item) => (
                 <tr 
                   key={item.rank}
-                  className="hover:bg-slate-50/80 transition-colors cursor-pointer"
+                  className="hover:bg-[#F8FAFC] transition-colors cursor-pointer"
                   onClick={() => setSelectedItem(item)}
                 >
                   <td className="p-3.5 text-center">
@@ -200,7 +200,7 @@ export const RationalizationPriorityView: React.FC<RationalizationPriorityViewPr
                     </span>
                   </td>
                   <td className="p-3.5 text-right">
-                    <span className="text-xs font-semibold text-blue-600 hover:text-gov-navy inline-flex items-center gap-1">
+                    <span className="text-xs font-semibold text-[#2563EB] hover:text-gov-navy inline-flex items-center gap-1">
                       Rationale <ChevronRight className="w-3.5 h-3.5" />
                     </span>
                   </td>
@@ -225,18 +225,18 @@ export const RationalizationPriorityView: React.FC<RationalizationPriorityViewPr
               </div>
               <button 
                 onClick={() => setSelectedItem(null)}
-                className="text-slate-400 hover:text-slate-700 font-bold text-lg px-2 cursor-pointer"
+                className="text-slate-400 hover:text-slate-700 focus:outline-hidden focus:ring-2 focus:ring-[#2563EB] rounded font-bold text-lg px-2 cursor-pointer"
               >
                 &times;
               </button>
             </div>
 
             <div className="grid grid-cols-2 gap-3 text-xs">
-              <div className="p-3 bg-slate-50 rounded-lg border border-slate-200/80">
+              <div className="p-3 bg-[#F8FAFC] rounded-lg border border-slate-200">
                 <span className="text-slate-500">Participating CPSEs</span>
                 <div className="font-bold text-slate-900 mt-1">{selectedItem.participating_cpses.join(', ')}</div>
               </div>
-              <div className="p-3 bg-slate-50 rounded-lg border border-slate-200/80">
+              <div className="p-3 bg-[#F8FAFC] rounded-lg border border-slate-200">
                 <span className="text-slate-500">Calculated Score</span>
                 <div className="font-bold text-slate-900 mt-1">{selectedItem.priority_score.toFixed(1)} / 100</div>
               </div>
@@ -244,7 +244,7 @@ export const RationalizationPriorityView: React.FC<RationalizationPriorityViewPr
 
             <div className="space-y-1.5 text-xs">
               <span className="font-bold text-slate-900 uppercase tracking-wider block">Impact Rationale</span>
-              <p className="p-3 bg-slate-50 rounded-lg border border-slate-200 text-slate-700 leading-relaxed">
+              <p className="p-3 bg-[#F8FAFC] rounded-lg border border-slate-200 text-slate-700 leading-relaxed">
                 {selectedItem.rationalization_reason}
               </p>
             </div>
@@ -252,7 +252,7 @@ export const RationalizationPriorityView: React.FC<RationalizationPriorityViewPr
             <div className="flex justify-end pt-3 border-t border-slate-100">
               <button
                 onClick={() => setSelectedItem(null)}
-                className="px-4 py-2 bg-gov-navy text-white text-xs font-semibold rounded-lg hover:bg-gov-navy-dark transition-all shadow-2xs cursor-pointer"
+                className="px-4 py-2 bg-gov-navy text-white text-xs font-semibold rounded-lg hover:bg-gov-navy-dark focus:outline-hidden focus:ring-2 focus:ring-[#2563EB] transition-all shadow-2xs cursor-pointer"
               >
                 Close Rationale
               </button>
@@ -263,3 +263,4 @@ export const RationalizationPriorityView: React.FC<RationalizationPriorityViewPr
     </div>
   );
 };
+

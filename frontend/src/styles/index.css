@@ -4,28 +4,34 @@
 
 @layer base {
   body {
-    @apply min-h-screen bg-slate-50 font-sans text-slate-900 antialiased selection:bg-gov-navy selection:text-white;
+    @apply min-h-screen bg-[#F8FAFC] font-sans text-[#0F172A] antialiased selection:bg-gov-navy selection:text-white;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply tracking-tight text-slate-900;
+    @apply tracking-tight text-[#0F172A];
   }
 }
 
 @layer components {
+  /* Cards & Surfaces */
   .gov-card {
-    @apply bg-white border border-slate-200 rounded-xl shadow-xs;
+    @apply bg-white border border-[#E2E8F0] rounded-xl shadow-2xs;
   }
   
+  .gov-panel-subtle {
+    @apply bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl;
+  }
+
+  /* Standardized Badges */
   .gov-badge-navy {
     @apply bg-slate-100 text-gov-navy border border-slate-200 font-semibold;
   }
 
   .gov-badge-blue {
-    @apply bg-blue-50 text-blue-700 border border-blue-200 font-semibold;
+    @apply bg-[#EFF6FF] text-[#1D4ED8] border border-blue-200 font-semibold;
   }
 
-  .gov-badge-saffron {
+  .gov-badge-amber, .gov-badge-saffron {
     @apply bg-[#FFF7E6] text-[#92400E] border border-[#F3D19C] font-semibold;
   }
 
@@ -41,8 +47,41 @@
     @apply bg-[#F0FDFA] text-[#0F766E] border border-[#99F6E4] font-semibold;
   }
 
+  /* Notice Box */
   .gov-notice-box {
     @apply p-4 rounded-xl bg-[#FFF7E6] border border-[#F3D19C] text-[#78350F];
   }
+
+  /* Standardized Form Inputs */
+  .gov-input {
+    @apply bg-white border border-[#CBD5E1] text-[#0F172A] placeholder-[#64748B] rounded-lg text-xs transition-all
+           hover:border-slate-400 focus:outline-hidden focus:border-[#2563EB] focus:ring-2 focus:ring-[#2563EB]/20;
+  }
+
+  /* Standardized Button System */
+  .gov-btn-primary {
+    @apply bg-gov-navy hover:bg-gov-navy-dark text-white font-bold rounded-xl shadow-xs transition-all
+           focus:outline-hidden focus:ring-2 focus:ring-[#2563EB] focus:ring-offset-2
+           disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer;
+  }
+
+  .gov-btn-secondary {
+    @apply bg-white hover:bg-[#F8FAFC] text-gov-navy font-semibold border border-[#CBD5E1] hover:border-slate-400 rounded-lg shadow-2xs transition-all
+           focus:outline-hidden focus:ring-2 focus:ring-[#2563EB] focus:ring-offset-2
+           disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer;
+  }
+
+  .gov-btn-tertiary {
+    @apply bg-transparent hover:bg-[#EFF6FF] text-[#2563EB] font-semibold rounded-lg transition-colors
+           focus:outline-hidden focus:ring-2 focus:ring-[#2563EB]
+           disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer;
+  }
+
+  .gov-btn-danger {
+    @apply bg-[#B91C1C] hover:bg-[#991B1B] text-white font-semibold rounded-lg shadow-xs transition-all
+           focus:outline-hidden focus:ring-2 focus:ring-[#B91C1C] focus:ring-offset-2
+           disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer;
+  }
 }
+
 

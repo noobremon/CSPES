@@ -182,7 +182,7 @@ export const GovernanceReviewQueue: React.FC<GovernanceReviewQueueProps> = ({
             placeholder="Search candidate CNMC or material title..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-9 pr-3 py-1.5 text-xs bg-white rounded-lg border border-[#CBD5E1] text-[#0F172A] placeholder-[#64748B] focus:outline-none focus:ring-1 focus:ring-[#2563EB] focus:border-[#2563EB] transition-all"
+            className="w-full pl-9 pr-3 py-1.5 text-xs bg-white rounded-lg border border-[#CBD5E1] text-[#0F172A] placeholder-[#64748B] hover:border-slate-400 focus:outline-hidden focus:ring-2 focus:ring-[#2563EB]/20 focus:border-[#2563EB] transition-all"
           />
         </div>
 
@@ -192,10 +192,10 @@ export const GovernanceReviewQueue: React.FC<GovernanceReviewQueueProps> = ({
             <button
               key={st}
               onClick={() => setStatusFilter(st)}
-              className={`px-3 py-1 rounded-md transition-all font-medium text-xs cursor-pointer ${
+              className={`px-3 py-1 rounded-md transition-all font-medium text-xs focus:outline-hidden focus:ring-2 focus:ring-[#2563EB] cursor-pointer ${
                 statusFilter === st
                   ? 'bg-gov-navy text-white font-semibold shadow-2xs'
-                  : 'text-[#475569] hover:text-[#0F172A] hover:bg-white'
+                  : 'text-[#475569] hover:text-gov-navy hover:bg-white'
               }`}
             >
               {st.replace('_', ' ')}
@@ -206,7 +206,7 @@ export const GovernanceReviewQueue: React.FC<GovernanceReviewQueueProps> = ({
         {/* Refresh Button */}
         <button
           onClick={loadCandidates}
-          className="p-2 bg-white border border-[#CBD5E1] rounded-lg text-[#475569] hover:text-gov-navy hover:border-slate-400 shadow-2xs transition-all cursor-pointer"
+          className="p-2 bg-white border border-[#CBD5E1] rounded-lg text-[#475569] hover:text-gov-navy hover:bg-[#F8FAFC] hover:border-slate-400 focus:outline-hidden focus:ring-2 focus:ring-[#2563EB] shadow-2xs transition-all cursor-pointer"
           title="Refresh Queue"
         >
           <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
@@ -234,7 +234,7 @@ export const GovernanceReviewQueue: React.FC<GovernanceReviewQueueProps> = ({
             <tbody className="divide-y divide-[#E2E8F0]">
               {filteredCandidates.length > 0 ? (
                 filteredCandidates.map((candidate) => (
-                  <tr key={candidate.id} className="hover:bg-slate-50/80 transition-colors">
+                  <tr key={candidate.id} className="hover:bg-[#F8FAFC] transition-colors">
                     <td className="py-3.5 px-6 font-mono font-bold text-gov-navy flex items-center gap-2">
                       <Tag className="w-3.5 h-3.5 text-[#2563EB] shrink-0" />
                       <span>{candidate.proposed_cnmc}</span>
@@ -255,7 +255,7 @@ export const GovernanceReviewQueue: React.FC<GovernanceReviewQueueProps> = ({
                     <td className="py-3.5 px-6 text-right">
                       <button
                         onClick={() => onSelectCandidate(candidate)}
-                        className="py-1 px-3 bg-white hover:bg-gov-navy hover:text-white text-gov-navy border border-[#CBD5E1] hover:border-gov-navy rounded-lg font-semibold shadow-2xs transition-all inline-flex items-center gap-1.5 cursor-pointer"
+                        className="py-1 px-3 bg-white hover:bg-[#F8FAFC] hover:text-gov-navy hover:border-slate-400 text-gov-navy border border-[#CBD5E1] rounded-lg font-semibold shadow-2xs focus:outline-hidden focus:ring-2 focus:ring-[#2563EB] transition-all inline-flex items-center gap-1.5 cursor-pointer"
                       >
                         <span>Examine</span>
                         <ExternalLink className="w-3 h-3" />
@@ -277,3 +277,4 @@ export const GovernanceReviewQueue: React.FC<GovernanceReviewQueueProps> = ({
     </div>
   );
 };
+

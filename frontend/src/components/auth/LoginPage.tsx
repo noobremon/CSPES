@@ -126,10 +126,10 @@ export const LoginPage: React.FC = () => {
                     key={demo.email}
                     type="button"
                     onClick={() => handleDemoFill(demo.email, demo.password)}
-                    className={`p-3 rounded-xl border text-left transition-all cursor-pointer ${
+                    className={`p-3 rounded-xl border text-left transition-all cursor-pointer focus:outline-hidden focus:ring-2 focus:ring-[#2563EB] ${
                       isSelected
                         ? 'bg-[#EFF6FF] border-[#2563EB] shadow-2xs ring-1 ring-[#2563EB]'
-                        : 'bg-white border-[#E2E8F0] hover:border-slate-300 hover:bg-slate-50/70 shadow-2xs'
+                        : 'bg-white border-[#E2E8F0] hover:border-slate-300 hover:bg-[#F8FAFC] shadow-2xs'
                     }`}
                   >
                     <div className="flex items-center justify-between">
@@ -141,7 +141,7 @@ export const LoginPage: React.FC = () => {
                         <CheckCircle2 className="w-3.5 h-3.5 text-[#2563EB] shrink-0" />
                       )}
                     </div>
-                    <div className="mt-2 space-y-0.5 bg-slate-50 p-2 rounded-lg border border-[#E2E8F0] text-[10px] font-mono">
+                    <div className="mt-2 space-y-0.5 bg-[#F8FAFC] p-2 rounded-lg border border-[#E2E8F0] text-[10px] font-mono">
                       <div className="flex items-center gap-1 text-[#475569] truncate font-semibold">
                         <Mail className="w-2.5 h-2.5 text-[#64748B] shrink-0" />
                         <span className="truncate">{demo.email}</span>
@@ -197,7 +197,7 @@ export const LoginPage: React.FC = () => {
                   placeholder="e.g. national_admin@sih.demo"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full pl-10 pr-3.5 py-2.5 bg-white border border-[#CBD5E1] rounded-xl text-[#0F172A] placeholder-[#64748B] focus:outline-hidden focus:border-[#2563EB] focus:ring-1 focus:ring-[#2563EB] font-medium transition-all"
+                  className="w-full pl-10 pr-3.5 py-2.5 bg-white border border-[#CBD5E1] rounded-xl text-[#0F172A] placeholder-[#64748B] hover:border-slate-400 focus:outline-hidden focus:border-[#2563EB] focus:ring-2 focus:ring-[#2563EB]/20 font-medium transition-all"
                 />
               </div>
             </div>
@@ -212,7 +212,7 @@ export const LoginPage: React.FC = () => {
                   placeholder="Enter demonstration password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-10 pr-3.5 py-2.5 bg-white border border-[#CBD5E1] rounded-xl text-[#0F172A] placeholder-[#64748B] focus:outline-hidden focus:border-[#2563EB] focus:ring-1 focus:ring-[#2563EB] font-medium transition-all"
+                  className="w-full pl-10 pr-3.5 py-2.5 bg-white border border-[#CBD5E1] rounded-xl text-[#0F172A] placeholder-[#64748B] hover:border-slate-400 focus:outline-hidden focus:border-[#2563EB] focus:ring-2 focus:ring-[#2563EB]/20 font-medium transition-all"
                 />
               </div>
             </div>
@@ -220,7 +220,7 @@ export const LoginPage: React.FC = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full mt-3 py-3 px-4 bg-gov-navy hover:bg-gov-navy-dark text-white font-bold rounded-xl shadow-xs transition-all flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer"
+              className="w-full mt-3 py-3 px-4 bg-gov-navy hover:bg-gov-navy-dark text-white font-bold rounded-xl shadow-xs transition-all flex items-center justify-center gap-2 focus:outline-hidden focus:ring-2 focus:ring-[#2563EB] focus:ring-offset-2 disabled:opacity-50 cursor-pointer"
             >
               {loading ? (
                 <>

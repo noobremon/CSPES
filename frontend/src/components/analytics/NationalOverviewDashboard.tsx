@@ -97,7 +97,7 @@ export const NationalOverviewDashboard: React.FC<NationalOverviewDashboardProps>
       value: formatCount(totalCPSEs, 5),
       subtext: 'Active enterprise entities',
       icon: Building2,
-      color: 'text-blue-700 bg-blue-50 border-blue-200',
+      color: 'text-gov-navy bg-slate-100 border-slate-200',
     },
     {
       id: 'kpi-materials',
@@ -105,7 +105,7 @@ export const NationalOverviewDashboard: React.FC<NationalOverviewDashboardProps>
       value: formatCount(totalMaterials, 25),
       subtext: 'Line items across all ERPs',
       icon: Layers,
-      color: 'text-slate-700 bg-slate-50 border-slate-200',
+      color: 'text-[#475569] bg-[#F8FAFC] border-[#E2E8F0]',
     },
     {
       id: 'kpi-clusters',
@@ -113,7 +113,7 @@ export const NationalOverviewDashboard: React.FC<NationalOverviewDashboardProps>
       value: formatCount(totalClusters, 8),
       subtext: 'Clusters identified by AI',
       icon: Copy,
-      color: 'text-amber-800 bg-amber-50 border-amber-200',
+      color: 'text-[#92400E] bg-[#FFF7E6] border-[#F3D19C]',
     },
     {
       id: 'kpi-overlap-rate',
@@ -129,7 +129,7 @@ export const NationalOverviewDashboard: React.FC<NationalOverviewDashboardProps>
       value: formatCount(uniqueConcepts, 12),
       subtext: 'Normalized material entities',
       icon: Target,
-      color: 'text-emerald-800 bg-emerald-50 border-emerald-200',
+      color: 'text-[#15803D] bg-[#ECFDF3] border-[#BBF7D0]',
     },
     {
       id: 'kpi-cnmc-coverage',
@@ -137,7 +137,7 @@ export const NationalOverviewDashboard: React.FC<NationalOverviewDashboardProps>
       value: formatPct(coveragePct, 48.0),
       subtext: 'Raw items mapped to CNMC Master',
       icon: CheckCircle2,
-      color: 'text-teal-800 bg-teal-50 border-teal-200',
+      color: 'text-[#0F766E] bg-[#F0FDFA] border-[#99F6E4]',
     },
     {
       id: 'kpi-pipeline',
@@ -145,7 +145,7 @@ export const NationalOverviewDashboard: React.FC<NationalOverviewDashboardProps>
       value: formatCount(totalPipeline, 9),
       subtext: `${approvedCandidates} approved / ${pendingCandidates} pending`,
       icon: Sparkles,
-      color: 'text-purple-800 bg-purple-50 border-purple-200',
+      color: 'text-[#1D4ED8] bg-[#EFF6FF] border-blue-200',
     },
     {
       id: 'kpi-standardized-master',
@@ -153,7 +153,7 @@ export const NationalOverviewDashboard: React.FC<NationalOverviewDashboardProps>
       value: formatCount(masterCodes, 5),
       subtext: 'Governed prototype masters',
       icon: ShieldAlert,
-      color: 'text-emerald-900 bg-emerald-50 border-emerald-300',
+      color: 'text-[#15803D] bg-[#ECFDF3] border-[#BBF7D0]',
     },
     {
       id: 'kpi-opportunities',
@@ -161,7 +161,7 @@ export const NationalOverviewDashboard: React.FC<NationalOverviewDashboardProps>
       value: formatCount(oppCount, 6),
       subtext: 'High & medium impact synergy clusters',
       icon: TrendingUp,
-      color: 'text-amber-900 bg-amber-50 border-amber-300',
+      color: 'text-[#92400E] bg-[#FFF7E6] border-[#F3D19C]',
     },
     {
       id: 'kpi-savings-score',
@@ -169,7 +169,7 @@ export const NationalOverviewDashboard: React.FC<NationalOverviewDashboardProps>
       value: `${safeNum(savingsScore, 74.5).toFixed(1)}/100`,
       subtext: 'Illustrative synergy potential',
       icon: BarChart3,
-      color: 'text-cyan-900 bg-cyan-50 border-cyan-200',
+      color: 'text-gov-navy bg-[#EFF6FF] border-blue-200',
     }
   ];
 
@@ -227,7 +227,7 @@ export const NationalOverviewDashboard: React.FC<NationalOverviewDashboardProps>
             {onNavigateToTab && (
               <button 
                 onClick={() => onNavigateToTab('matrix')}
-                className="text-xs text-blue-600 hover:text-gov-navy font-semibold flex items-center gap-1 cursor-pointer"
+                className="text-xs text-[#2563EB] hover:text-gov-navy font-semibold flex items-center gap-1 focus:outline-hidden focus:ring-2 focus:ring-[#2563EB] rounded cursor-pointer"
               >
                 Matrix <ArrowRight className="w-3 h-3" />
               </button>
@@ -262,7 +262,7 @@ export const NationalOverviewDashboard: React.FC<NationalOverviewDashboardProps>
             {onNavigateToTab && (
               <button 
                 onClick={() => onNavigateToTab('duplicates')}
-                className="text-xs text-blue-600 hover:text-gov-navy font-semibold flex items-center gap-1 cursor-pointer"
+                className="text-xs text-[#2563EB] hover:text-gov-navy font-semibold flex items-center gap-1 focus:outline-hidden focus:ring-2 focus:ring-[#2563EB] rounded cursor-pointer"
               >
                 All <ArrowRight className="w-3 h-3" />
               </button>
@@ -326,7 +326,7 @@ export const NationalOverviewDashboard: React.FC<NationalOverviewDashboardProps>
           {onNavigateToTab && (
             <button
               onClick={() => onNavigateToTab('rationalization')}
-              className="w-full py-2 bg-gov-navy hover:bg-gov-navy-dark text-white rounded-lg font-semibold text-xs transition-all shadow-2xs flex items-center justify-center gap-1.5 cursor-pointer"
+              className="w-full py-2.5 bg-gov-navy hover:bg-gov-navy-dark text-white rounded-xl font-bold text-xs transition-all shadow-xs flex items-center justify-center gap-1.5 focus:outline-hidden focus:ring-2 focus:ring-[#2563EB] cursor-pointer"
             >
               <span>View Full Harmonization Priorities</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -337,3 +337,4 @@ export const NationalOverviewDashboard: React.FC<NationalOverviewDashboardProps>
     </div>
   );
 };
+

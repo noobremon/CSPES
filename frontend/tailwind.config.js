@@ -19,37 +19,61 @@ export default {
           950: '#0F2F4F',
         },
         gov: {
-          navy: '#123B63',
-          'navy-dark': '#0F2F4F',
-          darknavy: '#0F2F4F',
-          blue: '#2563EB',
-          blueSurface: '#EFF6FF',
+          // Page & Surfaces
           page: '#F8FAFC',
           card: '#FFFFFF',
+          surface: '#F1F5F9',
+          surfaceLight: '#F8FAFC',
+          blueSurface: '#EFF6FF',
+          
+          // Borders
           border: '#E2E8F0',
+          borderStrong: '#CBD5E1',
           borderSubtle: '#CBD5E1',
+
+          // Typography
           textPrimary: '#0F172A',
           textSecondary: '#475569',
           textMuted: '#64748B',
-          saffron: '#D97706',
-          saffronLight: '#FFF7E6',
-          saffronBorder: '#F3D19C',
-          saffronHeading: '#92400E',
-          saffronBody: '#78350F',
+          textDisabled: '#94A3B8',
+
+          // Primary Authority
+          navy: '#123B63',
+          'navy-dark': '#0F2F4F',
+          darknavy: '#0F2F4F',
+
+          // Interaction Blue
+          blue: '#2563EB',
+          'blue-dark': '#1D4ED8',
+
+          // Semantic Colors
           green: '#15803D',
           greenLight: '#ECFDF3',
           greenSurface: '#F0FDF4',
           greenBorder: '#BBF7D0',
           greenDark: '#166534',
+
+          amber: '#D97706',
+          amberLight: '#FFF7E6',
+          amberBorder: '#F3D19C',
+          amberHeading: '#92400E',
+          amberBody: '#78350F',
+          saffron: '#D97706',
+          saffronLight: '#FFF7E6',
+          saffronBorder: '#F3D19C',
+          saffronHeading: '#92400E',
+          saffronBody: '#78350F',
+          'notice-bg': '#FFF7E6',
+          'notice-border': '#F3D19C',
+
           red: '#B91C1C',
           redLight: '#FEF2F2',
           redBorder: '#FECACA',
+          redDark: '#991B1B',
+
           teal: '#0F766E',
           tealLight: '#F0FDFA',
           tealBorder: '#99F6E4',
-          surface: '#F8FAFC',
-          'notice-bg': '#FFF7E6',
-          'notice-border': '#F3D19C',
         },
       },
       fontFamily: {
@@ -65,3 +89,4 @@ export default {
   },
   plugins: [],
 }
+

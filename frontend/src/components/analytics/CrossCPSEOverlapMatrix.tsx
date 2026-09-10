@@ -104,11 +104,11 @@ export const CrossCPSEOverlapMatrix: React.FC<CrossCPSEOverlapMatrixProps> = ({
 
   // Helper to color cells based on overlap percentage
   const getCellColor = (isSelf: boolean, pct: number, count: number) => {
-    if (isSelf) return 'bg-slate-100 text-slate-400 font-normal';
-    if (count === 0) return 'bg-slate-50/50 text-slate-400';
-    if (pct < 10) return 'bg-blue-50 text-blue-800 font-semibold hover:bg-blue-100';
-    if (pct < 25) return 'bg-blue-100 text-blue-900 font-semibold hover:bg-blue-200';
-    if (pct < 50) return 'bg-blue-200 text-blue-950 font-bold hover:bg-blue-300';
+    if (isSelf) return 'bg-[#F1F5F9] text-slate-400 font-normal';
+    if (count === 0) return 'bg-[#F8FAFC] text-slate-400';
+    if (pct < 10) return 'bg-[#EFF6FF] text-[#1E40AF] font-semibold hover:bg-blue-100';
+    if (pct < 25) return 'bg-[#DBEAFE] text-[#1E3A8A] font-semibold hover:bg-blue-200';
+    if (pct < 50) return 'bg-[#BFDBFE] text-[#123B63] font-bold hover:bg-blue-300';
     return 'bg-gov-navy text-white font-bold hover:bg-gov-navy-dark';
   };
 
@@ -127,7 +127,7 @@ export const CrossCPSEOverlapMatrix: React.FC<CrossCPSEOverlapMatrixProps> = ({
         </div>
 
         {/* Filter Slider */}
-        <div className="flex items-center gap-3 bg-slate-50 p-2.5 rounded-lg border border-slate-200 text-xs">
+        <div className="flex items-center gap-3 bg-[#F8FAFC] p-2.5 rounded-lg border border-slate-200 text-xs">
           <Sliders className="w-4 h-4 text-slate-500" />
           <span className="font-semibold text-slate-700">Min Overlap Filter:</span>
           <input
@@ -136,7 +136,7 @@ export const CrossCPSEOverlapMatrix: React.FC<CrossCPSEOverlapMatrixProps> = ({
             max="10"
             value={minOverlapFilter}
             onChange={(e) => setMinOverlapFilter(Number(e.target.value))}
-            className="w-24 accent-gov-navy"
+            className="w-24 accent-gov-navy focus:outline-hidden focus:ring-2 focus:ring-[#2563EB]"
           />
           <span className="font-bold text-gov-navy">≥ {minOverlapFilter} items</span>
         </div>
@@ -146,10 +146,10 @@ export const CrossCPSEOverlapMatrix: React.FC<CrossCPSEOverlapMatrixProps> = ({
       <div className="flex items-center gap-2 text-xs text-slate-600 bg-white p-3 rounded-lg border border-slate-200 shadow-2xs">
         <span className="font-semibold text-slate-800">Overlap Heatmap:</span>
         <div className="flex items-center gap-1.5">
-          <span className="px-2 py-0.5 rounded text-[10px] bg-slate-100 text-slate-600 border border-slate-300">0%</span>
-          <span className="px-2 py-0.5 rounded text-[10px] bg-blue-50 text-blue-800 border border-blue-200">&lt;10%</span>
-          <span className="px-2 py-0.5 rounded text-[10px] bg-blue-100 text-blue-900 border border-blue-300">10-25%</span>
-          <span className="px-2 py-0.5 rounded text-[10px] bg-blue-200 text-blue-950 border border-blue-400">25-50%</span>
+          <span className="px-2 py-0.5 rounded text-[10px] bg-[#F1F5F9] text-slate-600 border border-slate-300">0%</span>
+          <span className="px-2 py-0.5 rounded text-[10px] bg-[#EFF6FF] text-[#1E40AF] border border-blue-200">&lt;10%</span>
+          <span className="px-2 py-0.5 rounded text-[10px] bg-[#DBEAFE] text-[#1E3A8A] border border-blue-300">10-25%</span>
+          <span className="px-2 py-0.5 rounded text-[10px] bg-[#BFDBFE] text-[#123B63] border border-blue-400 font-semibold">25-50%</span>
           <span className="px-2 py-0.5 rounded text-[10px] bg-gov-navy text-white font-bold">≥50%</span>
         </div>
       </div>
@@ -158,8 +158,8 @@ export const CrossCPSEOverlapMatrix: React.FC<CrossCPSEOverlapMatrixProps> = ({
       <div className="bg-white rounded-xl border border-slate-200 shadow-2xs overflow-x-auto">
         <table className="w-full text-xs text-left border-collapse">
           <thead>
-            <tr className="bg-slate-50 border-b border-slate-200">
-              <th className="p-3 font-bold text-slate-700 uppercase tracking-wider border-r border-slate-200 sticky left-0 bg-slate-50 z-10">
+            <tr className="bg-[#F8FAFC] border-b border-slate-200">
+              <th className="p-3 font-bold text-slate-700 uppercase tracking-wider border-r border-slate-200 sticky left-0 bg-[#F8FAFC] z-10">
                 CPSE Enterprise
               </th>
               {cpses.map((c) => (
@@ -172,7 +172,7 @@ export const CrossCPSEOverlapMatrix: React.FC<CrossCPSEOverlapMatrixProps> = ({
           </thead>
           <tbody className="divide-y divide-slate-200">
             {cpses.map((rowCPSE, rIdx) => (
-              <tr key={rowCPSE.cpse_code} className="hover:bg-slate-50/50">
+              <tr key={rowCPSE.cpse_code} className="hover:bg-[#F8FAFC]">
                 <td className="p-3 font-bold text-slate-900 border-r border-slate-200 sticky left-0 bg-white z-10">
                   <div>{rowCPSE.cpse_name}</div>
                   <div className="text-[10px] text-slate-500 font-mono">{rowCPSE.cpse_code}</div>
@@ -236,18 +236,18 @@ export const CrossCPSEOverlapMatrix: React.FC<CrossCPSEOverlapMatrixProps> = ({
               </div>
               <button 
                 onClick={() => setSelectedCell(null)}
-                className="text-slate-400 hover:text-slate-700 font-bold text-lg px-2 cursor-pointer"
+                className="text-slate-400 hover:text-slate-700 focus:outline-hidden focus:ring-2 focus:ring-[#2563EB] rounded font-bold text-lg px-2 cursor-pointer"
               >
                 &times;
               </button>
             </div>
 
             <div className="grid grid-cols-2 gap-3 text-xs">
-              <div className="p-3 bg-slate-50 rounded-lg border border-slate-200/80">
+              <div className="p-3 bg-[#F8FAFC] rounded-lg border border-[#E2E8F0]">
                 <span className="text-slate-500">Overlapping Line Items</span>
                 <div className="text-xl font-bold text-gov-navy mt-0.5">{selectedCell.count} items</div>
               </div>
-              <div className="p-3 bg-slate-50 rounded-lg border border-slate-200/80">
+              <div className="p-3 bg-[#F8FAFC] rounded-lg border border-[#E2E8F0]">
                 <span className="text-slate-500">Relative Catalog Overlap</span>
                 <div className="text-xl font-bold text-blue-700 mt-0.5">{selectedCell.pct.toFixed(1)}%</div>
               </div>
@@ -258,7 +258,7 @@ export const CrossCPSEOverlapMatrix: React.FC<CrossCPSEOverlapMatrixProps> = ({
                 <span className="font-bold text-slate-900 uppercase tracking-wider block">Top Overlapping Concepts</span>
                 <div className="space-y-1 max-h-48 overflow-y-auto">
                   {selectedCell.pairDetail.top_overlapping_materials.map((mat: any, i: number) => (
-                    <div key={i} className="p-2 bg-slate-50 rounded border border-slate-200/80 flex items-center justify-between">
+                    <div key={i} className="p-2 bg-[#F8FAFC] rounded border border-[#E2E8F0] flex items-center justify-between">
                       <span className="font-medium text-slate-800">{mat.canonical_name || mat.material_name}</span>
                       <span className="text-[11px] font-mono text-gov-navy font-bold">{mat.suggested_cnmc || 'PENDING'}</span>
                     </div>
@@ -270,7 +270,7 @@ export const CrossCPSEOverlapMatrix: React.FC<CrossCPSEOverlapMatrixProps> = ({
             <div className="flex justify-end pt-3 border-t border-slate-100">
               <button
                 onClick={() => setSelectedCell(null)}
-                className="px-4 py-2 bg-gov-navy text-white text-xs font-semibold rounded-lg hover:bg-gov-navy-dark transition-all shadow-2xs cursor-pointer"
+                className="px-4 py-2 bg-gov-navy text-white text-xs font-semibold rounded-lg hover:bg-gov-navy-dark focus:outline-hidden focus:ring-2 focus:ring-[#2563EB] transition-all shadow-2xs cursor-pointer"
               >
                 Close View
               </button>
@@ -281,3 +281,4 @@ export const CrossCPSEOverlapMatrix: React.FC<CrossCPSEOverlapMatrixProps> = ({
     </div>
   );
 };
+

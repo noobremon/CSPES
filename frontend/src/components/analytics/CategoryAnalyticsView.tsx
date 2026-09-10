@@ -120,10 +120,10 @@ export const CategoryAnalyticsView: React.FC<CategoryAnalyticsViewProps> = ({
           >
             <div>
               <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-mono font-bold px-2 py-0.5 bg-slate-100 border border-slate-200 text-slate-800 rounded">
+                <span className="text-xs font-mono font-bold px-2 py-0.5 bg-[#F8FAFC] border border-[#CBD5E1] text-[#0F172A] rounded">
                   {cat.category_code}
                 </span>
-                <span className="text-xs font-bold text-blue-800 bg-blue-50 border border-blue-200 px-2 py-0.5 rounded">
+                <span className="text-xs font-bold text-gov-navy bg-[#EFF6FF] border border-blue-200 px-2 py-0.5 rounded">
                   {cat.overlap_percentage.toFixed(1)}% overlap
                 </span>
               </div>
@@ -135,24 +135,24 @@ export const CategoryAnalyticsView: React.FC<CategoryAnalyticsViewProps> = ({
 
             <div className="space-y-3 pt-3 border-t border-slate-100 text-xs">
               <div className="grid grid-cols-2 gap-2">
-                <div className="p-2 bg-slate-50 rounded-lg border border-slate-200/60">
+                <div className="p-2 bg-[#F8FAFC] rounded-lg border border-[#E2E8F0]">
                   <span className="text-slate-500 text-[11px]">Total Items</span>
                   <div className="font-bold text-slate-900 mt-0.5">{cat.total_materials}</div>
                 </div>
-                <div className="p-2 bg-slate-50 rounded-lg border border-slate-200/60">
-                  <span className="text-slate-500 text-[11px]">Standardized</span>
-                  <div className="font-bold text-emerald-800 mt-0.5">{cat.standardized_master_count} Masters</div>
+                <div className="p-2 bg-[#ECFDF3] rounded-lg border border-[#BBF7D0]">
+                  <span className="text-[#15803D] text-[11px]">Standardized</span>
+                  <div className="font-bold text-[#15803D] mt-0.5">{cat.standardized_master_count} Masters</div>
                 </div>
               </div>
 
               <div>
                 <div className="flex justify-between text-[11px] text-slate-600 mb-1 font-medium">
                   <span>Category Standardization</span>
-                  <span className="font-bold text-teal-800">{cat.standardization_rate.toFixed(1)}%</span>
+                  <span className="font-bold text-[#0F766E]">{cat.standardization_rate.toFixed(1)}%</span>
                 </div>
                 <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden border border-slate-200/60">
                   <div 
-                    className="bg-teal-600 h-2 rounded-full transition-all" 
+                    className="bg-[#0F766E] h-2 rounded-full transition-all" 
                     style={{ width: `${Math.min(100, cat.standardization_rate)}%` }}
                   />
                 </div>
@@ -164,3 +164,4 @@ export const CategoryAnalyticsView: React.FC<CategoryAnalyticsViewProps> = ({
     </div>
   );
 };
+

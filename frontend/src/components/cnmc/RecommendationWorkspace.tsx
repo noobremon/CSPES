@@ -182,10 +182,10 @@ export const RecommendationWorkspace: React.FC<RecommendationWorkspaceProps> = (
                 setRecommendation(null);
                 setNotification(null);
               }}
-              className={`px-3.5 py-1.5 rounded-lg text-xs font-medium border transition-all cursor-pointer ${
+              className={`px-3.5 py-1.5 rounded-lg text-xs font-medium border transition-all focus:outline-hidden focus:ring-2 focus:ring-[#2563EB] cursor-pointer ${
                 selectedMatIndex === idx
                   ? 'bg-gov-navy border-gov-navy text-white shadow-2xs font-semibold'
-                  : 'bg-white border-[#CBD5E1] text-[#475569] hover:text-[#0F172A] hover:bg-[#F8FAFC]'
+                  : 'bg-white border-[#CBD5E1] text-[#475569] hover:text-gov-navy hover:bg-[#F8FAFC] hover:border-slate-400'
               }`}
             >
               <span className="font-bold mr-1">{m.org_code}:</span>
@@ -340,7 +340,7 @@ export const RecommendationWorkspace: React.FC<RecommendationWorkspaceProps> = (
               <button
                 onClick={handleGenerateRecommendation}
                 disabled={loading}
-                className="w-full py-3 px-4 rounded-xl bg-gov-navy hover:bg-gov-navy-dark text-white font-bold flex items-center justify-center gap-2 shadow-xs transition-all disabled:opacity-50 cursor-pointer"
+                className="w-full py-3 px-4 rounded-xl bg-gov-navy hover:bg-gov-navy-dark text-white font-bold flex items-center justify-center gap-2 shadow-xs transition-all focus:outline-hidden focus:ring-2 focus:ring-[#2563EB] disabled:opacity-50 cursor-pointer"
               >
                 {loading ? (
                   <>
@@ -413,7 +413,7 @@ export const RecommendationWorkspace: React.FC<RecommendationWorkspaceProps> = (
               <div className="pt-2 space-y-2">
                 <button
                   onClick={() => onNavigateToReview(recommendation.candidate_id || undefined)}
-                  className="w-full py-2.5 px-4 rounded-xl bg-gov-navy hover:bg-gov-navy-dark text-white font-bold flex items-center justify-center gap-2 shadow-xs transition-all text-xs cursor-pointer"
+                  className="w-full py-2.5 px-4 rounded-xl bg-gov-navy hover:bg-gov-navy-dark text-white font-bold flex items-center justify-center gap-2 shadow-xs transition-all text-xs focus:outline-hidden focus:ring-2 focus:ring-[#2563EB] cursor-pointer"
                 >
                   <span>Review in Governance Queue</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -433,3 +433,4 @@ export const RecommendationWorkspace: React.FC<RecommendationWorkspaceProps> = (
     </div>
   );
 };
+
