@@ -37,7 +37,8 @@
 6. [Cross-CPSE Comparison & Explainability](file:///c:/Users/User/Desktop/CSPES/docs/CROSS_CPSE_COMPARISON.md)
 7. [Sensitive Data Sanitization Audit](file:///c:/Users/User/Desktop/CSPES/docs/PHASE_13_SENSITIVE_DATA_AUDIT.md)
 8. [Multi-Sector CPSE Demonstration Data](file:///c:/Users/User/Desktop/CSPES/docs/MULTI_CPSE_DEMO_DATA.md)
-9. [Phase 13 Multi-CPSE Expansion Summary](file:///c:/Users/User/Desktop/CSPES/docs/phases/PHASE_13_MULTI_CPSE_EXPANSION.md)
+9. [Phase 13 Multi-CPSE Expansion Summary](file:///c:/Users/User/Desktop/SIH%202026/CSPES/docs/phases/PHASE_13_MULTI_CPSE_EXPANSION.md)
+10. [Government Enterprise UI Color System](file:///c:/Users/User/Desktop/SIH%202026/CSPES/docs/UI_COLOR_SYSTEM.md)
 
 ---
 

@@ -28,15 +28,15 @@ export class ErrorBoundary extends Component<Props, State> {
   public render() {
     if (this.state.hasError) {
       return (
-        <div className="p-6 bg-white rounded-2xl border border-slate-200 shadow-sm text-center space-y-4 my-4 max-w-2xl mx-auto">
-          <div className="w-12 h-12 bg-amber-50 text-amber-600 rounded-full flex items-center justify-center mx-auto border border-amber-200">
+        <div className="p-6 bg-white rounded-2xl border border-[#E2E8F0] shadow-xs text-center space-y-4 my-4 max-w-2xl mx-auto">
+          <div className="w-12 h-12 bg-[#FFF7E6] text-[#D97706] rounded-full flex items-center justify-center mx-auto border border-[#F3D19C] shadow-2xs">
             <AlertTriangle className="w-6 h-6" />
           </div>
           <div>
-            <h3 className="text-base font-bold text-slate-900">
+            <h3 className="text-base font-bold text-[#0F172A]">
               {this.props.fallbackTitle || 'Display Module Recovered'}
             </h3>
-            <p className="text-xs text-slate-500 mt-1 max-w-md mx-auto">
+            <p className="text-xs text-[#64748B] mt-1 max-w-md mx-auto">
               A view rendering notice occurred. The enterprise portal has isolated the fault to maintain system integrity.
             </p>
           </div>
@@ -45,7 +45,7 @@ export class ErrorBoundary extends Component<Props, State> {
               this.setState({ hasError: false, error: null });
               window.location.reload();
             }}
-            className="px-4 py-2 bg-gov-navy hover:bg-gov-navy-dark text-white font-semibold text-xs rounded-xl shadow-sm transition-all inline-flex items-center gap-1.5 cursor-pointer"
+            className="px-4 py-2 bg-gov-navy hover:bg-gov-navy-dark text-white font-semibold text-xs rounded-xl shadow-xs transition-all inline-flex items-center gap-1.5 cursor-pointer"
           >
             <RefreshCw className="w-3.5 h-3.5" />
             <span>Reload Module</span>

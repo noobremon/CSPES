@@ -151,25 +151,25 @@ export const RecommendationWorkspace: React.FC<RecommendationWorkspaceProps> = (
   return (
     <div className="space-y-6 text-left">
       {/* Scope Disclaimer Banner */}
-      <div className="rounded-xl border border-amber-200 bg-amber-50/80 p-4 flex items-start gap-3 text-xs text-amber-900 shadow-xs">
-        <AlertTriangle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
+      <div className="rounded-xl border border-[#F3D19C] bg-[#FFF7E6] p-4 flex items-start gap-3 text-xs text-[#78350F] shadow-2xs">
+        <AlertTriangle className="w-5 h-5 text-[#D97706] shrink-0 mt-0.5" />
         <div className="leading-relaxed">
-          <span className="font-bold uppercase tracking-wider text-amber-800">
+          <span className="font-bold uppercase tracking-wider text-[#92400E]">
             Mandatory Governance Scope Notice:
           </span>{' '}
           All Common National Material Codes (CNMCs) generated in this platform use the{' '}
-          <span className="font-bold text-slate-900">MVP Prototype CNMC Reference Format</span> (e.g.{' '}
-          <code className="bg-amber-100/80 border border-amber-300 px-1.5 py-0.5 rounded text-amber-950 font-mono font-semibold">
+          <span className="font-bold text-[#0F172A]">MVP Prototype CNMC Reference Format</span> (e.g.{' '}
+          <code className="bg-[#FFFBEB] border border-[#F3D19C] px-1.5 py-0.5 rounded text-[#78350F] font-mono font-semibold">
             IN-IND-MECH-BLT-00492
           </code>) for SIH 2026 evaluation. Approvals are strictly valid within the demonstration governance workflow and do not constitute official Government of India or DPE statutory codification.
         </div>
       </div>
 
       {/* Demo Material Selector */}
-      <div className="bg-white border border-slate-200 rounded-xl p-4 flex flex-col md:flex-row items-center justify-between gap-4 shadow-xs">
+      <div className="bg-white border border-[#E2E8F0] rounded-xl p-4 flex flex-col md:flex-row items-center justify-between gap-4 shadow-2xs">
         <div className="flex items-center gap-2">
-          <Layers className="w-4 h-4 text-blue-600" />
-          <span className="text-xs font-bold text-slate-900 uppercase tracking-wider">
+          <Layers className="w-4 h-4 text-gov-navy" />
+          <span className="text-xs font-bold text-gov-navy uppercase tracking-wider">
             Select Ingested Material Scenario:
           </span>
         </div>
@@ -184,8 +184,8 @@ export const RecommendationWorkspace: React.FC<RecommendationWorkspaceProps> = (
               }}
               className={`px-3.5 py-1.5 rounded-lg text-xs font-medium border transition-all cursor-pointer ${
                 selectedMatIndex === idx
-                  ? 'bg-gov-navy border-gov-navy text-white shadow-sm font-semibold'
-                  : 'bg-slate-50 border-slate-200 text-slate-700 hover:text-slate-900 hover:bg-slate-100'
+                  ? 'bg-gov-navy border-gov-navy text-white shadow-2xs font-semibold'
+                  : 'bg-white border-[#CBD5E1] text-[#475569] hover:text-[#0F172A] hover:bg-[#F8FAFC]'
               }`}
             >
               <span className="font-bold mr-1">{m.org_code}:</span>
@@ -199,14 +199,14 @@ export const RecommendationWorkspace: React.FC<RecommendationWorkspaceProps> = (
         <div
           className={`p-3 rounded-xl text-xs flex items-center gap-2 border ${
             notification.type === 'success'
-              ? 'bg-emerald-50 border-emerald-200 text-emerald-800'
-              : 'bg-rose-50 border-rose-200 text-rose-800'
+              ? 'bg-[#ECFDF3] border-[#BBF7D0] text-[#15803D]'
+              : 'bg-[#FEF2F2] border-[#FECACA] text-[#B91C1C]'
           }`}
         >
           {notification.type === 'success' ? (
-            <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+            <CheckCircle2 className="w-4 h-4 text-[#15803D] shrink-0" />
           ) : (
-            <AlertTriangle className="w-4 h-4 text-rose-600 shrink-0" />
+            <AlertTriangle className="w-4 h-4 text-[#B91C1C] shrink-0" />
           )}
           <span className="font-medium">{notification.message}</span>
         </div>
@@ -218,59 +218,59 @@ export const RecommendationWorkspace: React.FC<RecommendationWorkspaceProps> = (
         <Card
           title="1. Source CPSE Material"
           subtitle="Layer 1 & 2 Normalized Ingestion Data"
-          icon={<Building2 className="w-5 h-5 text-blue-600" />}
+          icon={<Building2 className="w-5 h-5 text-[#2563EB]" />}
         >
           <div className="space-y-4 text-xs">
-            <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-200 space-y-2">
+            <div className="p-3.5 bg-[#F8FAFC] rounded-xl border border-[#E2E8F0] space-y-2">
               <div className="flex items-center justify-between">
-                <span className="text-slate-500 font-medium">Enterprise</span>
-                <span className="font-bold text-slate-900">{selectedMat.organization}</span>
+                <span className="text-[#64748B] font-medium">Enterprise</span>
+                <span className="font-bold text-[#0F172A]">{selectedMat.organization}</span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-slate-500 font-medium">CPSE Local Code</span>
-                <span className="font-mono text-blue-700 font-bold bg-blue-50 px-2 py-0.5 rounded border border-blue-200">
+                <span className="text-[#64748B] font-medium">CPSE Local Code</span>
+                <span className="font-mono text-[#1D4ED8] font-bold bg-[#EFF6FF] px-2 py-0.5 rounded border border-blue-200">
                   {selectedMat.material_code}
                 </span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-slate-500 font-medium">Raw Description</span>
-                <span className="text-slate-800 font-medium">{selectedMat.description}</span>
+                <span className="text-[#64748B] font-medium">Raw Description</span>
+                <span className="text-[#0F172A] font-medium">{selectedMat.description}</span>
               </div>
             </div>
 
             <div className="space-y-1.5">
-              <span className="text-[11px] font-bold text-slate-700 uppercase tracking-wider">
+              <span className="text-[11px] font-bold text-[#475569] uppercase tracking-wider">
                 Normalized Intelligence (Layer 2)
               </span>
-              <p className="text-slate-900 bg-slate-50 p-3 rounded-xl border border-slate-200 leading-relaxed font-semibold">
+              <p className="text-[#0F172A] bg-[#F8FAFC] p-3 rounded-xl border border-[#E2E8F0] leading-relaxed font-semibold">
                 {selectedMat.canonical}
               </p>
             </div>
 
             <div className="space-y-1.5">
-              <span className="text-[11px] font-bold text-slate-700 uppercase tracking-wider">
+              <span className="text-[11px] font-bold text-[#475569] uppercase tracking-wider">
                 Technical Attributes
               </span>
               <div className="grid grid-cols-2 gap-2">
-                <div className="bg-slate-50 p-2.5 rounded-lg border border-slate-200">
-                  <span className="text-slate-500 block text-[10px] font-medium">Standard</span>
-                  <span className="font-bold text-slate-900">{selectedMat.standard}</span>
+                <div className="bg-[#F8FAFC] p-2.5 rounded-lg border border-[#E2E8F0]">
+                  <span className="text-[#64748B] block text-[10px] font-medium">Standard</span>
+                  <span className="font-bold text-[#0F172A]">{selectedMat.standard}</span>
                 </div>
-                <div className="bg-slate-50 p-2.5 rounded-lg border border-slate-200">
-                  <span className="text-slate-500 block text-[10px] font-medium">Material Grade</span>
-                  <span className="font-bold text-slate-900">{selectedMat.grade}</span>
+                <div className="bg-[#F8FAFC] p-2.5 rounded-lg border border-[#E2E8F0]">
+                  <span className="text-[#64748B] block text-[10px] font-medium">Material Grade</span>
+                  <span className="font-bold text-[#0F172A]">{selectedMat.grade}</span>
                 </div>
                 {Object.entries(selectedMat.attributes).map(([k, v]) => (
-                  <div key={k} className="bg-slate-50 p-2.5 rounded-lg border border-slate-200">
-                    <span className="text-slate-500 block text-[10px] uppercase font-medium">{k}</span>
-                    <span className="font-bold text-slate-900">{String(v)}</span>
+                  <div key={k} className="bg-[#F8FAFC] p-2.5 rounded-lg border border-[#E2E8F0]">
+                    <span className="text-[#64748B] block text-[10px] uppercase font-medium">{k}</span>
+                    <span className="font-bold text-[#0F172A]">{String(v)}</span>
                   </div>
                 ))}
               </div>
             </div>
 
-            <div className="text-[11px] text-slate-500 pt-1">
-              <span className="font-semibold text-slate-600">Taxonomy:</span> <span>{selectedMat.category}</span>
+            <div className="text-[11px] text-[#64748B] pt-1">
+              <span className="font-semibold text-[#475569]">Taxonomy:</span> <span>{selectedMat.category}</span>
             </div>
           </div>
         </Card>
@@ -279,36 +279,36 @@ export const RecommendationWorkspace: React.FC<RecommendationWorkspaceProps> = (
         <Card
           title="2. AI & Candidate Intelligence"
           subtitle="Multi-Tier Match Analysis & Signals"
-          icon={<Cpu className="w-5 h-5 text-indigo-600" />}
+          icon={<Cpu className="w-5 h-5 text-[#2563EB]" />}
         >
           <div className="space-y-4 text-xs">
-            <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-200 space-y-2.5">
+            <div className="p-3.5 bg-[#F8FAFC] rounded-xl border border-[#E2E8F0] space-y-2.5">
               <div className="flex items-center justify-between">
-                <span className="text-slate-500 font-medium">Match Evidence:</span>
+                <span className="text-[#64748B] font-medium">Match Evidence:</span>
                 {selectedMat.matches.length > 0 ? (
-                  <span className="text-emerald-800 font-bold bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+                  <span className="text-[#15803D] font-bold bg-[#ECFDF3] px-2 py-0.5 rounded border border-[#BBF7D0]">
                     {selectedMat.matches[0].type}
                   </span>
                 ) : (
-                  <span className="text-slate-600 font-semibold bg-slate-200 px-2 py-0.5 rounded">
+                  <span className="text-[#475569] font-semibold bg-slate-100 border border-slate-200 px-2 py-0.5 rounded">
                     NO ACTIVE CLUSTER
                   </span>
                 )}
               </div>
 
               {selectedMat.matches.length > 0 && (
-                <div className="text-slate-700 space-y-1.5 pt-2 border-t border-slate-200">
+                <div className="text-[#475569] space-y-1.5 pt-2 border-t border-[#E2E8F0]">
                   <div className="flex justify-between">
-                    <span className="text-slate-500">Cluster Peer CPSE:</span>
-                    <span className="text-slate-900 font-bold">{selectedMat.matches[0].cpse}</span>
+                    <span className="text-[#64748B]">Cluster Peer CPSE:</span>
+                    <span className="text-[#0F172A] font-bold">{selectedMat.matches[0].cpse}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-slate-500">Peer Material Code:</span>
-                    <span className="font-mono font-bold text-slate-900">{selectedMat.matches[0].code}</span>
+                    <span className="text-[#64748B]">Peer Material Code:</span>
+                    <span className="font-mono font-bold text-[#0F172A]">{selectedMat.matches[0].code}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-slate-500">Evidence Score:</span>
-                    <span className="font-bold text-emerald-700">
+                    <span className="text-[#64748B]">Evidence Score:</span>
+                    <span className="font-bold text-[#15803D]">
                       {(selectedMat.matches[0].score * 100).toFixed(0)}% Match Evidence
                     </span>
                   </div>
@@ -317,19 +317,19 @@ export const RecommendationWorkspace: React.FC<RecommendationWorkspaceProps> = (
             </div>
 
             <div className="space-y-1.5">
-              <span className="text-[11px] font-bold text-slate-700 uppercase tracking-wider">
+              <span className="text-[11px] font-bold text-[#475569] uppercase tracking-wider">
                 Recommendation Engine Methodology
               </span>
-              <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-1.5">
-                <div className="flex items-center gap-1.5 text-slate-900 font-bold">
-                  <Sparkles className="w-3.5 h-3.5 text-blue-600" />
+              <div className="p-3 bg-[#F8FAFC] rounded-xl border border-[#E2E8F0] space-y-1.5">
+                <div className="flex items-center gap-1.5 text-[#0F172A] font-bold">
+                  <Sparkles className="w-3.5 h-3.5 text-[#2563EB]" />
                   <span>
                     {selectedMat.matches.length > 0
                       ? 'Cluster Reuse Detection Engine'
                       : 'Deterministic Taxonomy Rule-Based Generator'}
                   </span>
                 </div>
-                <p className="text-[11px] text-slate-600 leading-relaxed">
+                <p className="text-[11px] text-[#475569] leading-relaxed">
                   Evaluates exact attribute signatures, dimension compatibility, and cross-CPSE cluster history.
                   Zero fake probabilities used.
                 </p>
@@ -340,7 +340,7 @@ export const RecommendationWorkspace: React.FC<RecommendationWorkspaceProps> = (
               <button
                 onClick={handleGenerateRecommendation}
                 disabled={loading}
-                className="w-full py-3 px-4 rounded-xl bg-gov-navy hover:bg-gov-navy-dark text-white font-bold flex items-center justify-center gap-2 shadow-md transition-all disabled:opacity-50 cursor-pointer"
+                className="w-full py-3 px-4 rounded-xl bg-gov-navy hover:bg-gov-navy-dark text-white font-bold flex items-center justify-center gap-2 shadow-xs transition-all disabled:opacity-50 cursor-pointer"
               >
                 {loading ? (
                   <>
@@ -349,7 +349,7 @@ export const RecommendationWorkspace: React.FC<RecommendationWorkspaceProps> = (
                   </>
                 ) : (
                   <>
-                    <Sparkles className="w-4 h-4 text-blue-400" />
+                    <Sparkles className="w-4 h-4 text-blue-300" />
                     <span>Generate CNMC Recommendation</span>
                   </>
                 )}
@@ -362,23 +362,23 @@ export const RecommendationWorkspace: React.FC<RecommendationWorkspaceProps> = (
         <Card
           title="3. Prototype CNMC Recommendation"
           subtitle="MVP Reference Format Output"
-          icon={<Tag className="w-5 h-5 text-emerald-600" />}
+          icon={<Tag className="w-5 h-5 text-[#15803D]" />}
         >
           {recommendation ? (
             <div className="space-y-4 text-xs">
               {/* Proposed Code Banner */}
-              <div className="p-4 rounded-xl bg-blue-50/70 border border-blue-200 space-y-1.5">
-                <span className="text-[10px] font-bold uppercase tracking-widest text-blue-800">
+              <div className="p-4 rounded-xl bg-[#F0FDF4] border border-[#BBF7D0] space-y-1.5">
+                <span className="text-[10px] font-bold uppercase tracking-widest text-[#166534]">
                   Recommended Prototype CNMC
                 </span>
-                <div className="text-xl font-mono font-extrabold text-slate-900 tracking-wider">
+                <div className="text-xl font-mono font-extrabold text-[#0F172A] tracking-wider">
                   {recommendation.proposed_cnmc}
                 </div>
                 <div className="flex items-center gap-2 pt-1">
-                  <span className="text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-300 px-2 py-0.5 rounded">
+                  <span className="text-[10px] font-bold bg-[#ECFDF3] text-[#15803D] border border-[#BBF7D0] px-2 py-0.5 rounded">
                     Strength: {recommendation.recommendation_strength}
                   </span>
-                  <span className="text-[10px] font-semibold bg-white text-slate-700 border border-slate-200 px-2 py-0.5 rounded">
+                  <span className="text-[10px] font-semibold bg-white text-[#475569] border border-[#E2E8F0] px-2 py-0.5 rounded">
                     {recommendation.explanation.format_version}
                   </span>
                 </div>
@@ -386,10 +386,10 @@ export const RecommendationWorkspace: React.FC<RecommendationWorkspaceProps> = (
 
               {/* Rationale Breakdown */}
               <div className="space-y-1.5">
-                <span className="text-[11px] font-bold text-slate-700 uppercase tracking-wider">
+                <span className="text-[11px] font-bold text-[#475569] uppercase tracking-wider">
                   Recommendation Rationale
                 </span>
-                <p className="text-slate-800 bg-slate-50 p-3 rounded-xl border border-slate-200 leading-relaxed font-medium">
+                <p className="text-[#0F172A] bg-[#F8FAFC] p-3 rounded-xl border border-[#E2E8F0] leading-relaxed font-medium">
                   {recommendation.explanation.recommendation_reason}
                 </p>
               </div>
@@ -400,9 +400,9 @@ export const RecommendationWorkspace: React.FC<RecommendationWorkspaceProps> = (
                   {recommendation.explanation.warnings.map((w, idx) => (
                     <div
                       key={idx}
-                      className="p-2.5 bg-amber-50 border border-amber-200 rounded-lg text-[11px] text-amber-900 flex items-start gap-1.5"
+                      className="p-2.5 bg-[#FFF7E6] border border-[#F3D19C] rounded-lg text-[11px] text-[#78350F] flex items-start gap-1.5"
                     >
-                      <Info className="w-3.5 h-3.5 text-amber-600 shrink-0 mt-0.5" />
+                      <Info className="w-3.5 h-3.5 text-[#D97706] shrink-0 mt-0.5" />
                       <span className="leading-tight">{w}</span>
                     </div>
                   ))}
@@ -413,7 +413,7 @@ export const RecommendationWorkspace: React.FC<RecommendationWorkspaceProps> = (
               <div className="pt-2 space-y-2">
                 <button
                   onClick={() => onNavigateToReview(recommendation.candidate_id || undefined)}
-                  className="w-full py-2.5 px-4 rounded-xl bg-gov-navy hover:bg-gov-navy-dark text-white font-bold flex items-center justify-center gap-2 shadow-md transition-all text-xs cursor-pointer"
+                  className="w-full py-2.5 px-4 rounded-xl bg-gov-navy hover:bg-gov-navy-dark text-white font-bold flex items-center justify-center gap-2 shadow-xs transition-all text-xs cursor-pointer"
                 >
                   <span>Review in Governance Queue</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -421,10 +421,10 @@ export const RecommendationWorkspace: React.FC<RecommendationWorkspaceProps> = (
               </div>
             </div>
           ) : (
-            <div className="py-12 text-center text-slate-400 space-y-3">
+            <div className="py-12 text-center text-[#64748B] space-y-3">
               <FileText className="w-8 h-8 mx-auto text-slate-300" />
-              <p className="text-xs text-slate-500 max-w-xs mx-auto font-medium">
-                Click <span className="text-blue-700 font-bold">"Generate CNMC Recommendation"</span> to analyze this material scenario.
+              <p className="text-xs text-[#64748B] max-w-xs mx-auto font-medium">
+                Click <span className="text-gov-navy font-bold">"Generate CNMC Recommendation"</span> to analyze this material scenario.
               </p>
             </div>
           )}

@@ -91,40 +91,40 @@ export const CPSEMappingView: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Scope Disclaimer Banner */}
-      <div className="rounded-xl border border-blue-200 bg-blue-50/70 p-4 flex items-start gap-3 text-xs text-slate-800 shadow-2xs">
+      <div className="rounded-xl border border-blue-200 bg-[#EFF6FF] p-4 flex items-start gap-3 text-xs text-[#0F172A] shadow-2xs">
         <Info className="w-5 h-5 text-gov-blue shrink-0 mt-0.5" />
         <div className="leading-relaxed">
           <span className="font-bold uppercase tracking-wider text-gov-navy">
             Cross-Walk Traceability & Safety Principle:
           </span>{' '}
           Original CPSE local item codes (e.g.{' '}
-          <code className="bg-white border border-slate-200 px-1.5 py-0.5 rounded text-gov-navy font-mono font-semibold">
+          <code className="bg-white border border-[#E2E8F0] px-1.5 py-0.5 rounded text-gov-navy font-mono font-semibold">
             MAT-1001
           </code>
           ,{' '}
-          <code className="bg-white border border-slate-200 px-1.5 py-0.5 rounded text-gov-navy font-mono font-semibold">
+          <code className="bg-white border border-[#E2E8F0] px-1.5 py-0.5 rounded text-gov-navy font-mono font-semibold">
             BOLT-778
           </code>
-          ) are permanently preserved in Layer 1 and are <span className="font-bold text-slate-900">NEVER overwritten</span> in source ERPs. The platform establishes an immutable cross-walk binding to the governed prototype CNMC.
+          ) are permanently preserved in Layer 1 and are <span className="font-bold text-[#0F172A]">NEVER overwritten</span> in source ERPs. The platform establishes an immutable cross-walk binding to the governed prototype CNMC.
         </div>
       </div>
 
       {/* Filter / Search Bar */}
-      <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm flex flex-col md:flex-row items-center justify-between gap-4">
+      <div className="bg-white border border-[#E2E8F0] rounded-xl p-4 shadow-2xs flex flex-col md:flex-row items-center justify-between gap-4">
         <div className="relative w-full md:w-80">
-          <Search className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
+          <Search className="w-4 h-4 text-[#64748B] absolute left-3 top-2.5" />
           <input
             type="text"
             placeholder="Search by CNMC code, CPSE, or local item code..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-9 pr-3 py-1.5 text-xs bg-slate-50 rounded-lg border border-slate-300 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-gov-navy/20 focus:border-gov-navy transition-all"
+            className="w-full pl-9 pr-3 py-1.5 text-xs bg-white rounded-lg border border-[#CBD5E1] text-[#0F172A] placeholder-[#64748B] focus:outline-none focus:ring-1 focus:ring-[#2563EB] focus:border-[#2563EB] transition-all"
           />
         </div>
 
         <button
           onClick={loadMappings}
-          className="p-2 bg-white border border-slate-300 rounded-lg text-slate-700 hover:text-gov-navy hover:border-slate-400 flex items-center gap-1.5 text-xs px-3 shadow-2xs transition-all"
+          className="p-2 bg-white border border-[#CBD5E1] rounded-lg text-[#475569] hover:text-gov-navy hover:border-slate-400 flex items-center gap-1.5 text-xs px-3 shadow-2xs transition-all cursor-pointer"
           title="Refresh Mappings"
         >
           <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
@@ -139,8 +139,8 @@ export const CPSEMappingView: React.FC = () => {
         icon={<GitCompare className="w-5 h-5 text-gov-navy" />}
       >
         <div className="overflow-x-auto -mx-6 -mb-6">
-          <table className="w-full text-left text-xs text-slate-700">
-            <thead className="bg-slate-50 border-y border-slate-200 text-slate-700 text-[11px] font-bold uppercase tracking-wider">
+          <table className="w-full text-left text-xs text-[#475569]">
+            <thead className="bg-[#F8FAFC] border-y border-[#E2E8F0] text-[#475569] text-[11px] font-bold uppercase tracking-wider">
               <tr>
                 <th className="py-3 px-6">Governed Prototype CNMC</th>
                 <th className="py-3 px-4">CPSE Enterprise</th>
@@ -150,39 +150,39 @@ export const CPSEMappingView: React.FC = () => {
                 <th className="py-3 px-6">Approved By</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-200">
+            <tbody className="divide-y divide-[#E2E8F0]">
               {filteredMappings.length > 0 ? (
                 filteredMappings.map((m) => (
                   <tr key={m.id} className="hover:bg-slate-50/80 transition-colors">
                     <td className="py-3.5 px-6 font-mono font-bold text-gov-navy flex items-center gap-2">
-                      <Tag className="w-3.5 h-3.5 text-blue-600 shrink-0" />
+                      <Tag className="w-3.5 h-3.5 text-[#2563EB] shrink-0" />
                       <span>{m.cnmc_code}</span>
                     </td>
-                    <td className="py-3.5 px-4 font-semibold text-slate-900">
-                      <span className="bg-slate-100 border border-slate-300 text-slate-800 px-2 py-0.5 rounded text-[11px] mr-1.5 font-bold">
+                    <td className="py-3.5 px-4 font-semibold text-[#0F172A]">
+                      <span className="bg-[#F8FAFC] border border-[#CBD5E1] text-[#0F172A] px-2 py-0.5 rounded text-[11px] mr-1.5 font-bold">
                         {m.organization_code}
                       </span>
                       {m.organization_name}
                     </td>
-                    <td className="py-3.5 px-4 font-mono font-bold text-slate-800">
+                    <td className="py-3.5 px-4 font-mono font-bold text-[#0F172A]">
                       {m.local_material_code}
                     </td>
-                    <td className="py-3.5 px-4 max-w-xs truncate text-slate-700 font-medium">
+                    <td className="py-3.5 px-4 max-w-xs truncate text-[#475569] font-medium">
                       {m.canonical_name}
                     </td>
                     <td className="py-3.5 px-4">
-                      <span className="font-semibold text-[11px] bg-blue-50 text-blue-700 border border-blue-200 px-2 py-0.5 rounded">
+                      <span className="font-semibold text-[11px] bg-[#EFF6FF] text-[#1D4ED8] border border-blue-200 px-2 py-0.5 rounded">
                         {m.mapping_type}
                       </span>
                     </td>
-                    <td className="py-3.5 px-6 text-slate-500 font-mono text-[11px]">
+                    <td className="py-3.5 px-6 text-[#64748B] font-mono text-[11px]">
                       {m.approved_by || 'System Automatic'}
                     </td>
                   </tr>
                 ))
               ) : (
                 <tr>
-                  <td colSpan={6} className="py-8 text-center text-slate-500">
+                  <td colSpan={6} className="py-8 text-center text-[#64748B]">
                     No mapping records found matching current query.
                   </td>
                 </tr>

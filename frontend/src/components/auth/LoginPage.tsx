@@ -83,38 +83,38 @@ export const LoginPage: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col justify-center items-center p-6 selection:bg-brand-500 selection:text-white">
+    <div className="min-h-screen bg-[#F8FAFC] flex flex-col justify-center items-center p-6 selection:bg-gov-navy selection:text-white">
       <div className="max-w-4xl w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
         {/* Left / Top Info Column */}
         <div className="lg:col-span-6 space-y-5 text-left">
           <div className="flex items-center space-x-3.5">
-            <div className="p-2.5 bg-slate-900 text-white rounded-xl shadow-xs">
+            <div className="p-2.5 bg-gov-navy text-white rounded-xl shadow-2xs">
               <Layers className="w-6 h-6" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-blue-700 bg-blue-50 px-2.5 py-0.5 rounded border border-blue-200">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-gov-blue bg-gov-blueSurface px-2.5 py-0.5 rounded border border-blue-200">
                   Government Enterprise Portal
                 </span>
               </div>
-              <h1 className="text-xl font-extrabold text-slate-900 tracking-tight sm:text-2xl mt-1">
+              <h1 className="text-xl font-extrabold text-[#0F172A] tracking-tight sm:text-2xl mt-1">
                 National Unified Material Master
               </h1>
             </div>
           </div>
 
-          <p className="text-xs text-slate-600 leading-relaxed font-medium">
+          <p className="text-xs text-[#475569] leading-relaxed font-medium">
             Smart India Hackathon (SIH) 2026 • “One Nation – One Common Material Code”.
             Enterprise role-based access control protecting Layer 1 CPSE catalog data, Layer 2 normalized intelligence, and Layer 3 governed master records.
           </p>
 
           {/* Demonstration Quick Fill Cards */}
           <div className="space-y-2.5 pt-1">
-            <div className="flex items-center justify-between text-xs text-slate-500">
-              <span className="font-bold uppercase tracking-wider text-[11px] text-slate-700">
+            <div className="flex items-center justify-between text-xs text-[#64748B]">
+              <span className="font-bold uppercase tracking-wider text-[11px] text-[#0F172A]">
                 SIH Prototype Demo Personas
               </span>
-              <span className="text-[10px] text-slate-500">Click any persona to load credentials</span>
+              <span className="text-[10px] text-[#64748B]">Click any persona to load credentials</span>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
@@ -128,91 +128,91 @@ export const LoginPage: React.FC = () => {
                     onClick={() => handleDemoFill(demo.email, demo.password)}
                     className={`p-3 rounded-xl border text-left transition-all cursor-pointer ${
                       isSelected
-                        ? 'bg-blue-50/60 border-blue-600 shadow-xs ring-1 ring-blue-600'
-                        : 'bg-white border-slate-200 hover:border-slate-300 hover:bg-slate-50 shadow-xs'
+                        ? 'bg-[#EFF6FF] border-[#2563EB] shadow-2xs ring-1 ring-[#2563EB]'
+                        : 'bg-white border-[#E2E8F0] hover:border-slate-300 hover:bg-slate-50/70 shadow-2xs'
                     }`}
                   >
                     <div className="flex items-center justify-between">
-                      <span className="text-xs font-bold text-slate-900 flex items-center gap-1.5">
-                        <Icon className="w-3.5 h-3.5 text-blue-600" />
+                      <span className="text-xs font-bold text-[#0F172A] flex items-center gap-1.5">
+                        <Icon className="w-3.5 h-3.5 text-[#2563EB]" />
                         {demo.title}
                       </span>
                       {isSelected && (
-                        <CheckCircle2 className="w-3.5 h-3.5 text-blue-600 shrink-0" />
+                        <CheckCircle2 className="w-3.5 h-3.5 text-[#2563EB] shrink-0" />
                       )}
                     </div>
-                    <div className="mt-2 space-y-0.5 bg-slate-50 p-2 rounded-lg border border-slate-200 text-[10px] font-mono">
-                      <div className="flex items-center gap-1 text-slate-700 truncate font-semibold">
-                        <Mail className="w-2.5 h-2.5 text-slate-400 shrink-0" />
+                    <div className="mt-2 space-y-0.5 bg-slate-50 p-2 rounded-lg border border-[#E2E8F0] text-[10px] font-mono">
+                      <div className="flex items-center gap-1 text-[#475569] truncate font-semibold">
+                        <Mail className="w-2.5 h-2.5 text-[#64748B] shrink-0" />
                         <span className="truncate">{demo.email}</span>
                       </div>
-                      <div className="flex items-center gap-1 text-slate-500">
-                        <KeyRound className="w-2.5 h-2.5 text-slate-400 shrink-0" />
+                      <div className="flex items-center gap-1 text-[#64748B]">
+                        <KeyRound className="w-2.5 h-2.5 text-[#64748B] shrink-0" />
                         <span>{demo.password}</span>
                       </div>
                     </div>
-                    <p className="text-[10px] text-slate-500 mt-1.5 leading-tight">{demo.desc}</p>
+                    <p className="text-[10px] text-[#64748B] mt-1.5 leading-tight">{demo.desc}</p>
                   </button>
                 );
               })}
             </div>
 
             {/* Official Notice Box */}
-            <div className="p-3 rounded-xl bg-amber-50/80 border border-amber-200 text-[11px] text-amber-900 flex items-start gap-2.5">
-              <Info className="w-4 h-4 text-amber-600 mt-0.5 shrink-0" />
+            <div className="p-3.5 rounded-xl bg-[#FFF7E6] border border-[#F3D19C] text-[11px] text-[#78350F] flex items-start gap-2.5 shadow-2xs">
+              <Info className="w-4 h-4 text-[#D97706] mt-0.5 shrink-0" />
               <span className="leading-relaxed">
-                <strong>SIH 2026 DEMONSTRATION CREDENTIALS — NON-PRODUCTION ENVIRONMENT.</strong> Select any persona above to load credentials or click <strong>Sign In to Platform</strong> with the pre-filled Admin account.
+                <strong className="text-[#92400E]">SIH 2026 DEMONSTRATION CREDENTIALS — NON-PRODUCTION ENVIRONMENT.</strong> Select any persona above to load credentials or click <strong>Sign In to Platform</strong> with the pre-filled Admin account.
               </span>
             </div>
           </div>
         </div>
 
         {/* Right / Login Form Card */}
-        <div className="lg:col-span-6 bg-white border border-slate-200 p-8 rounded-2xl shadow-xs">
+        <div className="lg:col-span-6 bg-white border border-[#E2E8F0] p-8 rounded-2xl shadow-xs">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-lg font-bold text-slate-900 tracking-tight">Portal Authentication</h2>
-              <p className="text-xs text-slate-500 mt-0.5">Enter registered enterprise credentials to access the platform</p>
+              <h2 className="text-lg font-bold text-[#0F172A] tracking-tight">Portal Authentication</h2>
+              <p className="text-xs text-[#64748B] mt-0.5">Enter registered enterprise credentials to access the platform</p>
             </div>
-            <span className="text-[10px] font-mono bg-blue-50 text-blue-700 border border-blue-200 px-2 py-1 rounded-md font-semibold">
+            <span className="text-[10px] font-mono bg-[#EFF6FF] text-[#2563EB] border border-blue-200 px-2 py-1 rounded-md font-semibold">
               Pre-filled: Admin
             </span>
           </div>
 
           {error && (
-            <div className="mt-4 p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs flex items-center gap-2">
-              <AlertCircle className="w-4 h-4 shrink-0 text-rose-600" />
+            <div className="mt-4 p-3 rounded-xl bg-[#FEF2F2] border border-[#FECACA] text-[#B91C1C] text-xs flex items-center gap-2">
+              <AlertCircle className="w-4 h-4 shrink-0 text-[#B91C1C]" />
               <span>{error}</span>
             </div>
           )}
 
           <form onSubmit={handleSubmit} className="mt-6 space-y-4 text-xs">
             <div>
-              <label className="block text-slate-700 font-bold mb-1.5">Email Address</label>
+              <label className="block text-[#0F172A] font-semibold mb-1.5">Email Address</label>
               <div className="relative">
-                <Mail className="w-4 h-4 text-slate-400 absolute left-3.5 top-3" />
+                <Mail className="w-4 h-4 text-[#64748B] absolute left-3.5 top-3" />
                 <input
                   type="email"
                   required
                   placeholder="e.g. national_admin@sih.demo"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full pl-10 pr-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-hidden focus:border-blue-600 focus:bg-white focus:ring-1 focus:ring-blue-600 font-medium"
+                  className="w-full pl-10 pr-3.5 py-2.5 bg-white border border-[#CBD5E1] rounded-xl text-[#0F172A] placeholder-[#64748B] focus:outline-hidden focus:border-[#2563EB] focus:ring-1 focus:ring-[#2563EB] font-medium transition-all"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-slate-700 font-bold mb-1.5">Password</label>
+              <label className="block text-[#0F172A] font-semibold mb-1.5">Password</label>
               <div className="relative">
-                <Lock className="w-4 h-4 text-slate-400 absolute left-3.5 top-3" />
+                <Lock className="w-4 h-4 text-[#64748B] absolute left-3.5 top-3" />
                 <input
                   type="password"
                   required
                   placeholder="Enter demonstration password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-10 pr-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-hidden focus:border-blue-600 focus:bg-white focus:ring-1 focus:ring-blue-600 font-medium"
+                  className="w-full pl-10 pr-3.5 py-2.5 bg-white border border-[#CBD5E1] rounded-xl text-[#0F172A] placeholder-[#64748B] focus:outline-hidden focus:border-[#2563EB] focus:ring-1 focus:ring-[#2563EB] font-medium transition-all"
                 />
               </div>
             </div>
@@ -220,7 +220,7 @@ export const LoginPage: React.FC = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full mt-3 py-3 px-4 bg-gov-navy hover:bg-gov-navy-dark text-white font-bold rounded-xl shadow-md transition-all flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer"
+              className="w-full mt-3 py-3 px-4 bg-gov-navy hover:bg-gov-navy-dark text-white font-bold rounded-xl shadow-xs transition-all flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer"
             >
               {loading ? (
                 <>
@@ -236,7 +236,7 @@ export const LoginPage: React.FC = () => {
             </button>
           </form>
 
-          <div className="mt-6 pt-4 border-t border-slate-100 text-[11px] text-slate-500 flex items-center justify-between">
+          <div className="mt-6 pt-4 border-t border-slate-100 text-[11px] text-[#64748B] flex items-center justify-between">
             <span>Session: Secure JWT Bearer</span>
             <span>Security Standard: ADR-007</span>
           </div>

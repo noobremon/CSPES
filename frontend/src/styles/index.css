@@ -4,7 +4,7 @@
 
 @layer base {
   body {
-    @apply min-h-screen bg-slate-50 font-sans text-slate-900 antialiased selection:bg-brand-500 selection:text-white;
+    @apply min-h-screen bg-slate-50 font-sans text-slate-900 antialiased selection:bg-gov-navy selection:text-white;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -26,10 +26,23 @@
   }
 
   .gov-badge-saffron {
-    @apply bg-amber-50 text-amber-800 border border-amber-200 font-semibold;
+    @apply bg-[#FFF7E6] text-[#92400E] border border-[#F3D19C] font-semibold;
   }
 
   .gov-badge-green {
-    @apply bg-emerald-50 text-emerald-800 border border-emerald-200 font-semibold;
+    @apply bg-[#ECFDF3] text-[#15803D] border border-[#BBF7D0] font-semibold;
+  }
+
+  .gov-badge-red {
+    @apply bg-[#FEF2F2] text-[#B91C1C] border border-[#FECACA] font-semibold;
+  }
+
+  .gov-badge-teal {
+    @apply bg-[#F0FDFA] text-[#0F766E] border border-[#99F6E4] font-semibold;
+  }
+
+  .gov-notice-box {
+    @apply p-4 rounded-xl bg-[#FFF7E6] border border-[#F3D19C] text-[#78350F];
   }
 }
+
