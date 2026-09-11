@@ -84,4 +84,80 @@
   }
 }
 
+/* ==========================================================================
+   National Flag Wave & Gentle Floating Animations
+   Adheres to Indian National Flag geometry with subtle cloth physics
+   ========================================================================== */
+
+@keyframes flag-floating-sway {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  30% {
+    transform: translateY(-2.5px) rotate(-0.35deg);
+  }
+  70% {
+    transform: translateY(1.5px) rotate(0.35deg);
+  }
+}
+
+@keyframes flag-fabric-wave {
+  0%, 100% {
+    transform: translateY(calc(var(--wave-amp, 0px) * -1)) scaleY(0.985);
+  }
+  50% {
+    transform: translateY(calc(var(--wave-amp, 0px) * 1)) scaleY(1.015);
+  }
+}
+
+@keyframes flag-fabric-sheen {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes flag-shadow-pulse {
+  0%, 100% {
+    transform: scaleX(0.95) translateY(0);
+    opacity: 0.18;
+  }
+  50% {
+    transform: scaleX(1.05) translateY(1px);
+    opacity: 0.12;
+  }
+}
+
+.flag-floating-group {
+  animation: flag-floating-sway 5.2s ease-in-out infinite;
+  transform-origin: 0% 50%;
+  will-change: transform;
+}
+
+.flag-wave-slice {
+  animation: flag-fabric-wave 2.6s ease-in-out infinite;
+  will-change: transform;
+}
+
+.flag-sheen-overlay {
+  animation: flag-fabric-sheen 2.6s linear infinite;
+  will-change: transform;
+}
+
+.flag-ambient-shadow {
+  animation: flag-shadow-pulse 5.2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flag-floating-group,
+  .flag-wave-slice,
+  .flag-sheen-overlay,
+  .flag-ambient-shadow {
+    animation: none !important;
+    transform: none !important;
+  }
+}
+
 
