@@ -119,10 +119,10 @@ export const NationalDashboardView: React.FC<NationalDashboardViewProps> = ({
     <div className="space-y-4 text-left font-sans select-none">
       
       {/* 1. Hero / Page Introduction with Flowing Tricolor Silk Background */}
-      <div className="relative overflow-hidden bg-white border border-[#CBD5E1] rounded-2xl p-5 sm:p-6 shadow-xs flex flex-col lg:flex-row items-start lg:items-center justify-between gap-5">
+      <div className="relative overflow-hidden bg-white border border-[#CBD5E1] rounded-2xl p-4 sm:py-2.5 sm:px-6 shadow-xs flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
         <HeroTricolorBackground />
 
-        <div className="relative z-10 space-y-1.5 max-w-2xl">
+        <div className="relative z-10 space-y-1.5 max-w-2xl py-1">
           <div className="flex items-center gap-2">
             <span className="text-[10px] font-extrabold tracking-wider uppercase text-[#1D4ED8] flex items-center gap-1.5">
               <span>🇮🇳</span> BHARAT | COMMON STANDARDS | STRONGER TOGETHER
