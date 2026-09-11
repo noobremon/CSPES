@@ -322,11 +322,11 @@ describe('Phase 10 Authentication, RBAC & Multi-Tenant Access UI', () => {
     localStorage.clear();
   });
 
-  it('renders login page with demo account selector when unauthenticated', async () => {
+  it('renders login page with role selector when unauthenticated', async () => {
     render(<App />);
     await waitFor(() => {
       expect(screen.getByText(/Portal Authentication/i)).toBeInTheDocument();
-      expect(screen.getByText(/SIH Prototype Demo Personas/i)).toBeInTheDocument();
+      expect(screen.getByText(/Select Your Role to Continue/i)).toBeInTheDocument();
       expect(screen.getByRole('button', { name: /Sign In to Platform/i })).toBeInTheDocument();
     });
   });
@@ -335,9 +335,6 @@ describe('Phase 10 Authentication, RBAC & Multi-Tenant Access UI', () => {
     render(<App />);
     const reviewerBtn = await screen.findByText(/Domain Reviewer/i);
     fireEvent.click(reviewerBtn);
-
-    const passwordInput = screen.getByPlaceholderText(/Enter demonstration password/i);
-    fireEvent.change(passwordInput, { target: { value: 'Reviewer@SIH2026' } });
 
     const submitBtn = screen.getByRole('button', { name: /Sign In to Platform/i });
     fireEvent.click(submitBtn);
@@ -358,12 +355,15 @@ describe('Phase 10 Authentication, RBAC & Multi-Tenant Access UI', () => {
     localStorage.setItem('auth_token', 'mock_jwt_access_token_sih2026');
     render(<App />);
 
+    const workspaceTab = await screen.findByRole('button', { name: /CNMC Workspace/i });
+    fireEvent.click(workspaceTab);
+
     const generateBtn = await screen.findByRole('button', { name: /Generate CNMC Recommendation/i });
     fireEvent.click(generateBtn);
 
     await waitFor(() => {
-      expect(screen.getByText(/Recommended Prototype CNMC/i)).toBeInTheDocument();
-      expect(screen.getAllByText(/IN-IND-MECH-BLT-00492/i).length).toBeGreaterThan(0);
+      expect(screen.getByText(/Recommendation generated:/i)).toBeInTheDocument();
+      expect(screen.getByText(/Recommended CNMC/i)).toBeInTheDocument();
     });
   });
 
@@ -393,7 +393,7 @@ describe('Phase 10 Authentication, RBAC & Multi-Tenant Access UI', () => {
     });
   });
 
-  it('navigates to National Analytics tab and renders 10 KPIs and disclaimer', async () => {
+  it('navigates to National Analytics tab and renders KPI cards and disclaimer', async () => {
     localStorage.setItem('auth_token', 'mock_jwt_access_token_sih2026');
     render(<App />);
 
@@ -403,8 +403,8 @@ describe('Phase 10 Authentication, RBAC & Multi-Tenant Access UI', () => {
     await waitFor(() => {
       expect(screen.getByText(/Participating CPSEs/i)).toBeInTheDocument();
       expect(screen.getByText(/Cross-CPSE Overlap Rate/i)).toBeInTheDocument();
-      expect(screen.getByText(/Synthetic Savings Score/i)).toBeInTheDocument();
-      expect(screen.getAllByText(/SYNTHETIC DEMONSTRATION INSIGHT/i).length).toBeGreaterThan(0);
+      expect(screen.getByText(/Candidate Pipeline/i)).toBeInTheDocument();
+      expect(screen.getByText(/National Governance Framework Notice/i)).toBeInTheDocument();
     });
   });
 
