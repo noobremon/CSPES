@@ -3,7 +3,8 @@ import tricolorBg from '../../assets/tricolor-hero-bg.png';
 
 /**
  * HeroTricolorBackground:
- * Renders the full Indian Tricolor silk wave background image across the hero card.
+ * Renders the full Indian Tricolor silk wave background image across the hero card
+ * using object-fill so the full saffron and green waves are completely visible without cropping.
  */
 export const HeroTricolorBackground: React.FC<{ className?: string }> = ({ className = "" }) => {
   return (
@@ -11,20 +12,15 @@ export const HeroTricolorBackground: React.FC<{ className?: string }> = ({ class
       className={`absolute inset-0 overflow-hidden pointer-events-none select-none rounded-2xl ${className}`}
       aria-hidden="true"
     >
-      {/* 1. Base White Layer */}
-      <div className="absolute inset-0 bg-white" />
-
-      {/* 2. Full Background Image */}
+      {/* Full Background Image - Stretched to 100% Width & 100% Height */}
       <img
         src={tricolorBg}
         alt=""
-        className="w-full h-full object-cover object-center block opacity-95"
+        className="w-full h-full object-fill block select-none pointer-events-none"
         loading="eager"
       />
-
-      {/* 3. Subtle Luminous Center Highlight for Crisp Text Contrast */}
-      <div className="absolute inset-0 bg-gradient-to-r from-white/40 via-transparent to-white/20 pointer-events-none" />
     </div>
   );
 };
+
 
