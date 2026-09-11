@@ -136,19 +136,8 @@ export const NationalDashboardView: React.FC<NationalDashboardViewProps> = ({
           </p>
         </div>
 
-        <div className="relative z-10 flex items-center gap-4 shrink-0 self-stretch lg:self-auto justify-between lg:justify-end">
+        <div className="relative z-10 flex items-center shrink-0 self-stretch lg:self-auto justify-end">
           <IndiaMapGraphic />
-
-          <div className="flex flex-col gap-1.5 shrink-0">
-            <div className="px-3.5 py-1.5 bg-white/95 backdrop-blur-xs border border-[#CBD5E1] rounded-xl text-center shadow-2xs">
-              <span className="font-extrabold text-[#0F172A] text-base block leading-none">4</span>
-              <span className="text-[9px] text-[#475569] font-bold block mt-0.5">4 Roles</span>
-              <span className="text-[8px] text-[#64748B] font-medium block">RBAC Enabled</span>
-            </div>
-            <div className="px-2.5 py-1 bg-[#EFF6FF] border border-blue-200 rounded-lg text-[#1D4ED8] text-[10px] font-bold tracking-tight text-center shadow-2xs">
-              Enterprise Master
-            </div>
-          </div>
         </div>
       </div>
 
