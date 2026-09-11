@@ -15,6 +15,7 @@ import {
   AlertTriangle
 } from 'lucide-react';
 import { IndiaMapGraphic } from '../common/IndiaMapGraphic';
+import { HeroTricolorBackground } from '../common/HeroTricolorBackground';
 
 interface ScenarioData {
   id: string;
@@ -95,11 +96,13 @@ const SCENARIOS: ScenarioData[] = [
 interface NationalDashboardViewProps {
   onNavigateToWorkspace?: () => void;
   onNavigateToReview?: () => void;
+  onNavigateToTab?: (tabIndex: number) => void;
 }
 
 export const NationalDashboardView: React.FC<NationalDashboardViewProps> = ({
   onNavigateToWorkspace,
-  onNavigateToReview
+  onNavigateToReview,
+  onNavigateToTab
 }) => {
   const [selectedScenarioIndex, setSelectedScenarioIndex] = useState(0);
   const [copied, setCopied] = useState(false);
@@ -115,9 +118,11 @@ export const NationalDashboardView: React.FC<NationalDashboardViewProps> = ({
   return (
     <div className="space-y-4 text-left font-sans select-none">
       
-      {/* 1. Hero / Page Introduction */}
-      <div className="bg-white border border-[#E2E8F0] rounded-2xl p-5 shadow-xs flex flex-col lg:flex-row items-start lg:items-center justify-between gap-5">
-        <div className="space-y-1.5 max-w-2xl">
+      {/* 1. Hero / Page Introduction with Flowing Tricolor Silk Background */}
+      <div className="relative overflow-hidden bg-white border border-[#CBD5E1] rounded-2xl p-5 sm:p-6 shadow-xs flex flex-col lg:flex-row items-start lg:items-center justify-between gap-5">
+        <HeroTricolorBackground />
+
+        <div className="relative z-10 space-y-1.5 max-w-2xl">
           <div className="flex items-center gap-2">
             <span className="text-[10px] font-extrabold tracking-wider uppercase text-[#1D4ED8] flex items-center gap-1.5">
               <span>🇮🇳</span> BHARAT | COMMON STANDARDS | STRONGER TOGETHER
@@ -131,16 +136,16 @@ export const NationalDashboardView: React.FC<NationalDashboardViewProps> = ({
           </p>
         </div>
 
-        <div className="flex items-center gap-4 shrink-0 self-stretch lg:self-auto justify-between lg:justify-end">
+        <div className="relative z-10 flex items-center gap-4 shrink-0 self-stretch lg:self-auto justify-between lg:justify-end">
           <IndiaMapGraphic />
 
           <div className="flex flex-col gap-1.5 shrink-0">
-            <div className="px-3.5 py-1.5 bg-white border border-[#CBD5E1] rounded-xl text-center shadow-2xs">
+            <div className="px-3.5 py-1.5 bg-white/95 backdrop-blur-xs border border-[#CBD5E1] rounded-xl text-center shadow-2xs">
               <span className="font-extrabold text-[#0F172A] text-base block leading-none">4</span>
               <span className="text-[9px] text-[#475569] font-bold block mt-0.5">4 Roles</span>
               <span className="text-[8px] text-[#64748B] font-medium block">RBAC Enabled</span>
             </div>
-            <div className="px-2.5 py-1 bg-[#EFF6FF] border border-blue-200 rounded-lg text-[#1D4ED8] text-[10px] font-bold tracking-tight text-center">
+            <div className="px-2.5 py-1 bg-[#EFF6FF] border border-blue-200 rounded-lg text-[#1D4ED8] text-[10px] font-bold tracking-tight text-center shadow-2xs">
               Enterprise Master
             </div>
           </div>
