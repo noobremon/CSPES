@@ -43,6 +43,34 @@ DEMO_USERS: List[Dict[str, Any]] = [
         "role": RoleEnum.AUDITOR,
         "org_code": None,
     },
+    {
+        "email": "national_admin@gov.in",
+        "full_name": "Dr. Rajesh Sharma (National Admin)",
+        "password": "DemoAdmin@2026",
+        "role": RoleEnum.NATIONAL_MASTER_ADMIN,
+        "org_code": None,
+    },
+    {
+        "email": "cpse_manager@gov.in",
+        "full_name": "Vikram Malhotra (IOCL Materials)",
+        "password": "DemoManager@2026",
+        "role": RoleEnum.CPSE_MATERIAL_MANAGER,
+        "org_code": "IOCL",
+    },
+    {
+        "email": "domain_reviewer@gov.in",
+        "full_name": "Ananya Sen (Domain Reviewer)",
+        "password": "DemoReviewer@2026",
+        "role": RoleEnum.DOMAIN_REVIEWER,
+        "org_code": None,
+    },
+    {
+        "email": "auditor@gov.in",
+        "full_name": "Suresh Nair (National Auditor)",
+        "password": "DemoAuditor@2026",
+        "role": RoleEnum.AUDITOR,
+        "org_code": None,
+    },
 ]
 
 

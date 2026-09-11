@@ -23,7 +23,7 @@ import { IndiaGateIllustration } from '../common/IndiaGateIllustration';
 export const LoginPage: React.FC = () => {
   const { login } = useAuth();
   // By default, pre-populate National Master Admin credentials for instant 1-click evaluation
-  const [email, setEmail] = useState('national_admin@gov.in');
+  const [email, setEmail] = useState('national_admin@sih.demo');
   const [password, setPassword] = useState('DemoAdmin@2026');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -57,7 +57,7 @@ export const LoginPage: React.FC = () => {
     {
       role: 'NATIONAL_MASTER_ADMIN',
       title: 'National Master Admin',
-      email: 'national_admin@gov.in',
+      email: 'national_admin@sih.demo',
       password: 'DemoAdmin@2026',
       icon: ShieldCheck,
       desc: 'National macro intelligence, cross-CPSE matrix, and governance visibility',
@@ -65,7 +65,7 @@ export const LoginPage: React.FC = () => {
     {
       role: 'CPSE_MATERIAL_MANAGER',
       title: 'CPSE Material Manager (IOCL)',
-      email: 'cpse_manager@gov.in',
+      email: 'cpse_manager_a@sih.demo',
       password: 'DemoManager@2026',
       icon: Building2,
       desc: 'Ingestion, catalog deduplication, and cross-walk mappings for IOCL',
@@ -73,7 +73,7 @@ export const LoginPage: React.FC = () => {
     {
       role: 'DOMAIN_REVIEWER',
       title: 'Domain Reviewer',
-      email: 'domain_reviewer@gov.in',
+      email: 'domain_reviewer@sih.demo',
       password: 'DemoReviewer@2026',
       icon: UserCheck,
       desc: 'Technical specification review, APPROVE / REJECT / MODIFY candidates',
@@ -81,7 +81,7 @@ export const LoginPage: React.FC = () => {
     {
       role: 'AUDITOR',
       title: 'National Auditor',
-      email: 'auditor@gov.in',
+      email: 'auditor@sih.demo',
       password: 'DemoAuditor@2026',
       icon: FileCheck2,
       desc: 'Read-only access to immutable audit trails and governance decision logs',
@@ -272,7 +272,7 @@ export const LoginPage: React.FC = () => {
                   <input
                     type="email"
                     required
-                    placeholder="e.g. national_admin@gov.in"
+                    placeholder="e.g. national_admin@sih.demo"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     className="w-full pl-10 pr-3.5 py-3 bg-[#F8FAFC] border border-[#CBD5E1] rounded-xl text-[#0F172A] placeholder-[#94A3B8] hover:border-slate-400 focus:outline-hidden focus:border-[#2563EB] focus:ring-2 focus:ring-[#2563EB]/20 font-medium transition-all"
