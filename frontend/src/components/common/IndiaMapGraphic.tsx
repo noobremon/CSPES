@@ -7,12 +7,12 @@ export const IndiaMapGraphic: React.FC<{ className?: string }> = ({ className = 
       className={`flex items-center gap-3 sm:gap-4 select-none my-auto ${className}`}
       aria-label="Government of India National Material Master Identity"
     >
-      {/* Significantly Enlarged Crisp Map of India spanning full height with minimal top/bottom gap */}
-      <div className="relative w-36 h-36 sm:w-44 sm:h-44 md:w-52 md:h-48 shrink-0 flex items-center justify-center -my-2 sm:-my-3">
+      {/* Significantly Enlarged Crisp Map of India spanning full height with minimal gap to borders */}
+      <div className="relative w-44 h-44 sm:w-52 sm:h-52 md:w-60 md:h-56 shrink-0 flex items-center justify-center -my-3 sm:-my-4">
         <img
           src={indiaMapImg}
           alt="Map of India with National Monuments"
-          className="w-full h-full object-contain block mix-blend-multiply select-none pointer-events-none"
+          className="w-full h-full object-contain block select-none pointer-events-none drop-shadow-xs"
           loading="eager"
         />
       </div>
