@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AuthProvider, useAuth } from '../context/AuthContext';
 import { Header } from '../components/layout/Header';
 import { Sidebar, NavTabType } from '../components/layout/Sidebar';
@@ -14,6 +14,7 @@ import { AnalyticsContainer } from '../components/analytics/AnalyticsContainer';
 import { Card } from '../components/ui/Card';
 import { ErrorBoundary } from '../components/common/ErrorBoundary';
 import { CNMCCandidateItem } from '../types';
+import { fetchCNMCCandidates } from '../services/api';
 import { 
   Activity, 
   Database, 
@@ -26,6 +27,33 @@ const MainAppContent: React.FC = () => {
   const [activeTab, setActiveTab] = useState<NavTabType>('dashboard');
   const [selectedCandidate, setSelectedCandidate] = useState<CNMCCandidateItem | null>(null);
   const [refreshTrigger, setRefreshTrigger] = useState<number>(0);
+  const [pendingCount, setPendingCount] = useState<number>(0);
+
+  useEffect(() => {
+    let isMounted = true;
+    const updatePendingCount = async () => {
+      try {
+        const candidates = await fetchCNMCCandidates();
+        if (isMounted) {
+          const count = Array.isArray(candidates)
+            ? candidates.filter((c) => c.status === 'PENDING_REVIEW' || c.status === 'UNDER_REVIEW').length
+            : 0;
+          setPendingCount(count);
+        }
+      } catch {
+        if (isMounted) {
+          setPendingCount(0);
+        }
+      }
+    };
+
+    if (isAuthenticated) {
+      updatePendingCount();
+    }
+    return () => {
+      isMounted = false;
+    };
+  }, [refreshTrigger, isAuthenticated]);
 
   const handleSelectCandidate = (candidate: CNMCCandidateItem) => {
     setSelectedCandidate(candidate);
@@ -62,7 +90,7 @@ const MainAppContent: React.FC = () => {
         <Sidebar
           activeTab={activeTab}
           setActiveTab={setActiveTab}
-          pendingCount={2}
+          pendingCount={pendingCount}
         />
 
         {/* Right Main Content Area */}

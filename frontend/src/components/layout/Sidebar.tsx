@@ -23,7 +23,7 @@ interface SidebarProps {
 export const Sidebar: React.FC<SidebarProps> = ({
   activeTab,
   setActiveTab,
-  pendingCount = 2,
+  pendingCount = 0,
 }) => {
   const { logout } = useAuth();
 
