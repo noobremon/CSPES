@@ -4,11 +4,11 @@ import indiaMapImg from '../../assets/india-monuments-map.png';
 export const IndiaMapGraphic: React.FC<{ className?: string }> = ({ className = "w-auto h-auto" }) => {
   return (
     <div
-      className={`flex items-center gap-3 sm:gap-4 select-none my-auto ${className}`}
+      className={`flex items-center gap-3 sm:gap-4 select-none my-auto pr-1 sm:pr-2 ${className}`}
       aria-label="Government of India National Material Master Identity"
     >
-      {/* Significantly Enlarged Crisp Map of India spanning full height with minimal gap to borders */}
-      <div className="relative w-44 h-44 sm:w-52 sm:h-52 md:w-60 md:h-56 shrink-0 flex items-center justify-center -my-3 sm:-my-4">
+      {/* Prominently Sized Crisp Map of India with clean padding from all borders */}
+      <div className="relative w-36 h-36 sm:w-40 sm:h-40 md:w-48 md:h-44 shrink-0 flex items-center justify-center py-1">
         <img
           src={indiaMapImg}
           alt="Map of India with National Monuments"
@@ -18,7 +18,7 @@ export const IndiaMapGraphic: React.FC<{ className?: string }> = ({ className = 
       </div>
 
       {/* Blue Standardized Materials Stronger Bharat Typography */}
-      <div className="flex flex-col text-left leading-tight shrink-0 space-y-0.5">
+      <div className="flex flex-col text-left leading-tight shrink-0 space-y-0.5 whitespace-nowrap">
         <span className="text-sm sm:text-base font-extrabold text-[#1E3A8A] tracking-tight">
           Standardized
         </span>
