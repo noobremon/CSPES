@@ -4,7 +4,7 @@ Governance Reviews and Immutable Audit Log REST API Endpoints.
 Endpoints:
 - GET /api/v1/governance/reviews : Query review history with entity type/ID filtering
 - GET /api/v1/governance/reviews/{review_id} : Specific review decision details
-- GET /api/v1/governance/audit-logs : Query append-only audit trail logs
+- GET /api/v1/governance/audit-logs : Query append-only audit trail logs (RBAC Scoped)
 """
 
 from typing import List, Optional, Any
@@ -15,6 +15,8 @@ from sqlalchemy import select, or_, and_, desc
 
 from app.db.session import get_db
 from app.models.governance import GovernanceReview, AuditLog
+from app.models.user import User, RoleEnum
+from app.core.deps import require_authenticated_user
 from app.schemas.governance import (
     GovernanceReviewResponse,
     AuditLogResponse,
@@ -30,10 +32,12 @@ async def list_governance_reviews(
     decision: Optional[str] = Query(None, description="Filter by decision (APPROVED, REJECTED, MODIFIED)"),
     limit: int = Query(50, ge=1, le=100),
     offset: int = Query(0, ge=0),
+    current_user: User = Depends(require_authenticated_user),
     db: AsyncSession = Depends(get_db)
 ):
     """
     Retrieves human governance review decisions and rationales across candidates and matches.
+    Requires authenticated user session.
     """
     stmt = select(GovernanceReview)
     if entity_type:
@@ -52,10 +56,12 @@ async def list_governance_reviews(
 @router.get("/reviews/{review_id}", response_model=GovernanceReviewResponse)
 async def get_governance_review_detail(
     review_id: uuid.UUID,
+    current_user: User = Depends(require_authenticated_user),
     db: AsyncSession = Depends(get_db)
 ):
     """
     Retrieves detail of a single governance review record.
+    Requires authenticated user session.
     """
     review = await db.get(GovernanceReview, review_id)
     if not review:
@@ -73,12 +79,20 @@ async def list_audit_logs(
     action: Optional[str] = Query(None, description="Filter by action code"),
     limit: int = Query(50, ge=1, le=100),
     offset: int = Query(0, ge=0),
+    current_user: User = Depends(require_authenticated_user),
     db: AsyncSession = Depends(get_db)
 ):
     """
     Retrieves immutable audit trail log entries. Sensitive Layer 1 data is guaranteed excluded.
+    RBAC Scoping:
+    - AUDITOR, NATIONAL_MASTER_ADMIN, DOMAIN_REVIEWER: Full national audit trail access.
+    - CPSE_MATERIAL_MANAGER: Scoped to their own actions and actor reference.
     """
     stmt = select(AuditLog)
+
+    if current_user.role == RoleEnum.CPSE_MATERIAL_MANAGER:
+        stmt = stmt.where(AuditLog.actor_reference == current_user.email)
+
     if entity_type:
         stmt = stmt.where(AuditLog.entity_type == entity_type)
     if entity_id:

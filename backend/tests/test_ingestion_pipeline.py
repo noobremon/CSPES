@@ -242,6 +242,18 @@ async def test_end_to_end_ingestion_execution_and_sensitive_isolation(tmp_path):
 async def test_discover_api_endpoint():
     from httpx import AsyncClient, ASGITransport
     from app.main import app
+    from app.core.deps import require_authenticated_user, get_current_user
+    from app.models.user import User, RoleEnum, UserStatus
+    import uuid
+
+    mock_user = User(
+        id=uuid.uuid4(),
+        email="cpse_manager@sih.demo",
+        role=RoleEnum.CPSE_MATERIAL_MANAGER,
+        status=UserStatus.ACTIVE
+    )
+    app.dependency_overrides[require_authenticated_user] = lambda: mock_user
+    app.dependency_overrides[get_current_user] = lambda: mock_user
 
     transport = ASGITransport(app=app)
     csv_bytes = b"MAT_CODE,ITEM_DESCRIPTION,UOM\nIOCL-01,Bolt M16,NOS\n"

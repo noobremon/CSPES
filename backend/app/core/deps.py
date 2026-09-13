@@ -91,7 +91,7 @@ def require_roles(*allowed_roles: RoleEnum) -> Callable:
         if current_user.role not in allowed_roles:
             raise HTTPException(
                 status_code=status.HTTP_403_FORBIDDEN,
-                detail=f"Access forbidden. Action requires one of: {[r.value for r in allowed_roles]}. Current role: {current_user.role.value}"
+                detail=f"Access forbidden. Candidate review and approvals require DOMAIN_REVIEWER or NATIONAL_MASTER_ADMIN. Action requires one of: {[r.value for r in allowed_roles]}. Current role: {current_user.role.value}"
             )
         return current_user
 

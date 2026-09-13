@@ -573,12 +573,24 @@ async def test_complete_audit_trail_generation(async_db: AsyncSession):
 async def test_cnmc_and_governance_api_endpoints(async_db: AsyncSession):
     from app.main import app
     from app.db.session import get_db
+    from app.core.deps import require_authenticated_user, get_current_user
+    from app.models.user import User, RoleEnum, UserStatus
+    import uuid
     from httpx import AsyncClient, ASGITransport
+
+    mock_user = User(
+        id=uuid.uuid4(),
+        email="domain_reviewer@sih.demo",
+        role=RoleEnum.DOMAIN_REVIEWER,
+        status=UserStatus.ACTIVE
+    )
 
     async def override_get_db():
         yield async_db
 
     app.dependency_overrides[get_db] = override_get_db
+    app.dependency_overrides[require_authenticated_user] = lambda: mock_user
+    app.dependency_overrides[get_current_user] = lambda: mock_user
 
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as client:
         # Test GET /api/v1/cnmc/candidates

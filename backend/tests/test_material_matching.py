@@ -415,12 +415,23 @@ async def test_end_to_end_cross_cpse_matching_flow():
         assert m.composite_confidence >= 0.95
         assert m.recommendation_status == "PROPOSED"  # No auto-approval
 
-    # Test API endpoints via FastAPI test client overriding db dependency
+    from app.core.deps import require_authenticated_user, get_current_user
+    from app.models.user import User, RoleEnum, UserStatus
+
+    mock_user = User(
+        id=uuid.uuid4(),
+        email="domain_reviewer@sih.demo",
+        role=RoleEnum.DOMAIN_REVIEWER,
+        status=UserStatus.ACTIVE
+    )
+
     async def override_get_db():
         async with session_factory() as s:
             yield s
 
     app.dependency_overrides[get_db] = override_get_db
+    app.dependency_overrides[require_authenticated_user] = lambda: mock_user
+    app.dependency_overrides[get_current_user] = lambda: mock_user
 
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as client:
         # Check embeddings status endpoint

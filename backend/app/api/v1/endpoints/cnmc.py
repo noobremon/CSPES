@@ -5,7 +5,7 @@ Endpoints:
 - POST /api/v1/cnmc/recommend : Generate prototype CNMC recommendation for a normalized material
 - GET /api/v1/cnmc/candidates : Retrieve list of CNMC candidates with status filtering
 - GET /api/v1/cnmc/candidates/{candidate_id} : Detailed candidate with structured explainability
-- POST /api/v1/cnmc/candidates/{candidate_id}/review : Submit APPROVE, REJECT, or MODIFY decision
+- POST /api/v1/cnmc/candidates/{candidate_id}/review : Submit APPROVE, REJECT, or MODIFY decision (Admin/Reviewer)
 - GET /api/v1/cnmc/mappings : Query CPSE <-> CNMC cross-walk mappings
 - GET /api/v1/cnmc/masters : Query approved prototype CNMC masters
 """
@@ -40,34 +40,38 @@ from app.services.governance.workflow_service import (
     GovernanceWorkflowService,
     GOVERNANCE_DISCLAIMER,
 )
-from app.core.deps import get_current_user
+from app.core.deps import get_current_user, require_authenticated_user, require_roles
+from app.core.rate_limiter import RateLimiter
 from app.models.user import User, RoleEnum
 
 router = APIRouter()
 
+cnmc_recommend_limiter = RateLimiter(limit=30, window_seconds=60, scope="cnmc_recommend")
 
-@router.post("/recommend", response_model=CNMCRecommendationResponse)
+
+@router.post(
+    "/recommend",
+    response_model=CNMCRecommendationResponse,
+    dependencies=[Depends(cnmc_recommend_limiter)],
+    summary="Generate prototype CNMC recommendation"
+)
 async def generate_cnmc_recommendation(
     req: CNMCRecommendationRequest,
-    x_demo_reviewer: Optional[str] = Header(None, description="Demo Reviewer Identifier"),
-    current_user: Optional[User] = Depends(get_current_user),
+    current_user: User = Depends(require_authenticated_user),
     db: AsyncSession = Depends(get_db)
 ):
     """
     Generates a prototype CNMC recommendation for a given normalized material.
-    Inspects taxonomy, technical attributes, and candidate clusters to either:
-    - Recommend reusing an existing governed prototype CNMC, or
-    - Recommend synthesizing a new prototype CNMC candidate, or
-    - Flag insufficient data.
+    Requires authenticated session. Auditor role is blocked from persistence actions.
     """
-    if current_user and current_user.role == RoleEnum.AUDITOR:
+    if current_user.role == RoleEnum.AUDITOR:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Auditor role is read-only and cannot trigger recommendation persistence."
         )
 
     service = CNMCRecommendationService(db)
-    actor = current_user.email if current_user else (x_demo_reviewer or "CNMC_RECOMMENDATION_ENGINE_V1")
+    actor = current_user.email
 
     try:
         res: CNMCRecommendationResult = await service.recommend_cnmc_for_material(
@@ -103,10 +107,12 @@ async def list_cnmc_candidates(
     search: Optional[str] = Query(None, description="Search term in proposed CNMC or group title"),
     limit: int = Query(50, ge=1, le=100),
     offset: int = Query(0, ge=0),
+    current_user: User = Depends(require_authenticated_user),
     db: AsyncSession = Depends(get_db)
 ):
     """
     Retrieves a list of CNMC candidates with optional status filtering and search.
+    Requires authenticated user.
     """
     stmt = select(CNMCCandidate)
     if status_filter:
@@ -154,10 +160,12 @@ async def list_cnmc_candidates(
 @router.get("/candidates/{candidate_id}", response_model=CNMCCandidateDetailResponse)
 async def get_cnmc_candidate_detail(
     candidate_id: uuid.UUID,
+    current_user: User = Depends(require_authenticated_user),
     db: AsyncSession = Depends(get_db)
 ):
     """
     Retrieves full detail of a single CNMC candidate proposal including structured explanation.
+    Requires authenticated user.
     """
     cand = await db.get(CNMCCandidate, candidate_id)
     if not cand:
@@ -213,25 +221,16 @@ async def get_cnmc_candidate_detail(
 async def review_cnmc_candidate(
     candidate_id: uuid.UUID,
     req: CNMCReviewRequest,
-    x_demo_reviewer: Optional[str] = Header(None, description="Demo Reviewer Identifier"),
-    current_user: Optional[User] = Depends(get_current_user),
+    current_user: User = Depends(require_roles(RoleEnum.DOMAIN_REVIEWER, RoleEnum.NATIONAL_MASTER_ADMIN)),
     db: AsyncSession = Depends(get_db)
 ):
     """
     Submits a human governance review action (APPROVE, REJECT, MODIFY) for a CNMC candidate.
     Enforces mandatory justifications for rejections and modifications.
-    Enforces that reviewers have DOMAIN_REVIEWER or NATIONAL_MASTER_ADMIN role.
+    STRICT SECURITY GUARD:
+    Mandatory authentication and server-side RBAC restriction to DOMAIN_REVIEWER or NATIONAL_MASTER_ADMIN role.
     """
-    if current_user:
-        if current_user.role not in [RoleEnum.DOMAIN_REVIEWER, RoleEnum.NATIONAL_MASTER_ADMIN]:
-            raise HTTPException(
-                status_code=status.HTTP_403_FORBIDDEN,
-                detail=f"Governance review actions (APPROVE/REJECT/MODIFY) require DOMAIN_REVIEWER or NATIONAL_MASTER_ADMIN role. Current role: {current_user.role.value}"
-            )
-        reviewer = current_user.email
-    else:
-        reviewer = req.reviewer_reference or x_demo_reviewer or "demo_domain_reviewer@sih.gov.in"
-
+    reviewer = current_user.email
     workflow = GovernanceWorkflowService(db)
 
     try:
@@ -263,10 +262,12 @@ async def list_cpse_cnmc_mappings(
     status_filter: Optional[str] = Query("ACTIVE", description="Filter by mapping status"),
     limit: int = Query(50, ge=1, le=100),
     offset: int = Query(0, ge=0),
+    current_user: User = Depends(require_authenticated_user),
     db: AsyncSession = Depends(get_db)
 ):
     """
     Queries cross-walk mappings binding CPSE legacy material codes to approved prototype CNMCs.
+    Requires authenticated user.
     """
     stmt = (
         select(CPSECNMCMapping, Organization, CNMCMaster)
@@ -315,10 +316,11 @@ async def list_cnmc_masters(
     search: Optional[str] = Query(None, description="Search term in CNMC code or title"),
     limit: int = Query(50, ge=1, le=100),
     offset: int = Query(0, ge=0),
+    current_user: User = Depends(require_authenticated_user),
     db: AsyncSession = Depends(get_db)
 ):
     """
-    Queries governed prototype CNMC master records.
+    Queries governed prototype CNMC master records. Requires authenticated user.
     """
     stmt = select(CNMCMaster).where(CNMCMaster.status == "ACTIVE")
     if search:

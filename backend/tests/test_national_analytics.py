@@ -364,12 +364,24 @@ async def test_sensitive_layer1_data_exclusion_in_analytics(analytics_db: AsyncS
 async def test_analytics_api_endpoints_and_pagination(analytics_db: AsyncSession):
     from app.main import app
     from app.db.session import get_db
+    from app.core.deps import require_authenticated_user, get_current_user
+    from app.models.user import User, RoleEnum, UserStatus
+    import uuid
     from httpx import AsyncClient, ASGITransport
+
+    mock_user = User(
+        id=uuid.uuid4(),
+        email="national_admin@sih.demo",
+        role=RoleEnum.NATIONAL_MASTER_ADMIN,
+        status=UserStatus.ACTIVE
+    )
 
     async def override_get_db():
         yield analytics_db
 
     app.dependency_overrides[get_db] = override_get_db
+    app.dependency_overrides[require_authenticated_user] = lambda: mock_user
+    app.dependency_overrides[get_current_user] = lambda: mock_user
 
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as client:
         # GET /api/v1/analytics/dashboard

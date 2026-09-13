@@ -51,6 +51,9 @@ pnpm-debug.log*
 
 # Uploads & Temporary Ingestion Data
 data/uploads/
+**/data/uploads/*
+backend/app/data/uploads/*
+backend/data/uploads/*
 
 # IDE & OS Files
 .DS_Store

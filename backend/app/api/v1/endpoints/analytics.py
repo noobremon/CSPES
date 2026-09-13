@@ -19,6 +19,8 @@ from fastapi import APIRouter, Depends, HTTPException, status, Query
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.db.session import get_db
+from app.models.user import User
+from app.core.deps import require_authenticated_user
 from app.schemas.analytics import (
     DashboardSummaryResponse,
     DuplicateSummaryResponse,
@@ -44,18 +46,26 @@ router = APIRouter()
 
 @router.get("/dashboard", response_model=DashboardSummaryResponse)
 @router.get("/dashboard/national")
-async def get_national_dashboard_summary(db: AsyncSession = Depends(get_db)):
+async def get_national_dashboard_summary(
+    current_user: User = Depends(require_authenticated_user),
+    db: AsyncSession = Depends(get_db)
+):
     """
     Returns high-level national material KPIs, standardization progress, and duplication ratios.
+    Requires authenticated session.
     """
     service = NationalDashboardService(db)
     return await service.get_dashboard_summary()
 
 
 @router.get("/duplicates", response_model=DuplicateSummaryResponse)
-async def get_duplicate_summary(db: AsyncSession = Depends(get_db)):
+async def get_duplicate_summary(
+    current_user: User = Depends(require_authenticated_user),
+    db: AsyncSession = Depends(get_db)
+):
     """
     Returns duplicate density breakdowns across classifications, CPSE organizations, and taxonomy categories.
+    Requires authenticated session.
     """
     service = DuplicateAnalyticsService(db)
     return await service.get_duplicate_summary()
@@ -67,10 +77,12 @@ async def list_duplicate_clusters(
     min_confidence: float = Query(0.50, ge=0.0, le=1.0, description="Minimum match confidence threshold"),
     limit: int = Query(50, ge=1, le=100),
     offset: int = Query(0, ge=0),
+    current_user: User = Depends(require_authenticated_user),
     db: AsyncSession = Depends(get_db)
 ):
     """
     Returns detailed duplicate material clusters with participating CPSEs and sanitized member metadata.
+    Requires authenticated session.
     """
     service = DuplicateAnalyticsService(db)
     return await service.get_duplicate_clusters(
@@ -85,10 +97,12 @@ async def list_duplicate_clusters(
 @router.get("/matrix/cross-cpse")
 async def get_cross_cpse_overlap_matrix(
     min_overlap: Optional[int] = Query(0, ge=0),
+    current_user: User = Depends(require_authenticated_user),
     db: AsyncSession = Depends(get_db)
 ):
     """
     Returns the dynamic pairwise N x N material overlap matrix across all participating CPSEs.
+    Requires authenticated session.
     """
     service = CrossCPSEAnalyticsService(db)
     return await service.get_cross_cpse_overlap_matrix()
@@ -96,9 +110,13 @@ async def get_cross_cpse_overlap_matrix(
 
 @router.get("/cnmc-summary", response_model=CNMCSummaryResponse)
 @router.get("/standardization/cnmc")
-async def get_cnmc_standardization_summary(db: AsyncSession = Depends(get_db)):
+async def get_cnmc_standardization_summary(
+    current_user: User = Depends(require_authenticated_user),
+    db: AsyncSession = Depends(get_db)
+):
     """
     Returns CNMC candidate pipeline metrics, master catalog statistics, and conversion funnel.
+    Requires authenticated session.
     """
     service = CNMCAnalyticsService(db)
     return await service.get_cnmc_summary()
@@ -111,10 +129,12 @@ async def list_procurement_opportunities(
     priority: Optional[str] = Query(None, description="Filter by priority (HIGH, MEDIUM, LOW)"),
     limit: int = Query(50, ge=1, le=100),
     offset: int = Query(0, ge=0),
+    current_user: User = Depends(require_authenticated_user),
     db: AsyncSession = Depends(get_db)
 ):
     """
     Returns illustrative cross-CPSE procurement and demand aggregation opportunities.
+    Requires authenticated session.
     """
     service = ProcurementOpportunityService(db)
     return await service.get_procurement_opportunities(
@@ -131,10 +151,12 @@ async def list_rationalization_priorities(
     priority: Optional[str] = Query(None, description="Filter by priority level (HIGH, MEDIUM, LOW)"),
     limit: int = Query(50, ge=1, le=100),
     offset: int = Query(0, ge=0),
+    current_user: User = Depends(require_authenticated_user),
     db: AsyncSession = Depends(get_db)
 ):
     """
     Returns ranked material duplicate clusters with transparent deterministic rationalization priority scores.
+    Requires authenticated session.
     """
     service = RationalizationPriorityService(db)
     return await service.get_rationalization_priorities(
@@ -145,9 +167,13 @@ async def list_rationalization_priorities(
 
 
 @router.get("/categories", response_model=List[CategoryAnalyticsItem])
-async def list_category_analytics(db: AsyncSession = Depends(get_db)):
+async def list_category_analytics(
+    current_user: User = Depends(require_authenticated_user),
+    db: AsyncSession = Depends(get_db)
+):
     """
     Returns category-level statistics and rationalization density across all engineering taxonomy nodes.
+    Requires authenticated session.
     """
     service = CategoryAnalyticsService(db)
     return await service.get_category_analytics()
@@ -156,10 +182,12 @@ async def list_category_analytics(db: AsyncSession = Depends(get_db)):
 @router.get("/categories/{category_id}", response_model=Dict[str, Any])
 async def get_category_detail(
     category_id: uuid.UUID,
+    current_user: User = Depends(require_authenticated_user),
     db: AsyncSession = Depends(get_db)
 ):
     """
     Returns drilldown details and sample materials for a specific category node.
+    Requires authenticated session.
     """
     service = CategoryAnalyticsService(db)
     detail = await service.get_category_detail(category_id)

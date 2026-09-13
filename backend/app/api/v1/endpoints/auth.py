@@ -28,9 +28,14 @@ from app.core.security import (
 )
 from app.core.deps import get_current_user, require_authenticated_user, require_roles
 from app.core.config import settings
+from app.core.rate_limiter import RateLimiter
 from app.services.auth.seed_users import seed_demo_users
 
 router = APIRouter()
+
+# Rate limiters for security-sensitive authentication endpoints
+login_rate_limiter = RateLimiter(limit=15, window_seconds=60, scope="auth_login")
+refresh_rate_limiter = RateLimiter(limit=30, window_seconds=60, scope="auth_refresh")
 
 
 def format_user_response(user: User) -> UserResponse:
@@ -50,7 +55,12 @@ def format_user_response(user: User) -> UserResponse:
     )
 
 
-@router.post("/login", response_model=TokenResponse)
+@router.post(
+    "/login",
+    response_model=TokenResponse,
+    dependencies=[Depends(login_rate_limiter)],
+    summary="User Login with Rate Limiting & Audit Logging"
+)
 async def login(
     req: LoginRequest,
     request: Request,
@@ -61,6 +71,7 @@ async def login(
     Authenticates a user with corporate email and password.
     Returns short-lived JWT access token, refresh token, and user profile.
     Records audit event with credential sanitization.
+    Protected by 15 req/min rate limiter against brute-force attacks.
     """
     client_ip = request.client.host if request.client else "unknown"
 
@@ -117,14 +128,15 @@ async def login(
     )
     refresh_token = create_refresh_token(subject=str(user.id))
 
-    # Set HttpOnly Cookie for session security
+    # Set HttpOnly Cookie for session security with environment-aware Secure flag
+    is_prod = settings.ENVIRONMENT.lower() not in ["development", "dev", "test"]
     response.set_cookie(
         key="access_token",
         value=access_token,
         httponly=True,
         max_age=settings.ACCESS_TOKEN_EXPIRE_MINUTES * 60,
         samesite="lax",
-        secure=False,  # Set to True in HTTPS production
+        secure=is_prod,
     )
 
     # Record login audit event
@@ -193,7 +205,12 @@ async def logout(
     return AuthMessageResponse(message="Successfully logged out.", success=True)
 
 
-@router.post("/refresh", response_model=TokenResponse)
+@router.post(
+    "/refresh",
+    response_model=TokenResponse,
+    dependencies=[Depends(refresh_rate_limiter)],
+    summary="Token Refresh with Rotation & JTI Invalidation"
+)
 async def refresh_token(
     req: RefreshTokenRequest,
     response: Response,
@@ -242,13 +259,14 @@ async def refresh_token(
     )
     new_refresh_token = create_refresh_token(subject=str(user.id))
 
+    is_prod = settings.ENVIRONMENT.lower() not in ["development", "dev", "test"]
     response.set_cookie(
         key="access_token",
         value=new_access_token,
         httponly=True,
         max_age=settings.ACCESS_TOKEN_EXPIRE_MINUTES * 60,
         samesite="lax",
-        secure=False,
+        secure=is_prod,
     )
 
     return TokenResponse(
@@ -272,19 +290,31 @@ async def get_my_profile(
 
 @router.post("/seed-demo-users", response_model=AuthMessageResponse)
 async def seed_users_endpoint(
+    current_user: Optional[User] = Depends(get_current_user),
     db: AsyncSession = Depends(get_db)
 ):
     """
     Development/Demo environment setup helper to seed standard SIH demo user accounts.
     
-    SECURITY GUARD:
-    Permanently disabled and rejected in production environments.
+    SECURITY GUARDS:
+    1. Permanently disabled and rejected (403) in production environments.
+    2. If existing users exist in non-empty DB, requires NATIONAL_MASTER_ADMIN privileges.
     """
     if settings.ENVIRONMENT.lower() in ["production", "prod"]:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Demo user seeding is permanently disabled in production environments."
         )
+
+    # Check if database already has users; if so, require admin credentials
+    res = await db.execute(select(User).limit(1))
+    existing_user = res.scalars().first()
+    if existing_user:
+        if not current_user or current_user.role != RoleEnum.NATIONAL_MASTER_ADMIN:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Database already initialized. Re-seeding requires authenticated NATIONAL_MASTER_ADMIN role."
+            )
 
     users = await seed_demo_users(db)
     await db.commit()

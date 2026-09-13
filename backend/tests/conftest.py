@@ -8,6 +8,15 @@ from httpx import AsyncClient, ASGITransport
 from app.main import app
 
 
+@pytest.fixture(autouse=True)
+def reset_rate_limiter():
+    from app.core.rate_limiter import clear_rate_limiter_cache
+    clear_rate_limiter_cache()
+    yield
+    clear_rate_limiter_cache()
+    app.dependency_overrides.clear()
+
+
 @pytest.fixture
 async def client():
     transport = ASGITransport(app=app)

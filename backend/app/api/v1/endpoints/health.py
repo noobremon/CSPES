@@ -8,6 +8,8 @@ import redis.asyncio as aioredis
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import text
 from app.db.session import get_db
+from app.core.deps import require_roles
+from app.models.user import User, RoleEnum
 
 router = APIRouter()
 
@@ -44,6 +46,7 @@ async def get_health() -> ApiResponse[HealthResponse]:
 async def get_readiness(db: AsyncSession = Depends(get_db)) -> ApiResponse[ReadinessResponse]:
     """
     Standard readiness probe checking PostgreSQL database, pgvector extension, and Redis availability.
+    Sanitizes diagnostics in production to prevent leaking internal database errors.
     """
     db_status = "unknown"
     pgvector_status = "unknown"
@@ -64,7 +67,7 @@ async def get_readiness(db: AsyncSession = Depends(get_db)) -> ApiResponse[Readi
         else:
             pgvector_status = "not_installed"
     except Exception as e:
-        db_status = f"unreachable ({str(e)})"
+        db_status = "unreachable" if settings.ENVIRONMENT.lower() in ["production", "prod"] else f"unreachable ({str(e)})"
         pgvector_status = "unavailable"
 
     # Check Redis
@@ -74,7 +77,7 @@ async def get_readiness(db: AsyncSession = Depends(get_db)) -> ApiResponse[Readi
             redis_status = "connected"
         await r.close()
     except Exception as e:
-        redis_status = f"unreachable ({str(e)})"
+        redis_status = "unreachable" if settings.ENVIRONMENT.lower() in ["production", "prod"] else f"unreachable ({str(e)})"
 
     is_ready = (db_status == "connected" and redis_status == "connected")
 
@@ -95,11 +98,15 @@ async def get_readiness(db: AsyncSession = Depends(get_db)) -> ApiResponse[Readi
     "/test-celery-ping",
     response_model=ApiResponse[dict],
     status_code=status.HTTP_202_ACCEPTED,
-    summary="Technical Verification: Dispatch Celery Test Task",
+    summary="Technical Verification: Dispatch Celery Test Task (Admin Only)",
 )
-async def trigger_test_celery_task(msg: str = "technical_health_check") -> ApiResponse[dict]:
+async def trigger_test_celery_task(
+    msg: str = "technical_health_check",
+    current_user: User = Depends(require_roles(RoleEnum.NATIONAL_MASTER_ADMIN)),
+) -> ApiResponse[dict]:
     """
-    Technical verification endpoint: dispatches a harmless ping task to Redis broker for Celery worker consumption.
+    Technical verification endpoint: dispatches a ping task to Redis broker for Celery worker consumption.
+    Restricted strictly to authenticated NATIONAL_MASTER_ADMIN users to prevent resource exhaustion / queue flooding.
     """
     try:
         task = ping_task.delay(msg)

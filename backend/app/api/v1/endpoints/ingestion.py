@@ -25,10 +25,14 @@ from app.services.file_parser import (
 from app.services.ingestion_engine import execute_ingestion_job
 from app.workers.tasks import process_ingestion_batch_task
 from app.core.config import settings
-from app.core.deps import get_current_user, validate_tenant_access
+from app.core.deps import get_current_user, require_authenticated_user, validate_tenant_access
+from app.core.rate_limiter import RateLimiter
 from app.models.user import User, RoleEnum
 
 router = APIRouter()
+
+upload_rate_limiter = RateLimiter(limit=15, window_seconds=60, scope="ingestion_upload")
+discover_rate_limiter = RateLimiter(limit=25, window_seconds=60, scope="ingestion_discover")
 
 UPLOAD_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__)))), "data", "uploads")
 os.makedirs(UPLOAD_DIR, exist_ok=True)
@@ -66,20 +70,24 @@ async def list_cpse_organizations(
 @router.post(
     "/discover",
     response_model=ColumnDiscoveryResponse,
+    dependencies=[Depends(discover_rate_limiter)],
     summary="Inspect file headers and sample preview rows",
-    description="Inspects an uploaded CSV or OpenXML Excel (.xlsx) file without persisting it. Returns detected column headers, estimated row count, preview sample rows, and suggested mappings. Explicitly rejects legacy .xls format."
+    description="Inspects an uploaded CSV or OpenXML Excel (.xlsx) file without persisting it. Returns detected column headers, estimated row count, preview sample rows, and suggested mappings. Explicitly rejects legacy .xls and executable formats."
 )
 async def discover_columns(
     file: UploadFile = File(..., description="CSV or .xlsx file to inspect"),
-    current_user: Optional[User] = Depends(get_current_user),
+    current_user: User = Depends(require_authenticated_user),
 ):
-    if current_user and current_user.role == RoleEnum.AUDITOR:
+    if current_user.role == RoleEnum.AUDITOR:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Auditor role is read-only and cannot perform discovery or ingestion."
         )
 
     filename = file.filename or "unknown_file.csv"
+    # Basic filename sanitization
+    filename = os.path.basename(filename)
+
     content = await file.read()
     if not content:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Uploaded file is empty.")
@@ -113,6 +121,7 @@ async def discover_columns(
     "/upload",
     response_model=IngestionUploadResponse,
     status_code=status.HTTP_201_CREATED,
+    dependencies=[Depends(upload_rate_limiter)],
     summary="Upload material catalog file and create ingestion job",
     description="Uploads a CSV or OpenXML Excel (.xlsx) file, checks SHA-256 hash for duplicate upload protection, saves to controlled storage, and registers an IngestionJob."
 )
@@ -120,18 +129,21 @@ async def upload_ingestion_file(
     organization_id: uuid.UUID = Form(..., description="Target CPSE organization UUID"),
     source_system_id: Optional[uuid.UUID] = Form(None, description="Optional CPSE source system UUID"),
     file: UploadFile = File(..., description="CSV or OpenXML Excel (.xlsx) catalog file"),
-    current_user: Optional[User] = Depends(get_current_user),
+    current_user: User = Depends(require_authenticated_user),
     db: AsyncSession = Depends(get_db)
 ):
-    if current_user:
-        if current_user.role == RoleEnum.AUDITOR:
-            raise HTTPException(
-                status_code=status.HTTP_403_FORBIDDEN,
-                detail="Auditor role is read-only and cannot upload materials."
-            )
-        validate_tenant_access(organization_id, current_user)
+    if current_user.role == RoleEnum.AUDITOR:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Auditor role is read-only and cannot upload materials."
+        )
+
+    # Server-side horizontal privilege escalation / tenant boundary enforcement
+    validate_tenant_access(organization_id, current_user)
 
     filename = file.filename or "catalog.csv"
+    filename = os.path.basename(filename)
+
     content = await file.read()
     if not content:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Uploaded file is empty.")
@@ -172,9 +184,14 @@ async def upload_ingestion_file(
     except Exception as e:
         raise HTTPException(status_code=422, detail=f"File parse error: {str(e)}")
 
-    # Store file in controlled upload directory with safe UUID filename
-    safe_filename = f"{uuid.uuid4()}_{os.path.basename(filename)}"
-    stored_path = os.path.join(UPLOAD_DIR, safe_filename)
+    # Store file in controlled upload directory with safe UUID filename and directory confinement check
+    safe_basename = f"{uuid.uuid4()}_{os.path.basename(filename)}"
+    stored_path = os.path.abspath(os.path.join(UPLOAD_DIR, safe_basename))
+    upload_dir_abs = os.path.abspath(UPLOAD_DIR)
+
+    if not stored_path.startswith(upload_dir_abs):
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid filename or path traversal detected.")
+
     with open(stored_path, "wb") as f:
         f.write(content)
 
@@ -225,6 +242,7 @@ async def process_ingestion_job(
     payload: ProcessJobRequest,
     job_id: Optional[uuid.UUID] = None,
     run_sync: bool = False,
+    current_user: User = Depends(require_authenticated_user),
     db: AsyncSession = Depends(get_db)
 ):
     target_job_id = job_id or payload.job_id
@@ -234,6 +252,9 @@ async def process_ingestion_job(
     job = (await db.execute(select(IngestionJob).where(IngestionJob.id == target_job_id))).scalars().first()
     if not job:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"IngestionJob with ID {target_job_id} not found.")
+
+    # Server-side IDOR / tenant boundary enforcement
+    validate_tenant_access(job.organization_id, current_user)
 
     if job.status not in ["QUEUED", "FAILED", "PARTIALLY_COMPLETED"]:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"Job is already in '{job.status}' state.")
@@ -287,11 +308,15 @@ async def process_ingestion_job(
 )
 async def get_ingestion_job_status(
     job_id: uuid.UUID,
+    current_user: User = Depends(require_authenticated_user),
     db: AsyncSession = Depends(get_db)
 ):
     job = (await db.execute(select(IngestionJob).where(IngestionJob.id == job_id))).scalars().first()
     if not job:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"IngestionJob with ID {job_id} not found.")
+
+    # Server-side IDOR / tenant boundary enforcement
+    validate_tenant_access(job.organization_id, current_user)
 
     return IngestionJobStatusResponse(
         job_id=job.id,
@@ -317,11 +342,15 @@ async def get_ingestion_job_status(
 )
 async def get_ingestion_job_errors(
     job_id: uuid.UUID,
+    current_user: User = Depends(require_authenticated_user),
     db: AsyncSession = Depends(get_db)
 ):
     job = (await db.execute(select(IngestionJob).where(IngestionJob.id == job_id))).scalars().first()
     if not job:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"IngestionJob with ID {job_id} not found.")
+
+    # Server-side IDOR / tenant boundary enforcement
+    validate_tenant_access(job.organization_id, current_user)
 
     errors = job.error_summary or []
     return IngestionErrorListResponse(

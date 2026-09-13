@@ -2,9 +2,9 @@
 Material Matching API Endpoints for Candidate Intelligence & Explainability.
 
 Endpoints:
-- POST /api/v1/materials/{material_id}/match : Generate candidate matches for a material
-- GET /api/v1/materials/{material_id}/matches : Retrieve existing candidate matches
-- GET /api/v1/matches/{match_id} : Retrieve full explainable match card and attribute diff
+- POST /api/v1/matching/materials/{material_id}/match : Generate candidate matches for a material
+- GET /api/v1/matching/materials/{material_id}/matches : Retrieve existing candidate matches
+- GET /api/v1/matching/matches/{match_id} : Retrieve full explainable match card and attribute diff
 """
 
 from typing import List, Optional, Any, Dict
@@ -19,6 +19,9 @@ from app.db.session import get_db
 from app.models.matching import MaterialSimilarityMatch
 from app.models.material import NormalizedMaterial, RawMaterial
 from app.models.organization import Organization
+from app.models.user import User
+from app.core.deps import require_authenticated_user
+from app.core.rate_limiter import RateLimiter
 from app.services.matching.hybrid_engine import (
     generate_and_persist_matches_for_material,
     load_representation_for_material,
@@ -27,6 +30,8 @@ from app.services.matching.hybrid_engine import (
 from app.services.matching.embedding_provider import get_embedding_provider
 
 router = APIRouter()
+
+match_rate_limiter = RateLimiter(limit=30, window_seconds=60, scope="material_matching")
 
 
 # Schemas
@@ -80,9 +85,12 @@ class EmbeddingStatusResponse(BaseModel):
 
 
 @router.get("/status/embeddings", response_model=EmbeddingStatusResponse)
-async def get_embedding_model_status():
+async def get_embedding_model_status(
+    current_user: User = Depends(require_authenticated_user)
+):
     """
     Returns the live status and availability of the ML semantic embedding provider.
+    Requires authenticated session.
     """
     provider = get_embedding_provider()
     info = provider.get_model_info()
@@ -96,18 +104,25 @@ async def get_embedding_model_status():
     )
 
 
-@router.post("/materials/{material_id}/match", response_model=List[MatchCandidateResponse])
+@router.post(
+    "/materials/{material_id}/match",
+    response_model=List[MatchCandidateResponse],
+    dependencies=[Depends(match_rate_limiter)],
+    summary="Trigger Candidate Matching Engine"
+)
 async def trigger_material_matching(
     material_id: uuid.UUID,
     cross_org_only: bool = Query(True, description="Compare only across different CPSEs"),
     min_confidence: float = Query(0.40, ge=0.0, le=1.0, description="Minimum composite confidence score"),
     limit: int = Query(20, ge=1, le=100, description="Max candidate results to return"),
+    current_user: User = Depends(require_authenticated_user),
     db: AsyncSession = Depends(get_db)
 ):
     """
     Triggers candidate matching engine for a given source material.
     Retrieves candidates via blocking strategy, evaluates Tier 1, Tier 2, and Tier 3 signals,
     computes hybrid score, persists candidate matches, and returns explainable recommendations.
+    Requires authenticated user session.
     """
     source_mat = await db.get(NormalizedMaterial, material_id)
     if not source_mat:
@@ -160,10 +175,12 @@ async def trigger_material_matching(
 @router.get("/materials/{material_id}/matches", response_model=List[MatchCandidateResponse])
 async def get_material_matches(
     material_id: uuid.UUID,
+    current_user: User = Depends(require_authenticated_user),
     db: AsyncSession = Depends(get_db)
 ):
     """
     Retrieves all previously generated candidate matches for a source material.
+    Requires authenticated user session.
     """
     stmt = (
         select(MaterialSimilarityMatch)
@@ -215,11 +232,13 @@ async def get_material_matches(
 @router.get("/matches/{match_id}", response_model=MatchDetailResponse)
 async def get_match_detail(
     match_id: uuid.UUID,
+    current_user: User = Depends(require_authenticated_user),
     db: AsyncSession = Depends(get_db)
 ):
     """
     Retrieves a single explainable match card with detailed specification diff,
     signal evaluation breakdown, and sanitized material representations.
+    Requires authenticated user session.
     """
     match = await db.get(MaterialSimilarityMatch, match_id)
     if not match:

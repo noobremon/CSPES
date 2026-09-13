@@ -5,6 +5,13 @@ import os
 from typing import List, Dict, Any, Tuple
 import openpyxl
 
+ALLOWED_EXTENSIONS = {".csv", ".xlsx"}
+DANGEROUS_EXTENSIONS = {
+    ".exe", ".bat", ".cmd", ".sh", ".bash", ".bin", ".php", ".phtml",
+    ".py", ".pyw", ".js", ".ts", ".jsx", ".tsx", ".html", ".htm",
+    ".svg", ".xml", ".vbs", ".ps1", ".jar", ".war", ".dll", ".so", ".dylib"
+}
+
 
 def compute_file_hash(content: bytes) -> str:
     """Computes SHA-256 checksum of raw file bytes for duplicate upload protection."""
@@ -14,24 +21,32 @@ def compute_file_hash(content: bytes) -> str:
 def detect_file_type(filename: str, content: bytes) -> str:
     """
     Detects file format based on extension and signature.
-    Explicitly supports OpenXML Excel (.xlsx) and CSV (.csv).
-    Explicitly rejects legacy binary Excel (.xls).
+    Strictly validates against allowed formats: OpenXML Excel (.xlsx) and CSV (.csv).
+    Rejects legacy binary Excel (.xls) and all executable/malicious extensions.
     """
-    lower = filename.lower()
-    if lower.endswith(".xls") and not lower.endswith(".xlsx"):
+    _, ext = os.path.splitext(filename.lower())
+
+    if ext in DANGEROUS_EXTENSIONS:
+        raise ValueError(f"Dangerous file extension '{ext}' is strictly prohibited.")
+
+    if ext == ".xls":
         raise ValueError(
             "Legacy binary Excel format (.xls) is not supported. "
             "Please convert the file to OpenXML Excel (.xlsx) or standard CSV format."
         )
-    elif lower.endswith(".xlsx"):
-        return "EXCEL"
-    elif lower.endswith(".csv"):
-        return "CSV"
 
-    # Magic bytes check for ZIP (Excel .xlsx is an OpenXML zip package)
-    if content.startswith(b"PK\x03\x04"):
+    if ext not in ALLOWED_EXTENSIONS:
+        raise ValueError(
+            f"Unsupported file format '{ext}'. Only standard CSV (.csv) and OpenXML Excel (.xlsx) files are accepted."
+        )
+
+    if ext == ".xlsx":
+        # Magic bytes check for ZIP (Excel .xlsx is an OpenXML zip package)
+        if not content.startswith(b"PK\x03\x04"):
+            raise ValueError("File has .xlsx extension but is not a valid OpenXML Excel spreadsheet.")
         return "EXCEL"
-    
+
+    # CSV validation
     return "CSV"
 
 
