@@ -272,14 +272,23 @@ async def test_admin_and_governance_review_rbac(sec_context):
 async def test_rate_limiting_triggers_429(sec_context):
     client = sec_context["client"]
     clear_rate_limiter_cache()
+    test_headers = {"X-Forwarded-For": "198.51.100.42"}
 
     # Login rate limit is 15 req / min
     for i in range(15):
-        res = await client.post("/api/v1/auth/login", json={"email": "wrong@sih.demo", "password": "WrongPassword"})
+        res = await client.post(
+            "/api/v1/auth/login",
+            headers=test_headers,
+            json={"email": "wrong@sih.demo", "password": "WrongPassword"}
+        )
         assert res.status_code in [401, 200]
 
     # 16th request breaches rate limit -> 429 Too Many Requests
-    blocked_res = await client.post("/api/v1/auth/login", json={"email": "wrong@sih.demo", "password": "WrongPassword"})
+    blocked_res = await client.post(
+        "/api/v1/auth/login",
+        headers=test_headers,
+        json={"email": "wrong@sih.demo", "password": "WrongPassword"}
+    )
     assert blocked_res.status_code == 429
     assert "Retry-After" in blocked_res.headers
     assert blocked_res.headers.get("X-RateLimit-Remaining") == "0"

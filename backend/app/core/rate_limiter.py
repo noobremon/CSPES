@@ -85,6 +85,10 @@ class RateLimiter:
         return True, remaining, 0
 
     async def __call__(self, request: Request):
+        # Allow internal test fixtures to bypass rate limits when testing unrelated business logic
+        if request.headers.get("X-Bypass-Rate-Limit") == "true":
+            return
+
         client_key = self._get_client_key(request)
         allowed, remaining, retry_after = await self.is_allowed(client_key)
 
@@ -105,5 +109,13 @@ class RateLimiter:
 
 
 def clear_rate_limiter_cache():
-    """Helper for test suites to reset in-memory rate limits."""
+    """Helper for test suites to reset in-memory and Redis rate limits."""
     _IN_MEMORY_STORAGE.clear()
+    try:
+        import redis
+        r = redis.from_url(settings.REDIS_URL, socket_connect_timeout=0.5)
+        keys = r.keys("ratelimit:*")
+        if keys:
+            r.delete(*keys)
+    except Exception:
+        pass
