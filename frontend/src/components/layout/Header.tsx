@@ -12,6 +12,43 @@ export const Header: React.FC = () => {
   const { user, logout } = useAuth();
   const [showProfileMenu, setShowProfileMenu] = useState(false);
 
+  const getRolePost = (role?: string, orgCode?: string | null) => {
+    switch (role) {
+      case 'NATIONAL_MASTER_ADMIN':
+        return {
+          postTitle: 'National Master Admin',
+          postBadge: 'National Oversight & Standards',
+          avatarText: 'NA'
+        };
+      case 'CPSE_MATERIAL_MANAGER':
+        return {
+          postTitle: orgCode ? `CPSE Material Manager (${orgCode})` : 'CPSE Material Manager',
+          postBadge: orgCode ? `Enterprise Scope: ${orgCode}` : 'Enterprise Material Operations',
+          avatarText: orgCode ? orgCode.slice(0, 2).toUpperCase() : 'MM'
+        };
+      case 'DOMAIN_REVIEWER':
+        return {
+          postTitle: 'Domain Reviewer',
+          postBadge: 'Technical Governance Review',
+          avatarText: 'DR'
+        };
+      case 'AUDITOR':
+        return {
+          postTitle: 'National Auditor',
+          postBadge: 'Statutory Audit & Compliance',
+          avatarText: 'AU'
+        };
+      default:
+        return {
+          postTitle: 'National Master Admin',
+          postBadge: 'Government of India',
+          avatarText: 'NA'
+        };
+    }
+  };
+
+  const rolePost = getRolePost(user?.role, user?.organization_code);
+
   return (
     <header className="h-[3.75rem] bg-white border-b border-[#E2E8F0] sticky top-0 z-40 px-5 flex items-center justify-between gap-4 select-none">
       
@@ -67,14 +104,14 @@ export const Header: React.FC = () => {
           >
             {/* User Avatar with Initials */}
             <div className="w-7 h-7 rounded-lg bg-[#EFF6FF] text-[#1D4ED8] border border-blue-200 flex items-center justify-center font-bold text-xs">
-              {user?.full_name ? user.full_name.split(' ').map(n => n[0]).slice(0, 2).join('') : 'NA'}
+              {rolePost.avatarText}
             </div>
             <div className="flex flex-col text-left leading-tight hidden sm:flex">
               <span className="font-bold text-[#0F172A] text-[11px]">
-                {user?.full_name || 'National Master Admin'}
+                {rolePost.postTitle}
               </span>
               <span className="text-[10px] text-[#64748B] font-medium">
-                {user?.role ? user.role.replace(/_/g, ' ') : 'National Material Master Admin'}
+                {rolePost.postBadge}
               </span>
             </div>
             <ChevronDown className="w-3.5 h-3.5 text-[#64748B] ml-0.5" />
@@ -92,7 +129,7 @@ export const Header: React.FC = () => {
           {showProfileMenu && (
             <div className="absolute right-0 top-12 w-56 bg-white border border-[#E2E8F0] rounded-2xl shadow-lg p-2 z-50 text-left">
               <div className="p-2.5 border-b border-slate-100">
-                <div className="text-xs font-bold text-[#0F172A]">{user?.full_name || 'National Master Admin'}</div>
+                <div className="text-xs font-bold text-[#0F172A]">{rolePost.postTitle}</div>
                 <div className="text-[10px] text-[#64748B] font-mono truncate">{user?.email || 'national_admin@sih.demo'}</div>
               </div>
               <button
