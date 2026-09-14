@@ -26,7 +26,7 @@ export const Footer: React.FC = () => {
 
         {/* Right: Copyright & National Badges */}
         <div className="flex items-center gap-2.5">
-          <span className="text-[10.5px] font-semibold text-[#0F172A] hidden lg:inline">© 2024 Government of India</span>
+          <span className="text-[10.5px] font-semibold text-[#0F172A] hidden lg:inline">© {new Date().getFullYear()} Government of India</span>
 
           {/* Digital India Badge */}
           <div className="flex items-center gap-1.5 px-2 py-0.5 bg-white border border-slate-200 rounded-md shadow-2xs">
