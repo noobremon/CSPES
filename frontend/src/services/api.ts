@@ -243,13 +243,56 @@ export async function fetchNationalDashboard(): Promise<NationalDashboardRespons
 }
 
 export async function fetchDuplicateAnalytics(): Promise<DuplicateAnalyticsResponse> {
-  const response = await fetch(`${API_BASE_URL}/analytics/duplicates`, {
-    headers: getHeaders(),
-  });
-  if (!response.ok) {
-    throw new Error(`Failed to fetch duplicate analytics: ${response.statusText}`);
+  const [summaryRes, clustersRes] = await Promise.allSettled([
+    fetch(`${API_BASE_URL}/analytics/duplicates`, { headers: getHeaders() }),
+    fetch(`${API_BASE_URL}/analytics/duplicates/clusters`, { headers: getHeaders() })
+  ]);
+
+  let summaryData: any = {};
+  if (summaryRes.status === 'fulfilled' && summaryRes.value.ok) {
+    summaryData = await summaryRes.value.json().catch(() => ({}));
   }
-  return response.json();
+
+  let clustersData: any[] = [];
+  if (clustersRes.status === 'fulfilled' && clustersRes.value.ok) {
+    clustersData = await clustersRes.value.json().catch(() => []);
+  }
+
+  const classifications = summaryData.duplicate_classifications || {};
+  const cpseDensity = (summaryData.density_by_cpse || []).map((c: any) => ({
+    cpse_id: c.organization_code,
+    cpse_code: c.organization_code,
+    cpse_name: c.organization_name,
+    total_materials: c.match_candidate_count || 0,
+    duplicate_materials_count: c.match_candidate_count || 0,
+    duplicate_density_percentage: c.duplicate_density_percentage ?? 0
+  }));
+
+  const duplicateClusters = Array.isArray(clustersData) ? clustersData.map((cl: any) => ({
+    cluster_id: cl.cluster_id,
+    canonical_name: cl.canonical_description,
+    category_code: cl.category_code || 'MECH',
+    cnmc_code: cl.linked_cnmc_candidate || cl.cnmc_code || null,
+    match_type: cl.match_type,
+    participating_cpse_count: cl.participating_cpse_count,
+    participating_cpses: cl.participating_cpses || [],
+    item_count: cl.material_count || (cl.members ? cl.members.length : 2),
+    items: (cl.members || []).map((m: any) => ({
+      cpse_code: m.organization_code,
+      local_material_code: m.local_material_code,
+      description: m.canonical_description
+    }))
+  })) : [];
+
+  return {
+    ...summaryData,
+    total_clusters: classifications.total_duplicates ?? duplicateClusters.length,
+    exact_match_clusters: classifications.exact_duplicates ?? 0,
+    near_match_clusters: classifications.near_duplicates ?? 0,
+    functional_clusters: classifications.functional_equivalences ?? 0,
+    cpse_density_breakdown: cpseDensity,
+    duplicate_clusters: duplicateClusters,
+  };
 }
 
 export async function fetchCrossCPSEMatrix(minOverlap?: number): Promise<CrossCPSEMatrixResponse> {

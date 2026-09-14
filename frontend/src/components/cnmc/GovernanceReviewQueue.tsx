@@ -106,21 +106,22 @@ export const GovernanceReviewQueue: React.FC<GovernanceReviewQueueProps> = ({
   onSelectCandidate,
   refreshTrigger
 }) => {
-  const [candidates, setCandidates] = useState<CNMCCandidateItem[]>(INITIAL_DEMO_CANDIDATES);
+  const [candidates, setCandidates] = useState<CNMCCandidateItem[]>([]);
   const [statusFilter, setStatusFilter] = useState<string>('ALL');
   const [searchTerm, setSearchTerm] = useState<string>('');
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const loadCandidates = async () => {
     setLoading(true);
     try {
       const data = await fetchCNMCCandidates(statusFilter === 'ALL' ? undefined : statusFilter, searchTerm || undefined);
-      if (data && data.length > 0) {
+      if (Array.isArray(data)) {
         setCandidates(data);
       } else {
-        setCandidates(INITIAL_DEMO_CANDIDATES);
+        setCandidates([]);
       }
-    } catch {
+    } catch (err) {
+      console.warn('Backend unavailable, using demonstration candidates:', err);
       setCandidates(INITIAL_DEMO_CANDIDATES);
     } finally {
       setLoading(false);
@@ -232,7 +233,16 @@ export const GovernanceReviewQueue: React.FC<GovernanceReviewQueueProps> = ({
               </tr>
             </thead>
             <tbody className="divide-y divide-[#E2E8F0]">
-              {filteredCandidates.length > 0 ? (
+              {loading ? (
+                <tr>
+                  <td colSpan={6} className="py-12 text-center text-[#64748B]">
+                    <div className="inline-flex items-center gap-2">
+                      <RefreshCw className="w-4 h-4 animate-spin text-[#2563EB]" />
+                      <span className="text-xs font-medium">Loading candidate proposals...</span>
+                    </div>
+                  </td>
+                </tr>
+              ) : filteredCandidates.length > 0 ? (
                 filteredCandidates.map((candidate) => (
                   <tr key={candidate.id} className="hover:bg-[#F8FAFC] transition-colors">
                     <td className="py-3.5 px-6 font-mono font-bold text-gov-navy flex items-center gap-2">

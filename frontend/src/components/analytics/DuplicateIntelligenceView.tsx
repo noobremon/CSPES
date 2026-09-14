@@ -40,7 +40,23 @@ export const DuplicateIntelligenceView: React.FC<DuplicateIntelligenceViewProps>
     );
   }
 
-  const filteredClusters = (data.duplicate_clusters || []).filter((cluster) => {
+  const totalClusters = data.total_clusters ?? data.duplicate_classifications?.total_duplicates ?? 0;
+  const exactMatchClusters = data.exact_match_clusters ?? data.duplicate_classifications?.exact_duplicates ?? 0;
+  const nearMatchClusters = data.near_match_clusters ?? data.duplicate_classifications?.near_duplicates ?? 0;
+  const functionalClusters = data.functional_clusters ?? data.duplicate_classifications?.functional_equivalences ?? 0;
+  const cpseList = (data.cpse_density_breakdown && data.cpse_density_breakdown.length > 0)
+    ? data.cpse_density_breakdown
+    : (data.density_by_cpse || []).map((c: any) => ({
+        cpse_id: c.organization_code,
+        cpse_code: c.organization_code,
+        cpse_name: c.organization_name,
+        total_materials: c.match_candidate_count || 0,
+        duplicate_materials_count: c.match_candidate_count || 0,
+        duplicate_density_percentage: c.duplicate_density_percentage ?? 0
+      }));
+
+  const rawClusters = data.duplicate_clusters || [];
+  const filteredClusters = rawClusters.filter((cluster) => {
     const term = searchTerm.toLowerCase();
     return (
       (cluster.canonical_name && cluster.canonical_name.toLowerCase().includes(term)) ||
@@ -58,7 +74,7 @@ export const DuplicateIntelligenceView: React.FC<DuplicateIntelligenceViewProps>
             <span className="text-xs font-bold text-slate-600 uppercase tracking-wider">Total Clusters</span>
             <Copy className="w-4 h-4 text-amber-600" />
           </div>
-          <div className="text-2xl font-bold text-slate-900 mt-2">{data.total_clusters}</div>
+          <div className="text-2xl font-bold text-slate-900 mt-2">{totalClusters}</div>
           <p className="text-xs text-slate-500 mt-1">Multi-item equivalence sets</p>
         </div>
 
@@ -67,7 +83,7 @@ export const DuplicateIntelligenceView: React.FC<DuplicateIntelligenceViewProps>
             <span className="text-xs font-bold text-emerald-700 uppercase tracking-wider">Exact Code Match</span>
             <ShieldCheck className="w-4 h-4 text-emerald-600" />
           </div>
-          <div className="text-2xl font-bold text-emerald-800 mt-2">{data.exact_match_clusters}</div>
+          <div className="text-2xl font-bold text-emerald-800 mt-2">{exactMatchClusters}</div>
           <p className="text-xs text-slate-500 mt-1">Direct standardized code matches</p>
         </div>
 
@@ -76,7 +92,7 @@ export const DuplicateIntelligenceView: React.FC<DuplicateIntelligenceViewProps>
             <span className="text-xs font-bold text-blue-700 uppercase tracking-wider">Near Match (AI)</span>
             <Sparkles className="w-4 h-4 text-blue-600" />
           </div>
-          <div className="text-2xl font-bold text-blue-800 mt-2">{data.near_match_clusters}</div>
+          <div className="text-2xl font-bold text-blue-800 mt-2">{nearMatchClusters}</div>
           <p className="text-xs text-slate-500 mt-1">High semantic/fuzzy similarity (&ge; 85%)</p>
         </div>
 
@@ -85,33 +101,35 @@ export const DuplicateIntelligenceView: React.FC<DuplicateIntelligenceViewProps>
             <span className="text-xs font-bold text-purple-700 uppercase tracking-wider">Functional Equiv.</span>
             <Layers className="w-4 h-4 text-purple-600" />
           </div>
-          <div className="text-2xl font-bold text-purple-800 mt-2">{data.functional_clusters}</div>
+          <div className="text-2xl font-bold text-purple-800 mt-2">{functionalClusters}</div>
           <p className="text-xs text-slate-500 mt-1">Attribute & standard grade equivalence</p>
         </div>
       </div>
 
       {/* CPSE Density Breakdown */}
-      <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-2xs">
-        <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider mb-3">
-          Duplicate Density by Enterprise (CPSE)
-        </h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-          {(data.cpse_density_breakdown || []).map((cpse) => (
-            <div key={cpse.cpse_id || cpse.cpse_code} className="p-3 bg-slate-50 rounded-lg border border-slate-200/80 flex items-center justify-between">
-              <div>
-                <span className="text-xs font-bold text-slate-900">{cpse.cpse_name}</span>
-                <p className="text-xs text-slate-500 font-mono mt-0.5">{cpse.cpse_code} • {cpse.total_materials} materials</p>
+      {cpseList.length > 0 && (
+        <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-2xs">
+          <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider mb-3">
+            Duplicate Density by Enterprise (CPSE)
+          </h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+            {cpseList.map((cpse: any) => (
+              <div key={cpse.cpse_id || cpse.cpse_code} className="p-3 bg-slate-50 rounded-lg border border-slate-200/80 flex items-center justify-between">
+                <div>
+                  <span className="text-xs font-bold text-slate-900">{cpse.cpse_name}</span>
+                  <p className="text-xs text-slate-500 font-mono mt-0.5">{cpse.cpse_code} • {cpse.total_materials} materials</p>
+                </div>
+                <div className="text-right">
+                  <span className="text-xs font-bold text-amber-800 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded">
+                    {typeof cpse.duplicate_density_percentage === 'number' ? cpse.duplicate_density_percentage.toFixed(1) : '0.0'}%
+                  </span>
+                  <p className="text-[10px] text-slate-500 mt-0.5">{cpse.duplicate_materials_count} in clusters</p>
+                </div>
               </div>
-              <div className="text-right">
-                <span className="text-xs font-bold text-amber-800 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded">
-                  {cpse.duplicate_density_percentage.toFixed(1)}%
-                </span>
-                <p className="text-[10px] text-slate-500 mt-0.5">{cpse.duplicate_materials_count} in clusters</p>
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Clusters List & Detail Modal/Drawer */}
       <div className="bg-white rounded-xl border border-slate-200 shadow-2xs overflow-hidden">
@@ -134,8 +152,9 @@ export const DuplicateIntelligenceView: React.FC<DuplicateIntelligenceViewProps>
 
         <div className="divide-y divide-slate-200 max-h-[600px] overflow-y-auto">
           {filteredClusters.length === 0 ? (
-            <div className="p-8 text-center text-xs text-slate-500">
-              No duplicate clusters match your search query.
+            <div className="p-8 text-center text-xs text-slate-500 space-y-1">
+              <p className="font-semibold text-slate-700">No duplicate clusters found matching current criteria.</p>
+              <p className="text-[11px] text-slate-400">As multi-CPSE material catalogs are ingested and AI matching runs, duplicate equivalence groups appear here.</p>
             </div>
           ) : (
             filteredClusters.map((cluster) => (
