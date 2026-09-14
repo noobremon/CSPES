@@ -29,16 +29,16 @@ export const Footer: React.FC = () => {
           <span className="text-[10.5px] font-semibold text-[#0F172A] hidden lg:inline">© {new Date().getFullYear()} Government of India</span>
 
           {/* Digital India Badge */}
-          <div className="flex items-center gap-2 px-2.5 py-1 bg-white border border-slate-200 rounded-lg shadow-2xs">
+          <div className="flex items-center gap-2 px-2.5 py-1 bg-white border border-slate-200/90 rounded-lg shadow-2xs">
             <svg className="w-5 h-5 shrink-0" viewBox="0 0 40 40" fill="none">
               <circle cx="20" cy="20" r="18.5" fill="#F8FAFC" stroke="#CBD5E1" strokeWidth="1" />
               <path d="M11 23 C13 14 27 10 29 19 C25 28 15 27 19 17" stroke="#FF9933" strokeWidth="3.2" strokeLinecap="round" />
               <path d="M15 26 C17 19 26 17 26 23 C22 28 17 26 19 21" stroke="#138808" strokeWidth="2.8" strokeLinecap="round" />
               <circle cx="20" cy="20" r="2.2" fill="#000080" />
             </svg>
-            <div className="text-left leading-tight">
-              <div className="text-[11px] font-extrabold text-[#0F172A]">Digital India</div>
-              <div className="text-[8px] text-[#64748B] font-medium">Power To Empower</div>
+            <div className="text-left leading-tight flex flex-col justify-center whitespace-nowrap">
+              <span className="text-[11px] font-bold text-[#0F172A] tracking-normal font-sans">Digital India</span>
+              <span className="text-[7.5px] text-[#64748B] font-medium tracking-wide">Power To Empower</span>
             </div>
           </div>
 

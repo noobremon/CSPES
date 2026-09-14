@@ -445,16 +445,20 @@ export const LoginPage: React.FC = () => {
             </div>
 
             {/* Official Digital India Vector Badge */}
-            <div className="flex items-center gap-2 px-3 py-1.5 bg-white border border-slate-200 rounded-xl shadow-2xs shrink-0">
+            <div className="flex items-center gap-2.5 px-3 py-1.5 bg-white border border-slate-200/90 rounded-xl shadow-2xs shrink-0">
               <svg className="w-6 h-6 shrink-0" viewBox="0 0 40 40" fill="none" aria-hidden="true">
                 <circle cx="20" cy="20" r="18.5" fill="#F8FAFC" stroke="#CBD5E1" strokeWidth="1" />
                 <path d="M11 23 C13 14 27 10 29 19 C25 28 15 27 19 17" stroke="#FF9933" strokeWidth="3.2" strokeLinecap="round" />
                 <path d="M15 26 C17 19 26 17 26 23 C22 28 17 26 19 21" stroke="#138808" strokeWidth="2.8" strokeLinecap="round" />
                 <circle cx="20" cy="20" r="2.2" fill="#000080" />
               </svg>
-              <div className="text-left flex flex-col justify-center gap-0.5 whitespace-nowrap">
-                <span className="text-[12px] sm:text-[12.5px] font-extrabold text-[#0F172A] leading-none tracking-tight">Digital India</span>
-                <span className="text-[8.5px] sm:text-[9px] text-[#475569] font-semibold leading-none tracking-wide">Power To Empower</span>
+              <div className="text-left flex flex-col justify-center whitespace-nowrap leading-tight">
+                <span className="text-[12px] sm:text-[12.5px] font-bold text-[#0F172A] tracking-normal font-sans">
+                  Digital India
+                </span>
+                <span className="text-[8.5px] sm:text-[9px] text-[#64748B] font-medium tracking-wide">
+                  Power To Empower
+                </span>
               </div>
             </div>
           </div>
