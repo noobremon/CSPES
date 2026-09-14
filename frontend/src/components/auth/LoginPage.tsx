@@ -376,14 +376,14 @@ export const LoginPage: React.FC = () => {
       {/* ========================================================================= */}
       {/* 3. FULL-WIDTH INSTITUTIONAL FOOTER (REAL HTML/CSS)                        */}
       {/* ========================================================================= */}
-      <footer className="auth-footer w-full bg-[#F8FAFC] border-t border-[#DDE7EE] shrink-0 z-30 select-none relative overflow-hidden mt-auto min-h-[76px] sm:min-h-[84px] flex items-center">
+      <footer className="auth-footer w-full bg-[#F8FAFC] border-t border-[#DDE7EE] shrink-0 flex-none z-30 select-none relative overflow-hidden h-auto min-h-0">
         {/* Subtle Decorative Skyline Artwork (Subdued Opacity & Far Right) */}
         <div className="footer-decoration absolute right-0 top-0 bottom-0 w-2/5 pointer-events-none overflow-hidden z-0" aria-hidden="true">
           <IndiaMonumentsSkyline className="w-full h-full object-cover" opacity={0.035} />
         </div>
 
         {/* Semantic Responsive Footer Container */}
-        <div className="footer-content w-full max-w-[1400px] mx-auto px-6 sm:px-10 lg:px-12 py-3.5 sm:py-4 flex flex-col md:flex-row items-center justify-between gap-4 relative z-10">
+        <div className="footer-content w-full max-w-[1400px] mx-auto px-6 sm:px-10 lg:px-12 py-3 sm:py-3.5 flex flex-col md:flex-row items-center justify-between gap-4 relative z-10">
           {/* Government Department Hierarchy */}
           <div className="footer-government flex items-center gap-3 text-left">
             <div className="h-8 w-0.5 bg-[#1E3A8A] rounded-full hidden sm:block shrink-0" />
