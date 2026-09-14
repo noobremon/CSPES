@@ -101,15 +101,15 @@ export const LoginPage: React.FC = () => {
         {/* Subtle Decorative Left Tricolor Silk Ribbon Curve (Layer 2) */}
         <div className="absolute left-0 top-0 bottom-0 w-28 sm:w-36 pointer-events-none z-0" aria-hidden="true">
           <svg viewBox="0 0 160 88" className="w-full h-full" preserveAspectRatio="none">
-            <path d="M0,0 Q65,44 0,88" fill="#FF9933" fillOpacity="0.45" />
-            <path d="M0,16 Q85,44 0,72" fill="#FFFFFF" fillOpacity="0.6" />
-            <path d="M0,28 Q100,44 0,60" fill="#138808" fillOpacity="0.45" />
+            <path d="M0,0 Q65,44 0,88" fill="#FF9933" fillOpacity="0.75" />
+            <path d="M0,16 Q85,44 0,72" fill="#FFFFFF" fillOpacity="0.9" />
+            <path d="M0,28 Q100,44 0,60" fill="#138808" fillOpacity="0.75" />
           </svg>
         </div>
 
-        {/* Subtle Background Indian Monuments Skyline Watermark (Layer 2 - Right) */}
-        <div className="absolute right-0 top-0 bottom-0 w-1/3 sm:w-2/5 pointer-events-none overflow-hidden z-0" aria-hidden="true">
-          <IndiaMonumentsSkyline className="w-full h-full object-cover" opacity={0.038} />
+        {/* Subtle Background Indian Monuments Skyline Watermark (Layer 2 - Right: 0.08 opacity) */}
+        <div className="absolute right-0 top-0 bottom-0 w-1/2 sm:w-2/5 pointer-events-none overflow-hidden z-0" aria-hidden="true">
+          <IndiaMonumentsSkyline className="w-full h-full object-cover" opacity={0.08} />
         </div>
 
         {/* Semantic Responsive Header Container (Layer 3 & 4) */}
@@ -386,24 +386,24 @@ export const LoginPage: React.FC = () => {
       {/* 3. FULL-WIDTH INSTITUTIONAL FOOTER (MATCHES REFERENCE 2)                  */}
       {/* ========================================================================= */}
       <footer className="auth-footer w-full bg-[#F8FAFC] border-t border-[#DDE7EE] shrink-0 flex-none z-30 select-none relative overflow-hidden h-auto min-h-0">
-        {/* Subtle Decorative Background Skyline Artwork (Layer 2) */}
-        <div className="footer-decoration absolute right-0 top-0 bottom-0 w-1/2 sm:w-2/5 pointer-events-none overflow-hidden z-0" aria-hidden="true">
-          <IndiaMonumentsSkyline className="w-full h-full object-cover" opacity={0.038} />
+        {/* Subtle Decorative Background Skyline Artwork (Layer 2 - Right: 0.075 opacity) */}
+        <div className="footer-decoration absolute right-0 top-0 bottom-0 w-3/5 sm:w-1/2 pointer-events-none overflow-hidden z-0" aria-hidden="true">
+          <IndiaMonumentsSkyline className="w-full h-full object-cover" opacity={0.075} />
         </div>
 
         {/* Subtle Flowing Tricolor Curves on Bottom Left & Right (Layer 2) */}
-        <div className="absolute left-0 bottom-0 w-32 sm:w-44 h-7 pointer-events-none z-0" aria-hidden="true">
+        <div className="absolute left-0 bottom-0 w-36 sm:w-48 h-7 sm:h-8 pointer-events-none z-0" aria-hidden="true">
           <svg viewBox="0 0 160 30" className="w-full h-full" preserveAspectRatio="none">
-            <path d="M0,30 Q80,0 160,30" fill="#FF9933" fillOpacity="0.3" />
-            <path d="M0,30 Q80,10 160,30" fill="#FFFFFF" fillOpacity="0.45" />
-            <path d="M0,30 Q80,18 160,30" fill="#138808" fillOpacity="0.3" />
+            <path d="M0,30 Q80,0 160,30" fill="#FF9933" fillOpacity="0.55" />
+            <path d="M0,30 Q80,10 160,30" fill="#FFFFFF" fillOpacity="0.75" />
+            <path d="M0,30 Q80,18 160,30" fill="#138808" fillOpacity="0.55" />
           </svg>
         </div>
-        <div className="absolute right-0 bottom-0 w-32 sm:w-44 h-7 pointer-events-none z-0" aria-hidden="true">
+        <div className="absolute right-0 bottom-0 w-36 sm:w-48 h-7 sm:h-8 pointer-events-none z-0" aria-hidden="true">
           <svg viewBox="0 0 160 30" className="w-full h-full" preserveAspectRatio="none">
-            <path d="M0,30 Q80,0 160,30" fill="#FF9933" fillOpacity="0.3" />
-            <path d="M0,30 Q80,10 160,30" fill="#FFFFFF" fillOpacity="0.45" />
-            <path d="M0,30 Q80,18 160,30" fill="#138808" fillOpacity="0.3" />
+            <path d="M0,30 Q80,0 160,30" fill="#FF9933" fillOpacity="0.55" />
+            <path d="M0,30 Q80,10 160,30" fill="#FFFFFF" fillOpacity="0.75" />
+            <path d="M0,30 Q80,18 160,30" fill="#138808" fillOpacity="0.55" />
           </svg>
         </div>
 
