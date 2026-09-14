@@ -444,16 +444,16 @@ export const LoginPage: React.FC = () => {
             </div>
 
             {/* Official Digital India Vector Badge */}
-            <div className="flex items-center gap-2 px-3 py-1.5 bg-white border border-slate-200 rounded-lg shadow-2xs">
-              <svg className="w-5 h-5 shrink-0" viewBox="0 0 40 40" fill="none" aria-hidden="true">
-                <circle cx="20" cy="20" r="18" fill="#F8FAFC" stroke="#E2E8F0" strokeWidth="1" />
-                <path d="M12 24 C14 16 26 12 28 20 C24 28 16 26 20 18" stroke="#FF9933" strokeWidth="3" strokeLinecap="round" />
-                <path d="M16 26 C18 20 26 18 26 24 C22 28 18 26 20 22" stroke="#138808" strokeWidth="2.5" strokeLinecap="round" />
-                <circle cx="20" cy="20" r="2" fill="#000080" />
+            <div className="flex items-center gap-2.5 px-3.5 py-1.5 sm:py-2 bg-white border border-slate-200 rounded-xl shadow-2xs">
+              <svg className="w-7 h-7 shrink-0" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+                <circle cx="20" cy="20" r="18.5" fill="#F8FAFC" stroke="#CBD5E1" strokeWidth="1" />
+                <path d="M11 23 C13 14 27 10 29 19 C25 28 15 27 19 17" stroke="#FF9933" strokeWidth="3.2" strokeLinecap="round" />
+                <path d="M15 26 C17 19 26 17 26 23 C22 28 17 26 19 21" stroke="#138808" strokeWidth="2.8" strokeLinecap="round" />
+                <circle cx="20" cy="20" r="2.2" fill="#000080" />
               </svg>
-              <div className="text-left leading-none">
-                <div className="text-[10.5px] font-extrabold text-[#0F172A]">Digital India</div>
-                <div className="text-[7.5px] text-[#64748B] font-medium">Power To Empower</div>
+              <div className="text-left leading-tight flex flex-col justify-center">
+                <div className="text-[13px] sm:text-[13.5px] font-extrabold text-[#0F172A] tracking-tight">Digital India</div>
+                <div className="text-[9.5px] sm:text-[10px] text-[#475569] font-semibold tracking-wide">Power To Empower</div>
               </div>
             </div>
           </div>
