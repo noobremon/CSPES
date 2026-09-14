@@ -112,7 +112,7 @@ export const LoginPage: React.FC = () => {
         <div className="government-header w-full max-w-[1400px] mx-auto px-6 sm:px-10 lg:px-12 h-full flex items-center justify-between relative z-10">
           {/* Government of India Identity Hierarchy */}
           <div className="government-identity flex items-center gap-3.5 sm:gap-4 text-left">
-            <NationalEmblem className="h-10 w-auto text-[#1E293B] shrink-0" />
+            <NationalEmblem className="h-11 sm:h-12 w-auto shrink-0" />
             <div className="h-10 w-[1.5px] bg-slate-300 hidden sm:block shrink-0" />
             <div className="text-left flex flex-col justify-center leading-tight">
               <h1 className="text-[17.5px] sm:text-[18px] font-bold text-[#0F172A] tracking-normal leading-snug">
