@@ -97,42 +97,33 @@ export const LoginPage: React.FC = () => {
       {/* ========================================================================= */}
       {/* 1. FULL-WIDTH OFFICIAL GOVERNMENT HEADER (REAL HTML/CSS)                  */}
       {/* ========================================================================= */}
-      <header className="auth-header w-full bg-white/95 backdrop-blur-xs border-b border-[#E2E8F0] shadow-xs shrink-0 z-30 select-none relative overflow-hidden">
-        {/* Subtle Decorative Background: Tricolor Flowing Ribbon */}
-        <div className="absolute left-0 top-0 bottom-0 w-36 pointer-events-none z-0" aria-hidden="true">
-          <svg viewBox="0 0 160 90" className="w-full h-full" preserveAspectRatio="none">
-            <path d="M0,0 Q70,45 0,90" fill="#FF9933" fillOpacity="0.8" />
-            <path d="M0,20 Q90,45 0,70" fill="#FFFFFF" fillOpacity="0.9" />
-            <path d="M0,35 Q105,45 0,55" fill="#138808" fillOpacity="0.8" />
-          </svg>
+      <header className="auth-header w-full bg-white border-b border-[#E2E8F0] shrink-0 z-30 select-none relative overflow-hidden">
+        {/* Subtle Background Indian Monuments Skyline Watermark (Restrained Opacity & Far Right) */}
+        <div className="absolute right-0 top-0 bottom-0 w-2/5 pointer-events-none overflow-hidden z-0" aria-hidden="true">
+          <IndiaMonumentsSkyline className="w-full h-full object-cover" opacity={0.035} />
         </div>
 
-        {/* Subtle Background Indian Monuments Skyline Watermark */}
-        <div className="absolute right-0 top-0 bottom-0 w-2/3 pointer-events-none overflow-hidden z-0" aria-hidden="true">
-          <IndiaMonumentsSkyline className="w-full h-full object-cover" opacity={0.06} />
-        </div>
-
-        {/* Semantic Header Container */}
-        <div className="government-header w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-[76px] sm:h-[80px] flex items-center justify-between relative z-10">
+        {/* Semantic Responsive Header Container */}
+        <div className="government-header w-full max-w-[1400px] mx-auto px-6 sm:px-10 lg:px-12 h-[82px] sm:h-[86px] lg:h-[88px] flex items-center justify-between relative z-10">
           {/* Government of India Identity Hierarchy */}
-          <div className="government-identity flex items-center gap-3.5 sm:gap-4 text-left pl-3 sm:pl-4">
-            <NationalEmblem className="w-8 h-12 text-[#1E293B] shrink-0" />
+          <div className="government-identity flex items-center gap-3.5 sm:gap-4 text-left">
+            <NationalEmblem className="h-9 sm:h-10 w-auto text-[#1E293B] shrink-0" />
             <div className="h-10 w-[1.5px] bg-slate-300 hidden sm:block shrink-0" />
             <div className="text-left flex flex-col justify-center leading-tight">
-              <h1 className="text-sm sm:text-base font-extrabold text-[#0F172A] tracking-normal">
+              <h1 className="text-[17px] sm:text-[18px] font-bold text-[#0F172A] tracking-normal leading-snug">
                 Government of India
               </h1>
-              <span className="text-xs sm:text-sm font-semibold text-[#1E3A8A]">
+              <span className="text-[12px] sm:text-[13px] font-medium text-[#1E3A8A] leading-normal">
                 Ministry of Heavy Industries
               </span>
-              <span className="text-[11px] sm:text-xs font-normal text-[#64748B]">
+              <span className="text-[10.5px] sm:text-[11px] font-normal text-[#64748B] leading-tight">
                 Department of Public Enterprises
               </span>
             </div>
           </div>
 
           {/* Institutional Links & Indian Flag */}
-          <nav className="institutional-links flex items-center gap-3 sm:gap-4 text-xs text-[#475569] font-medium" aria-label="Institutional Links">
+          <nav className="institutional-links flex items-center gap-4 sm:gap-5 text-[12px] sm:text-[13px] text-[#334155] font-medium" aria-label="Institutional Links">
             <a href="#digital-india" className="hidden md:inline hover:text-[#1E3A8A] transition-colors cursor-pointer">Digital India</a>
             <span className="text-slate-300 hidden md:inline" aria-hidden="true">|</span>
             <a href="#atmanirbhar" className="hidden lg:inline hover:text-[#1E3A8A] transition-colors cursor-pointer">Atmanirbhar Bharat</a>
@@ -152,7 +143,7 @@ export const LoginPage: React.FC = () => {
             <span className="text-slate-300" aria-hidden="true">|</span>
 
             {/* Language Selector */}
-            <div className="flex items-center gap-1 font-semibold text-[#0F172A] hover:text-[#1E3A8A] px-1.5 py-1 rounded transition-colors cursor-pointer text-xs">
+            <div className="flex items-center gap-1 font-semibold text-[#0F172A] hover:text-[#1E3A8A] px-2 py-1 rounded transition-colors cursor-pointer text-[12px] sm:text-[13px]">
               <span>English</span>
               <svg className="w-3.5 h-3.5 text-slate-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                 <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clipRule="evenodd" />
@@ -165,7 +156,7 @@ export const LoginPage: React.FC = () => {
       {/* ========================================================================= */}
       {/* 2. AUTH-MAIN: FULL-SCREEN VIEWPORT FIT (VERTICALLY CENTERED)              */}
       {/* ========================================================================= */}
-      <main className="auth-main flex-1 min-h-0 flex items-center justify-center p-3 sm:p-5 lg:p-6 w-full max-w-7xl mx-auto z-10">
+      <main className="auth-main flex-1 min-h-0 flex items-center justify-center py-4 sm:py-6 px-6 sm:px-10 lg:px-12 w-full max-w-[1400px] mx-auto z-10">
         <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
           
           {/* Left Column: Branding, Roles & Mission */}
@@ -385,35 +376,19 @@ export const LoginPage: React.FC = () => {
       {/* ========================================================================= */}
       {/* 3. FULL-WIDTH INSTITUTIONAL FOOTER (REAL HTML/CSS)                        */}
       {/* ========================================================================= */}
-      <footer className="auth-footer w-full bg-[#F4F8FB] border-t border-[#DDE7EE] shrink-0 z-30 select-none relative overflow-hidden mt-auto">
-        {/* Subtle Decorative Skyline Artwork */}
-        <div className="footer-decoration absolute right-0 top-0 bottom-0 w-3/5 pointer-events-none overflow-hidden z-0" aria-hidden="true">
-          <IndiaMonumentsSkyline className="w-full h-full object-cover" opacity={0.06} />
+      <footer className="auth-footer w-full bg-[#F8FAFC] border-t border-[#DDE7EE] shrink-0 z-30 select-none relative overflow-hidden mt-auto min-h-[76px] sm:min-h-[84px] flex items-center">
+        {/* Subtle Decorative Skyline Artwork (Subdued Opacity & Far Right) */}
+        <div className="footer-decoration absolute right-0 top-0 bottom-0 w-2/5 pointer-events-none overflow-hidden z-0" aria-hidden="true">
+          <IndiaMonumentsSkyline className="w-full h-full object-cover" opacity={0.035} />
         </div>
 
-        {/* Subtle Decorative Flowing Tricolor Ribbon Curves */}
-        <div className="absolute left-0 bottom-0 w-36 h-10 pointer-events-none z-0" aria-hidden="true">
-          <svg viewBox="0 0 160 40" className="w-full h-full" preserveAspectRatio="none">
-            <path d="M0,40 Q80,0 160,40" fill="#FF9933" fillOpacity="0.5" />
-            <path d="M0,40 Q80,12 160,40" fill="#FFFFFF" fillOpacity="0.7" />
-            <path d="M0,40 Q80,24 160,40" fill="#138808" fillOpacity="0.5" />
-          </svg>
-        </div>
-        <div className="absolute right-0 bottom-0 w-36 h-10 pointer-events-none z-0" aria-hidden="true">
-          <svg viewBox="0 0 160 40" className="w-full h-full" preserveAspectRatio="none">
-            <path d="M0,40 Q80,0 160,40" fill="#FF9933" fillOpacity="0.5" />
-            <path d="M0,40 Q80,12 160,40" fill="#FFFFFF" fillOpacity="0.7" />
-            <path d="M0,40 Q80,24 160,40" fill="#138808" fillOpacity="0.5" />
-          </svg>
-        </div>
-
-        {/* Semantic Footer Container */}
-        <div className="footer-content w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-col md:flex-row items-center justify-between gap-3 text-xs relative z-10">
+        {/* Semantic Responsive Footer Container */}
+        <div className="footer-content w-full max-w-[1400px] mx-auto px-6 sm:px-10 lg:px-12 py-3.5 sm:py-4 flex flex-col md:flex-row items-center justify-between gap-4 relative z-10">
           {/* Government Department Hierarchy */}
           <div className="footer-government flex items-center gap-3 text-left">
             <div className="h-8 w-0.5 bg-[#1E3A8A] rounded-full hidden sm:block shrink-0" />
             <div className="flex flex-col leading-tight">
-              <span className="font-bold text-[#0F172A] text-xs">Ministry of Heavy Industries</span>
+              <span className="font-bold text-[#0F172A] text-[12.5px] sm:text-[13px]">Ministry of Heavy Industries</span>
               <span className="text-[11px] text-[#475569] font-medium">Department of Public Enterprises</span>
               <span className="text-[11px] text-[#64748B]">Government of India</span>
             </div>
@@ -421,7 +396,7 @@ export const LoginPage: React.FC = () => {
 
           {/* Legal & Accessibility Links + Browser Compatibility */}
           <div className="flex flex-col items-center gap-1 text-center">
-            <nav className="footer-links flex items-center gap-2.5 text-xs text-[#475569] font-semibold" aria-label="Legal and Accessibility Links">
+            <nav className="footer-links flex items-center gap-3 sm:gap-4 text-[11.5px] sm:text-[12px] text-[#334155] font-medium" aria-label="Legal and Accessibility Links">
               <a href="#privacy" className="hover:text-[#1E3A8A] transition-colors">Privacy Policy</a>
               <span className="text-slate-300" aria-hidden="true">|</span>
               <a href="#accessibility" className="hover:text-[#1E3A8A] transition-colors">Accessibility</a>
@@ -430,19 +405,19 @@ export const LoginPage: React.FC = () => {
               <span className="text-slate-300" aria-hidden="true">|</span>
               <a href="#help" className="hover:text-[#1E3A8A] transition-colors">Help & Support</a>
             </nav>
-            <span className="text-[10px] text-[#64748B]">
+            <span className="text-[9.5px] sm:text-[10px] text-[#64748B] font-normal">
               Site best viewed in latest versions of Chrome, Firefox, Edge and Safari
             </span>
           </div>
 
           {/* Dynamic Copyright & Institutional Badges */}
-          <div className="footer-meta flex items-center gap-3">
+          <div className="footer-meta flex items-center gap-3.5">
             <div className="text-right leading-tight hidden lg:block">
-              <span className="font-semibold text-[#0F172A] text-[11px]">© {new Date().getFullYear()} Government of India</span>
+              <span className="font-semibold text-[#0F172A] text-[11px] sm:text-[12px]">© {new Date().getFullYear()} Government of India</span>
             </div>
 
             {/* Official Digital India Vector Badge */}
-            <div className="flex items-center gap-2 px-2.5 py-1 bg-white border border-slate-200 rounded-lg shadow-2xs">
+            <div className="flex items-center gap-2 px-3 py-1.5 bg-white border border-slate-200 rounded-lg shadow-2xs">
               <svg className="w-5 h-5 shrink-0" viewBox="0 0 40 40" fill="none" aria-hidden="true">
                 <circle cx="20" cy="20" r="18" fill="#F8FAFC" stroke="#E2E8F0" strokeWidth="1" />
                 <path d="M12 24 C14 16 26 12 28 20 C24 28 16 26 20 18" stroke="#FF9933" strokeWidth="3" strokeLinecap="round" />
@@ -450,17 +425,8 @@ export const LoginPage: React.FC = () => {
                 <circle cx="20" cy="20" r="2" fill="#000080" />
               </svg>
               <div className="text-left leading-none">
-                <div className="text-[10px] font-extrabold text-[#0F172A]">Digital India</div>
+                <div className="text-[10.5px] font-extrabold text-[#0F172A]">Digital India</div>
                 <div className="text-[7.5px] text-[#64748B] font-medium">Power To Empower</div>
-              </div>
-            </div>
-
-            {/* Official 75+ Azadi Ka Amrit Mahotsav Vector Badge */}
-            <div className="flex items-center gap-1.5 px-2.5 py-1 bg-white border border-slate-200 rounded-lg shadow-2xs">
-              <span className="font-black text-xs text-[#1E3A8A]">75<sup className="text-[8px]">+</sup></span>
-              <div className="text-left leading-none">
-                <div className="text-[8.5px] font-black text-[#FF9933]">Azadi<span className="text-[7px] font-normal text-slate-400"> Ka</span></div>
-                <div className="text-[7.5px] font-black text-[#138808]">Amrit Mahotsav</div>
               </div>
             </div>
           </div>
