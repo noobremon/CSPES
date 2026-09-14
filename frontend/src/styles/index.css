@@ -3,6 +3,13 @@
 @tailwind utilities;
 
 @layer base {
+  html, body, #root {
+    border-top: none !important;
+    outline: none !important;
+    margin: 0;
+    padding: 0;
+  }
+
   html {
     font-feature-settings: "cv02", "cv03", "cv04", "cv11", "ss01";
     -webkit-font-smoothing: antialiased;

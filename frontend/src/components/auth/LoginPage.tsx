@@ -89,15 +89,11 @@ export const LoginPage: React.FC = () => {
   ];
 
   return (
-    <div className="auth-page min-h-[100dvh] flex flex-col bg-gradient-to-b from-[#F8FAFC] via-[#F1F5F9] to-[#E2E8F0] selection:bg-[#1E3A8A] selection:text-white relative overflow-x-hidden">
-      {/* Background Decorative Ambient Circles */}
-      <div className="absolute -top-40 -left-40 w-96 h-96 bg-blue-100 rounded-full blur-3xl opacity-40 pointer-events-none" />
-      <div className="absolute -bottom-40 -right-40 w-96 h-96 bg-amber-50 rounded-full blur-3xl opacity-50 pointer-events-none" />
-
+    <div className="auth-page min-h-[100dvh] flex flex-col bg-gradient-to-b from-[#F8FAFC] via-[#F1F5F9] to-[#E2E8F0] selection:bg-[#1E3A8A] selection:text-white relative overflow-x-hidden border-t-0">
       {/* ========================================================================= */}
       {/* 1. FULL-WIDTH OFFICIAL GOVERNMENT HEADER (MATCHES REFERENCE 1)             */}
       {/* ========================================================================= */}
-      <header className="auth-header w-full bg-white border-b border-[#E2E8F0] shrink-0 flex-none z-30 select-none relative overflow-hidden h-[88px]">
+      <header className="auth-header w-full bg-white border-t-0 border-b border-[#E2E8F0] shrink-0 flex-none z-30 select-none relative overflow-hidden h-[88px]">
         {/* Subtle Decorative Left Tricolor Silk Ribbon Curve (Layer 2) */}
         <div className="absolute left-0 top-0 bottom-0 w-20 sm:w-28 pointer-events-none z-0" aria-hidden="true">
           <svg viewBox="0 0 160 88" className="w-full h-full" preserveAspectRatio="none">
