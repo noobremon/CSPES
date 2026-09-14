@@ -67,11 +67,11 @@ export const Header: React.FC = () => {
           >
             {/* User Avatar with Initials */}
             <div className="w-7 h-7 rounded-lg bg-[#EFF6FF] text-[#1D4ED8] border border-blue-200 flex items-center justify-center font-bold text-xs">
-              {user?.full_name ? user.full_name.split(' ').map(n => n[0]).slice(0, 2).join('') : 'RS'}
+              {user?.full_name ? user.full_name.split(' ').map(n => n[0]).slice(0, 2).join('') : 'NA'}
             </div>
             <div className="flex flex-col text-left leading-tight hidden sm:flex">
               <span className="font-bold text-[#0F172A] text-[11px]">
-                {user?.full_name || 'Dr. Rajesh Sharma'}
+                {user?.full_name || 'National Master Admin'}
               </span>
               <span className="text-[10px] text-[#64748B] font-medium">
                 {user?.role ? user.role.replace(/_/g, ' ') : 'National Material Master Admin'}
@@ -92,7 +92,7 @@ export const Header: React.FC = () => {
           {showProfileMenu && (
             <div className="absolute right-0 top-12 w-56 bg-white border border-[#E2E8F0] rounded-2xl shadow-lg p-2 z-50 text-left">
               <div className="p-2.5 border-b border-slate-100">
-                <div className="text-xs font-bold text-[#0F172A]">{user?.full_name || 'Dr. Rajesh Sharma'}</div>
+                <div className="text-xs font-bold text-[#0F172A]">{user?.full_name || 'National Master Admin'}</div>
                 <div className="text-[10px] text-[#64748B] font-mono truncate">{user?.email || 'national_admin@sih.demo'}</div>
               </div>
               <button

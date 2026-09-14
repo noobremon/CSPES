@@ -5,7 +5,7 @@ import { App } from '../src/app/App';
 const mockUser = {
   id: 'usr-001',
   email: 'domain_reviewer@sih.demo',
-  full_name: 'Ananya Sen (Domain Reviewer)',
+  full_name: 'Domain Reviewer',
   role: 'DOMAIN_REVIEWER',
   organization_id: null,
   organization_code: null,
@@ -347,7 +347,7 @@ describe('Phase 10 Authentication, RBAC & Multi-Tenant Access UI', () => {
       expect(screen.getByText(/CPSE ↔ CNMC Cross-Walk/i)).toBeInTheDocument();
       expect(screen.getByText(/National Analytics/i)).toBeInTheDocument();
       expect(screen.getByText(/System Status/i)).toBeInTheDocument();
-      expect(screen.getByText(/Ananya Sen/i)).toBeInTheDocument();
+      expect(screen.getByText(/Domain Reviewer/i)).toBeInTheDocument();
     });
   });
 
