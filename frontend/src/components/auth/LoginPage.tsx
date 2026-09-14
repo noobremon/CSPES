@@ -17,9 +17,8 @@ import {
   Leaf
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
-import { NationalEmblem } from '../common/NationalEmblem';
-import { IndiaGateIllustration } from '../common/IndiaGateIllustration';
-import { IndiaMonumentsSkyline } from '../common/IndiaMonumentsSkyline';
+import govHeaderBanner from '../../assets/gov-header-banner.png';
+import govFooterBanner from '../../assets/gov-footer-banner.png';
 
 export const LoginPage: React.FC = () => {
   const { login } = useAuth();
@@ -96,68 +95,14 @@ export const LoginPage: React.FC = () => {
       <div className="absolute -bottom-40 -right-40 w-96 h-96 bg-amber-50 rounded-full blur-3xl opacity-50 pointer-events-none" />
 
       {/* ========================================================================= */}
-      {/* 1. FULL-WIDTH OFFICIAL GOVERNMENT HEADER (76–82px height)                */}
+      {/* 1. FULL-WIDTH OFFICIAL GOVERNMENT HEADER BANNER                           */}
       {/* ========================================================================= */}
-      <header className="auth-header w-full h-[76px] sm:h-[80px] bg-white border-b border-[#E2E8F0] px-4 sm:px-8 flex items-center justify-between relative overflow-hidden shrink-0 z-20 select-none shadow-xs">
-        {/* Left Tricolor Graceful Flowing Silk Ribbon */}
-        <div className="absolute left-0 top-0 bottom-0 w-32 pointer-events-none z-0" aria-hidden="true">
-          <svg viewBox="0 0 160 90" className="w-full h-full" preserveAspectRatio="none">
-            <path d="M0,0 Q60,45 0,90" fill="#FF9933" fillOpacity="0.75" />
-            <path d="M0,18 Q80,45 0,72" fill="#FFFFFF" fillOpacity="0.9" />
-            <path d="M0,32 Q95,45 0,58" fill="#138808" fillOpacity="0.75" />
-          </svg>
-        </div>
-
-        {/* Background Full Monuments Skyline Watermark */}
-        <div className="absolute right-0 top-0 bottom-0 w-3/5 pointer-events-none overflow-hidden z-0" aria-hidden="true">
-          <IndiaMonumentsSkyline className="w-full h-full object-cover" opacity={0.06} />
-        </div>
-
-        {/* Left: Government of India Official Identity */}
-        <div className="flex items-center gap-3.5 z-10 pl-3 sm:pl-4">
-          <NationalEmblem className="w-8 h-12 text-[#1E293B] shrink-0" />
-          <div className="h-10 w-[1.5px] bg-slate-300 hidden sm:block shrink-0" />
-          <div className="text-left flex flex-col justify-center leading-tight">
-            <h1 className="text-sm sm:text-base font-extrabold text-[#0F172A] tracking-normal">
-              Government of India
-            </h1>
-            <span className="text-xs sm:text-sm font-semibold text-[#1E3A8A]">
-              Ministry of Heavy Industries
-            </span>
-            <span className="text-[11px] sm:text-xs font-normal text-[#64748B]">
-              Department of Public Enterprises
-            </span>
-          </div>
-        </div>
-
-        {/* Right: Institutional Links, Flag & Language Selector */}
-        <div className="flex items-center gap-3 sm:gap-4 text-xs text-[#475569] font-medium z-10">
-          <span className="hidden md:inline hover:text-[#1E3A8A] transition-colors cursor-pointer">Digital India</span>
-          <span className="text-slate-300 hidden md:inline">|</span>
-          <span className="hidden lg:inline hover:text-[#1E3A8A] transition-colors cursor-pointer">Atmanirbhar Bharat</span>
-          <span className="text-slate-300 hidden lg:inline">|</span>
-          <span className="hidden sm:inline hover:text-[#1E3A8A] transition-colors cursor-pointer">Viksit Bharat</span>
-          <span className="text-slate-300 hidden sm:inline">|</span>
-          
-          {/* Indian Tricolor Flag Badge */}
-          <div className="w-6 h-4 rounded-xs overflow-hidden flex flex-col shadow-2xs border border-slate-300 shrink-0">
-            <div className="flex-1 bg-[#FF9933]" />
-            <div className="flex-1 bg-white flex items-center justify-center">
-              <div className="w-1.5 h-1.5 rounded-full bg-[#000080]" />
-            </div>
-            <div className="flex-1 bg-[#128807]" />
-          </div>
-
-          <span className="text-slate-300">|</span>
-
-          {/* Language Dropdown Selector */}
-          <div className="flex items-center gap-1 font-semibold text-[#0F172A] hover:text-[#1E3A8A] px-1.5 py-1 rounded transition-colors cursor-pointer text-xs">
-            <span>English</span>
-            <svg className="w-3.5 h-3.5 text-slate-600" viewBox="0 0 20 20" fill="currentColor">
-              <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clipRule="evenodd" />
-            </svg>
-          </div>
-        </div>
+      <header className="auth-header w-full bg-white border-b border-[#E2E8F0] shrink-0 z-20 select-none shadow-xs">
+        <img 
+          src={govHeaderBanner} 
+          alt="Government of India - Ministry of Heavy Industries - Department of Public Enterprises" 
+          className="w-full h-auto max-h-[76px] sm:max-h-[82px] object-cover sm:object-fill block"
+        />
       </header>
 
       {/* ========================================================================= */}
@@ -381,87 +326,14 @@ export const LoginPage: React.FC = () => {
       </main>
 
       {/* ========================================================================= */}
-      {/* 3. FULL-WIDTH INSTITUTIONAL FOOTER                                        */}
+      {/* 3. FULL-WIDTH INSTITUTIONAL FOOTER BANNER                                 */}
       {/* ========================================================================= */}
-      <footer className="auth-footer w-full bg-[#F4F8FB] border-t border-[#DDE7EE] relative overflow-hidden shrink-0 z-20 select-none">
-        {/* Upper Subtle Skyline Silhouette Watermark */}
-        <div className="absolute right-0 top-0 bottom-0 w-3/5 pointer-events-none overflow-hidden z-0" aria-hidden="true">
-          <IndiaMonumentsSkyline className="w-full h-full object-cover" opacity={0.06} />
-        </div>
-
-        {/* Left & Right Flowing Tricolor Ribbon Curves */}
-        <div className="absolute left-0 bottom-0 w-36 h-10 pointer-events-none z-0" aria-hidden="true">
-          <svg viewBox="0 0 160 40" className="w-full h-full" preserveAspectRatio="none">
-            <path d="M0,40 Q80,0 160,40" fill="#FF9933" fillOpacity="0.5" />
-            <path d="M0,40 Q80,12 160,40" fill="#FFFFFF" fillOpacity="0.7" />
-            <path d="M0,40 Q80,24 160,40" fill="#138808" fillOpacity="0.5" />
-          </svg>
-        </div>
-        <div className="absolute right-0 bottom-0 w-36 h-10 pointer-events-none z-0" aria-hidden="true">
-          <svg viewBox="0 0 160 40" className="w-full h-full" preserveAspectRatio="none">
-            <path d="M0,40 Q80,0 160,40" fill="#FF9933" fillOpacity="0.5" />
-            <path d="M0,40 Q80,12 160,40" fill="#FFFFFF" fillOpacity="0.7" />
-            <path d="M0,40 Q80,24 160,40" fill="#138808" fillOpacity="0.5" />
-          </svg>
-        </div>
-
-        <div className="w-full max-w-7xl mx-auto px-4 sm:px-8 py-3.5 flex flex-col md:flex-row items-center justify-between gap-4 text-xs relative z-10">
-          {/* Left: Department Hierarchy with Vertical Divider */}
-          <div className="flex items-center gap-3 text-left">
-            <div className="h-9 w-0.5 bg-[#1E3A8A] rounded-full hidden sm:block shrink-0" />
-            <div className="flex flex-col leading-tight">
-              <span className="font-bold text-[#0F172A] text-xs">Ministry of Heavy Industries</span>
-              <span className="text-[11px] text-[#475569] font-medium">Department of Public Enterprises</span>
-              <span className="text-[11px] text-[#64748B]">Government of India</span>
-            </div>
-          </div>
-
-          {/* Center: Legal & Accessibility Links + Browser Note */}
-          <div className="flex flex-col items-center gap-1 text-center">
-            <div className="flex items-center gap-2.5 text-xs text-[#475569] font-semibold">
-              <a href="#privacy" className="hover:text-[#1E3A8A] transition-colors">Privacy Policy</a>
-              <span className="text-slate-300">|</span>
-              <a href="#accessibility" className="hover:text-[#1E3A8A] transition-colors">Accessibility</a>
-              <span className="text-slate-300">|</span>
-              <a href="#terms" className="hover:text-[#1E3A8A] transition-colors">Terms of Use</a>
-              <span className="text-slate-300">|</span>
-              <a href="#help" className="hover:text-[#1E3A8A] transition-colors">Help & Support</a>
-            </div>
-            <span className="text-[10px] text-[#64748B]">
-              Site best viewed in latest versions of Chrome, Firefox, Edge and Safari
-            </span>
-          </div>
-
-          {/* Right: Copyright & National Badges */}
-          <div className="flex items-center gap-3.5">
-            <div className="text-right leading-tight hidden lg:block">
-              <span className="font-semibold text-[#0F172A] text-[11px]">© 2024 Government of India</span>
-            </div>
-
-            {/* Official Digital India Logo */}
-            <div className="flex items-center gap-2 px-2.5 py-1 bg-white border border-slate-200 rounded-lg shadow-2xs">
-              <svg className="w-5 h-5 shrink-0" viewBox="0 0 40 40" fill="none">
-                <circle cx="20" cy="20" r="18" fill="#F8FAFC" stroke="#E2E8F0" strokeWidth="1" />
-                <path d="M12 24 C14 16 26 12 28 20 C24 28 16 26 20 18" stroke="#FF9933" strokeWidth="3" strokeLinecap="round" />
-                <path d="M16 26 C18 20 26 18 26 24 C22 28 18 26 20 22" stroke="#138808" strokeWidth="2.5" strokeLinecap="round" />
-                <circle cx="20" cy="20" r="2" fill="#000080" />
-              </svg>
-              <div className="text-left leading-none">
-                <div className="text-[10px] font-extrabold text-[#0F172A]">Digital India</div>
-                <div className="text-[7.5px] text-[#64748B] font-medium tracking-tight">Power To Empower</div>
-              </div>
-            </div>
-
-            {/* Official 75+ Azadi Ka Amrit Mahotsav Logo Badge */}
-            <div className="flex items-center gap-1.5 px-2.5 py-1 bg-white border border-slate-200 rounded-lg shadow-2xs">
-              <span className="font-black text-xs text-[#1E3A8A] tracking-tighter">75<sup className="text-[8px]">+</sup></span>
-              <div className="text-left leading-none">
-                <div className="text-[8.5px] font-black text-[#FF9933]">Azadi<span className="text-[7px] font-normal text-slate-400"> Ka</span></div>
-                <div className="text-[7.5px] font-black text-[#138808]">Amrit Mahotsav</div>
-              </div>
-            </div>
-          </div>
-        </div>
+      <footer className="auth-footer w-full bg-[#F4F8FB] border-t border-[#DDE7EE] shrink-0 z-20 select-none">
+        <img 
+          src={govFooterBanner} 
+          alt="Ministry of Heavy Industries - Department of Public Enterprises - Government of India" 
+          className="w-full h-auto max-h-[52px] sm:max-h-[58px] object-cover sm:object-fill block"
+        />
       </footer>
     </div>
   );
