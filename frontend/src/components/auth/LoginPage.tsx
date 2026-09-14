@@ -95,25 +95,34 @@ export const LoginPage: React.FC = () => {
       <div className="absolute -bottom-40 -right-40 w-96 h-96 bg-amber-50 rounded-full blur-3xl opacity-50 pointer-events-none" />
 
       {/* ========================================================================= */}
-      {/* 1. FULL-WIDTH OFFICIAL GOVERNMENT HEADER (REAL HTML/CSS)                  */}
+      {/* 1. FULL-WIDTH OFFICIAL GOVERNMENT HEADER (MATCHES REFERENCE 1)             */}
       {/* ========================================================================= */}
-      <header className="auth-header w-full bg-white border-b border-[#E2E8F0] shrink-0 z-30 select-none relative overflow-hidden">
-        {/* Subtle Background Indian Monuments Skyline Watermark (Restrained Opacity & Far Right) */}
-        <div className="absolute right-0 top-0 bottom-0 w-2/5 pointer-events-none overflow-hidden z-0" aria-hidden="true">
-          <IndiaMonumentsSkyline className="w-full h-full object-cover" opacity={0.035} />
+      <header className="auth-header w-full bg-white border-b border-[#E2E8F0] shrink-0 flex-none z-30 select-none relative overflow-hidden h-[88px]">
+        {/* Subtle Decorative Left Tricolor Silk Ribbon Curve (Layer 2) */}
+        <div className="absolute left-0 top-0 bottom-0 w-28 sm:w-36 pointer-events-none z-0" aria-hidden="true">
+          <svg viewBox="0 0 160 88" className="w-full h-full" preserveAspectRatio="none">
+            <path d="M0,0 Q65,44 0,88" fill="#FF9933" fillOpacity="0.45" />
+            <path d="M0,16 Q85,44 0,72" fill="#FFFFFF" fillOpacity="0.6" />
+            <path d="M0,28 Q100,44 0,60" fill="#138808" fillOpacity="0.45" />
+          </svg>
         </div>
 
-        {/* Semantic Responsive Header Container */}
-        <div className="government-header w-full max-w-[1400px] mx-auto px-6 sm:px-10 lg:px-12 h-[82px] sm:h-[86px] lg:h-[88px] flex items-center justify-between relative z-10">
+        {/* Subtle Background Indian Monuments Skyline Watermark (Layer 2 - Right) */}
+        <div className="absolute right-0 top-0 bottom-0 w-1/3 sm:w-2/5 pointer-events-none overflow-hidden z-0" aria-hidden="true">
+          <IndiaMonumentsSkyline className="w-full h-full object-cover" opacity={0.038} />
+        </div>
+
+        {/* Semantic Responsive Header Container (Layer 3 & 4) */}
+        <div className="government-header w-full max-w-[1400px] mx-auto px-6 sm:px-10 lg:px-12 h-full flex items-center justify-between relative z-10">
           {/* Government of India Identity Hierarchy */}
           <div className="government-identity flex items-center gap-3.5 sm:gap-4 text-left">
-            <NationalEmblem className="h-9 sm:h-10 w-auto text-[#1E293B] shrink-0" />
+            <NationalEmblem className="h-10 w-auto text-[#1E293B] shrink-0" />
             <div className="h-10 w-[1.5px] bg-slate-300 hidden sm:block shrink-0" />
             <div className="text-left flex flex-col justify-center leading-tight">
-              <h1 className="text-[17px] sm:text-[18px] font-bold text-[#0F172A] tracking-normal leading-snug">
+              <h1 className="text-[17.5px] sm:text-[18px] font-bold text-[#0F172A] tracking-normal leading-snug">
                 Government of India
               </h1>
-              <span className="text-[12px] sm:text-[13px] font-medium text-[#1E3A8A] leading-normal">
+              <span className="text-[12.5px] sm:text-[13px] font-medium text-[#1E3A8A] leading-normal">
                 Ministry of Heavy Industries
               </span>
               <span className="text-[10.5px] sm:text-[11px] font-normal text-[#64748B] leading-tight">
@@ -123,7 +132,7 @@ export const LoginPage: React.FC = () => {
           </div>
 
           {/* Institutional Links & Indian Flag */}
-          <nav className="institutional-links flex items-center gap-4 sm:gap-5 text-[12px] sm:text-[13px] text-[#334155] font-medium" aria-label="Institutional Links">
+          <nav className="institutional-links flex items-center gap-4 sm:gap-5 text-[12.5px] sm:text-[13px] text-[#334155] font-medium" aria-label="Institutional Links">
             <a href="#digital-india" className="hidden md:inline hover:text-[#1E3A8A] transition-colors cursor-pointer">Digital India</a>
             <span className="text-slate-300 hidden md:inline" aria-hidden="true">|</span>
             <a href="#atmanirbhar" className="hidden lg:inline hover:text-[#1E3A8A] transition-colors cursor-pointer">Atmanirbhar Bharat</a>
@@ -143,7 +152,7 @@ export const LoginPage: React.FC = () => {
             <span className="text-slate-300" aria-hidden="true">|</span>
 
             {/* Language Selector */}
-            <div className="flex items-center gap-1 font-semibold text-[#0F172A] hover:text-[#1E3A8A] px-2 py-1 rounded transition-colors cursor-pointer text-[12px] sm:text-[13px]">
+            <div className="flex items-center gap-1 font-semibold text-[#0F172A] hover:text-[#1E3A8A] px-2 py-1 rounded transition-colors cursor-pointer text-[12.5px] sm:text-[13px]">
               <span>English</span>
               <svg className="w-3.5 h-3.5 text-slate-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                 <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clipRule="evenodd" />
@@ -374,16 +383,32 @@ export const LoginPage: React.FC = () => {
       </main>
 
       {/* ========================================================================= */}
-      {/* 3. FULL-WIDTH INSTITUTIONAL FOOTER (REAL HTML/CSS)                        */}
+      {/* 3. FULL-WIDTH INSTITUTIONAL FOOTER (MATCHES REFERENCE 2)                  */}
       {/* ========================================================================= */}
       <footer className="auth-footer w-full bg-[#F8FAFC] border-t border-[#DDE7EE] shrink-0 flex-none z-30 select-none relative overflow-hidden h-auto min-h-0">
-        {/* Subtle Decorative Skyline Artwork (Subdued Opacity & Far Right) */}
-        <div className="footer-decoration absolute right-0 top-0 bottom-0 w-2/5 pointer-events-none overflow-hidden z-0" aria-hidden="true">
-          <IndiaMonumentsSkyline className="w-full h-full object-cover" opacity={0.035} />
+        {/* Subtle Decorative Background Skyline Artwork (Layer 2) */}
+        <div className="footer-decoration absolute right-0 top-0 bottom-0 w-1/2 sm:w-2/5 pointer-events-none overflow-hidden z-0" aria-hidden="true">
+          <IndiaMonumentsSkyline className="w-full h-full object-cover" opacity={0.038} />
         </div>
 
-        {/* Semantic Responsive Footer Container */}
-        <div className="footer-content w-full max-w-[1400px] mx-auto px-6 sm:px-10 lg:px-12 py-3 sm:py-3.5 flex flex-col md:flex-row items-center justify-between gap-4 relative z-10">
+        {/* Subtle Flowing Tricolor Curves on Bottom Left & Right (Layer 2) */}
+        <div className="absolute left-0 bottom-0 w-32 sm:w-44 h-7 pointer-events-none z-0" aria-hidden="true">
+          <svg viewBox="0 0 160 30" className="w-full h-full" preserveAspectRatio="none">
+            <path d="M0,30 Q80,0 160,30" fill="#FF9933" fillOpacity="0.3" />
+            <path d="M0,30 Q80,10 160,30" fill="#FFFFFF" fillOpacity="0.45" />
+            <path d="M0,30 Q80,18 160,30" fill="#138808" fillOpacity="0.3" />
+          </svg>
+        </div>
+        <div className="absolute right-0 bottom-0 w-32 sm:w-44 h-7 pointer-events-none z-0" aria-hidden="true">
+          <svg viewBox="0 0 160 30" className="w-full h-full" preserveAspectRatio="none">
+            <path d="M0,30 Q80,0 160,30" fill="#FF9933" fillOpacity="0.3" />
+            <path d="M0,30 Q80,10 160,30" fill="#FFFFFF" fillOpacity="0.45" />
+            <path d="M0,30 Q80,18 160,30" fill="#138808" fillOpacity="0.3" />
+          </svg>
+        </div>
+
+        {/* Semantic Responsive Footer Container (Layer 3 & 4) */}
+        <div className="footer-content w-full max-w-[1400px] mx-auto px-6 sm:px-10 lg:px-12 py-3.5 sm:py-4 flex flex-col md:flex-row items-center justify-between gap-4 relative z-10">
           {/* Government Department Hierarchy */}
           <div className="footer-government flex items-center gap-3 text-left">
             <div className="h-8 w-0.5 bg-[#1E3A8A] rounded-full hidden sm:block shrink-0" />
