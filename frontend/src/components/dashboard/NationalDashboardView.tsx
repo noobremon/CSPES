@@ -128,10 +128,10 @@ export const NationalDashboardView: React.FC<NationalDashboardViewProps> = ({
               <span>🇮🇳</span> BHARAT | COMMON STANDARDS | STRONGER TOGETHER
             </span>
           </div>
-          <h1 className="text-xl sm:text-2xl font-extrabold text-[#0F172A] tracking-tight">
+          <h1 className="text-xl sm:text-2xl font-extrabold text-[#0F172A] tracking-normal sm:tracking-[0.01em]">
             NATIONAL MATERIAL INTELLIGENCE
           </h1>
-          <p className="text-xs text-[#475569] leading-relaxed font-medium">
+          <p className="text-xs text-[#475569] leading-relaxed font-normal">
             Unified material analysis, AI-assisted matching, CNMC recommendation, and human governance for cross-CPSE material standardization.
           </p>
         </div>
@@ -268,7 +268,7 @@ export const NationalDashboardView: React.FC<NationalDashboardViewProps> = ({
                 <Building2 className="w-4 h-4" />
               </div>
               <div>
-                <h3 className="text-xs font-extrabold text-[#0F172A] tracking-tight">
+                <h3 className="text-xs font-extrabold text-[#0F172A] tracking-normal">
                   1. SOURCE CPSE MATERIAL
                 </h3>
                 <p className="text-[10px] text-[#64748B]">
@@ -326,7 +326,7 @@ export const NationalDashboardView: React.FC<NationalDashboardViewProps> = ({
                 <Cpu className="w-4 h-4" />
               </div>
               <div>
-                <h3 className="text-xs font-extrabold text-[#0F172A] tracking-tight">
+                <h3 className="text-xs font-extrabold text-[#0F172A] tracking-normal">
                   2. AI & CANDIDATE INTELLIGENCE
                 </h3>
                 <p className="text-[10px] text-[#64748B]">
@@ -395,7 +395,7 @@ export const NationalDashboardView: React.FC<NationalDashboardViewProps> = ({
                 <Tag className="w-4 h-4" />
               </div>
               <div>
-                <h3 className="text-xs font-extrabold text-[#0F172A] tracking-tight">
+                <h3 className="text-xs font-extrabold text-[#0F172A] tracking-normal">
                   3. CNMC RECOMMENDATION
                 </h3>
                 <p className="text-[10px] text-[#64748B]">

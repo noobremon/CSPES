@@ -18,14 +18,14 @@ export const IndiaMapGraphic: React.FC<{ className?: string }> = ({ className = 
       </div>
 
       {/* Blue Standardized Materials Stronger Bharat Typography */}
-      <div className="flex flex-col text-left leading-tight shrink-0 space-y-0.5 whitespace-nowrap">
-        <span className="text-sm sm:text-base font-extrabold text-[#1E3A8A] tracking-tight">
+      <div className="flex flex-col text-left leading-snug shrink-0 space-y-0.5 whitespace-nowrap pl-1">
+        <span className="text-sm sm:text-base font-bold text-[#1E3A8A] tracking-normal">
           Standardized
         </span>
-        <span className="text-sm sm:text-base font-extrabold text-[#1E3A8A] tracking-tight">
+        <span className="text-sm sm:text-base font-bold text-[#1E3A8A] tracking-normal">
           Materials
         </span>
-        <span className="text-sm sm:text-base font-extrabold text-[#1D4ED8] tracking-tight">
+        <span className="text-sm sm:text-base font-extrabold text-[#1D4ED8] tracking-normal">
           Stronger Bharat
         </span>
       </div>

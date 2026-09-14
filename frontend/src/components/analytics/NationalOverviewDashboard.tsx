@@ -193,7 +193,7 @@ export const NationalOverviewDashboard: React.FC<NationalOverviewDashboardProps>
                 </div>
               </div>
               <div className="mt-4">
-                <div className="text-2xl font-bold text-slate-900 tracking-tight">{kpi.value}</div>
+                <div className="text-2xl font-bold text-slate-900 tracking-normal">{kpi.value}</div>
                 <div className="text-xs text-slate-500 mt-1">{kpi.subtext}</div>
               </div>
             </Card>

@@ -99,7 +99,7 @@ export const LoginPage: React.FC = () => {
         <div className="flex items-center gap-3.5">
           <NationalEmblem className="w-9 h-12 text-[#1E293B] shrink-0" />
           <div className="text-left">
-            <h2 className="text-xs sm:text-sm font-bold text-[#0F172A] tracking-tight">
+            <h2 className="text-xs sm:text-sm font-bold text-[#0F172A] tracking-normal">
               Government of India
             </h2>
             <p className="text-[11px] text-[#64748B] font-medium">
@@ -137,7 +137,7 @@ export const LoginPage: React.FC = () => {
               <Layers className="w-7 h-7" />
             </div>
             <div className="space-y-1">
-              <h1 className="text-2xl sm:text-3xl font-extrabold text-[#0F172A] tracking-tight leading-tight">
+              <h1 className="text-2xl sm:text-3xl font-extrabold text-[#0F172A] tracking-normal leading-tight">
                 National Unified Material Master Framework
               </h1>
               <div className="text-xs sm:text-sm font-bold text-[#2563EB]">
@@ -241,7 +241,7 @@ export const LoginPage: React.FC = () => {
                   <div className="p-1.5 bg-[#EFF6FF] text-[#2563EB] rounded-lg">
                     <Lock className="w-4 h-4" />
                   </div>
-                  <h2 className="text-lg font-extrabold text-[#0F172A] tracking-tight">
+                  <h2 className="text-lg font-extrabold text-[#0F172A] tracking-normal">
                     Portal Authentication
                   </h2>
                 </div>

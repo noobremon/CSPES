@@ -227,7 +227,7 @@ BHEL-MTR-103,HIGH VOLTAGE INDUCTION MOTOR 350KW 6.6KV 1000RPM,NOS,FABRICATED STE
               Multi-Sector Ingestion Engine
             </span>
           </div>
-          <h2 className="text-xl font-extrabold text-[#0F172A] tracking-tight sm:text-2xl">
+          <h2 className="text-xl font-extrabold text-[#0F172A] tracking-normal sm:text-2xl">
             CPSE Material Master Data Ingestion & Normalization
           </h2>
           <p className="text-xs text-[#475569] max-w-3xl leading-relaxed">

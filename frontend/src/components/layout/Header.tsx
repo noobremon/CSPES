@@ -22,7 +22,7 @@ export const Header: React.FC = () => {
         </div>
         <div className="text-left leading-tight">
           <div className="flex items-center gap-2">
-            <h1 className="text-sm font-extrabold text-[#0F172A] tracking-tight whitespace-nowrap">
+            <h1 className="text-sm font-extrabold text-[#0F172A] tracking-normal whitespace-nowrap">
               National Unified Material Master Framework
             </h1>
           </div>
