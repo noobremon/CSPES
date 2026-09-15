@@ -7,41 +7,44 @@ import {
   LogOut 
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
+import { LanguageSelector } from '../common/LanguageSelector';
+import { useTranslation } from '../../i18n';
 
 export const Header: React.FC = () => {
   const { user, logout } = useAuth();
+  const { t } = useTranslation();
   const [showProfileMenu, setShowProfileMenu] = useState(false);
 
   const getRolePost = (role?: string, orgCode?: string | null) => {
     switch (role) {
       case 'NATIONAL_MASTER_ADMIN':
         return {
-          postTitle: 'National Master Admin',
-          postBadge: 'National Oversight & Standards',
+          postTitle: t('auth.roles.adminTitle'),
+          postBadge: t('sidebar.roleOversight'),
           avatarText: 'NA'
         };
       case 'CPSE_MATERIAL_MANAGER':
         return {
-          postTitle: orgCode ? `CPSE Material Manager (${orgCode})` : 'CPSE Material Manager',
-          postBadge: orgCode ? `Enterprise Scope: ${orgCode}` : 'Enterprise Material Operations',
+          postTitle: orgCode ? `${t('auth.roles.managerTitle')} (${orgCode})` : t('auth.roles.managerTitle'),
+          postBadge: orgCode ? `Enterprise Scope: ${orgCode}` : t('sidebar.roleOperations'),
           avatarText: orgCode ? orgCode.slice(0, 2).toUpperCase() : 'MM'
         };
       case 'DOMAIN_REVIEWER':
         return {
-          postTitle: 'Domain Reviewer',
-          postBadge: 'Technical Governance Review',
+          postTitle: t('auth.roles.reviewerTitle'),
+          postBadge: t('sidebar.roleGovernance'),
           avatarText: 'DR'
         };
       case 'AUDITOR':
         return {
-          postTitle: 'National Auditor',
-          postBadge: 'Statutory Audit & Compliance',
+          postTitle: t('auth.roles.auditorTitle'),
+          postBadge: t('sidebar.roleAudit'),
           avatarText: 'AU'
         };
       default:
         return {
-          postTitle: 'National Master Admin',
-          postBadge: 'Government of India',
+          postTitle: t('auth.roles.adminTitle'),
+          postBadge: t('footer.gov'),
           avatarText: 'NA'
         };
     }
@@ -60,11 +63,11 @@ export const Header: React.FC = () => {
         <div className="text-left leading-tight">
           <div className="flex items-center gap-2">
             <h1 className="text-sm font-extrabold text-[#0F172A] tracking-normal whitespace-nowrap">
-              National Unified Material Master Framework
+              {t('header.portalName')}
             </h1>
           </div>
           <p className="text-[11px] text-[#64748B] font-medium">
-            National Material Intelligence Platform
+            {t('header.platformSubtitle')}
           </p>
         </div>
       </div>
@@ -75,20 +78,24 @@ export const Header: React.FC = () => {
           <Search className="w-3.5 h-3.5 text-[#94A3B8] absolute left-3 top-2.5" />
           <input
             type="text"
-            placeholder="Search materials, CNMC, CPSE..."
+            placeholder={t('header.searchPlaceholder')}
             className="w-full pl-9 pr-3 py-1.5 bg-[#F8FAFC] border border-[#CBD5E1] rounded-xl text-xs text-[#0F172A] placeholder-[#94A3B8] hover:border-slate-400 focus:outline-hidden focus:border-[#2563EB] focus:ring-2 focus:ring-[#2563EB]/20 transition-all font-medium"
           />
         </div>
       </div>
 
-      {/* Right: Notifications & Profile Pill */}
-      <div className="flex items-center space-x-3 shrink-0">
+      {/* Right: Language Selector, Notifications & Profile Pill */}
+      <div className="flex items-center space-x-2.5 sm:space-x-3 shrink-0">
         
+        {/* Language Selector */}
+        <LanguageSelector />
+
         {/* Notification Bell */}
         <div className="relative">
           <button
             className="p-2 text-[#64748B] hover:text-[#0F172A] hover:bg-[#F1F5F9] rounded-xl transition-colors cursor-pointer"
-            title="Notifications"
+            title={t('header.notifications')}
+            aria-label={t('header.notifications')}
           >
             <Bell className="w-4 h-4" />
           </button>
@@ -119,7 +126,8 @@ export const Header: React.FC = () => {
 
           <button
             onClick={() => logout()}
-            title="Sign Out of Portal"
+            title={t('header.signOutPortal')}
+            aria-label={t('header.signOutPortal')}
             className="p-2 text-[#64748B] hover:text-[#B91C1C] hover:bg-[#FEF2F2] rounded-xl transition-colors cursor-pointer"
           >
             <LogOut className="w-4 h-4" />
@@ -140,7 +148,7 @@ export const Header: React.FC = () => {
                 className="w-full mt-1 flex items-center gap-2 px-3 py-2 text-xs font-semibold text-[#B91C1C] hover:bg-[#FEF2F2] rounded-xl transition-colors cursor-pointer"
               >
                 <LogOut className="w-3.5 h-3.5" />
-                <span>Sign Out of Platform</span>
+                <span>{t('header.signOut')}</span>
               </button>
             </div>
           )}

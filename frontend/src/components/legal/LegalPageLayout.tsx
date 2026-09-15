@@ -2,7 +2,9 @@ import React from 'react';
 import { ArrowLeft, Layers, Shield } from 'lucide-react';
 import { NationalEmblem } from '../common/NationalEmblem';
 import { IndiaMonumentsSkyline } from '../common/IndiaMonumentsSkyline';
+import { LanguageSelector } from '../common/LanguageSelector';
 import { useNavigation } from '../../context/NavigationContext';
+import { useTranslation } from '../../i18n';
 
 interface LegalPageLayoutProps {
   title: string;
@@ -20,6 +22,7 @@ export const LegalPageLayout: React.FC<LegalPageLayoutProps> = ({
   children,
 }) => {
   const { navigate } = useNavigation();
+  const { t } = useTranslation();
 
   const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, path: string) => {
     e.preventDefault();
@@ -52,13 +55,13 @@ export const LegalPageLayout: React.FC<LegalPageLayoutProps> = ({
             <div className="h-9 w-[1.5px] bg-slate-300 hidden sm:block shrink-0" />
             <div className="text-left flex flex-col justify-center leading-tight">
               <h1 className="text-[16.5px] sm:text-[17.5px] font-bold text-[#0F172A] tracking-normal leading-snug">
-                Government of India
+                {t('header.govTitle')}
               </h1>
               <span className="text-[12px] sm:text-[12.5px] font-medium text-[#1E3A8A] leading-normal">
-                Ministry of Heavy Industries
+                {t('header.ministry')}
               </span>
               <span className="text-[10px] sm:text-[10.5px] font-normal text-[#64748B] leading-tight">
-                Department of Public Enterprises
+                {t('header.department')}
               </span>
             </div>
           </div>
@@ -71,7 +74,7 @@ export const LegalPageLayout: React.FC<LegalPageLayoutProps> = ({
               rel="noopener noreferrer"
               className="hidden md:inline hover:text-[#1E3A8A] transition-colors cursor-pointer"
             >
-              Digital India
+              {t('header.digitalIndia')}
             </a>
             <span className="text-slate-300 hidden md:inline" aria-hidden="true">|</span>
             <a
@@ -80,7 +83,7 @@ export const LegalPageLayout: React.FC<LegalPageLayoutProps> = ({
               rel="noopener noreferrer"
               className="hidden lg:inline hover:text-[#1E3A8A] transition-colors cursor-pointer"
             >
-              Atmanirbhar Bharat
+              {t('header.atmanirbhar')}
             </a>
             <span className="text-slate-300 hidden lg:inline" aria-hidden="true">|</span>
             <a
@@ -89,7 +92,7 @@ export const LegalPageLayout: React.FC<LegalPageLayoutProps> = ({
               rel="noopener noreferrer"
               className="hidden sm:inline hover:text-[#1E3A8A] transition-colors cursor-pointer"
             >
-              Viksit Bharat
+              {t('header.viksit')}
             </a>
             <span className="text-slate-300 hidden sm:inline" aria-hidden="true">|</span>
 
@@ -101,6 +104,11 @@ export const LegalPageLayout: React.FC<LegalPageLayoutProps> = ({
               </div>
               <div className="flex-1 bg-[#128807]" />
             </div>
+
+            <span className="text-slate-300" aria-hidden="true">|</span>
+
+            {/* Language Selector */}
+            <LanguageSelector />
           </nav>
         </div>
       </header>
@@ -115,13 +123,13 @@ export const LegalPageLayout: React.FC<LegalPageLayoutProps> = ({
             className="inline-flex items-center gap-2 px-3 py-1.5 bg-white border border-slate-200 hover:border-slate-300 hover:bg-slate-50 text-[#0F172A] font-semibold text-xs rounded-xl shadow-2xs transition-colors cursor-pointer"
           >
             <ArrowLeft className="w-3.5 h-3.5 text-[#1E3A8A]" />
-            <span>Return to Portal</span>
+            <span>{t('legal.returnToPortal')}</span>
           </button>
 
           <div className="flex items-center gap-2 text-xs text-[#64748B]">
             <span className="inline-flex items-center gap-1 font-medium">
               <Layers className="w-3.5 h-3.5 text-[#1E3A8A]" />
-              <span>National Unified Material Master</span>
+              <span>{t('legal.nationalFramework')}</span>
             </span>
           </div>
         </div>
@@ -134,7 +142,7 @@ export const LegalPageLayout: React.FC<LegalPageLayoutProps> = ({
               {categoryBadge}
             </span>
             <span className="text-xs text-[#64748B] font-medium">
-              Version 1.0 &bull; Effective {lastUpdated}
+              {t('legal.lastUpdated')}
             </span>
           </div>
 
@@ -160,7 +168,7 @@ export const LegalPageLayout: React.FC<LegalPageLayoutProps> = ({
             className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#0F172A] hover:bg-[#1E293B] text-white font-bold text-xs rounded-xl shadow-xs transition-colors cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4" />
-            <span>Return to Authentication / Dashboard</span>
+            <span>{t('legal.returnAuth')}</span>
           </button>
         </div>
       </main>
@@ -173,32 +181,32 @@ export const LegalPageLayout: React.FC<LegalPageLayoutProps> = ({
             <NationalEmblem className="h-8 sm:h-9 w-auto shrink-0" />
             <div className="h-7 w-[1.5px] bg-slate-300 hidden sm:block shrink-0" />
             <div className="flex flex-col leading-tight">
-              <span className="font-bold text-[#0F172A] text-[11.5px] sm:text-[12px]">Ministry of Heavy Industries</span>
-              <span className="text-[10px] sm:text-[10.5px] text-[#475569] font-medium">Department of Public Enterprises</span>
-              <span className="text-[9.5px] sm:text-[10px] text-[#64748B]">Government of India</span>
+              <span className="font-bold text-[#0F172A] text-[11.5px] sm:text-[12px]">{t('footer.ministry')}</span>
+              <span className="text-[10px] sm:text-[10.5px] text-[#475569] font-medium">{t('footer.department')}</span>
+              <span className="text-[9.5px] sm:text-[10px] text-[#64748B]">{t('footer.gov')}</span>
             </div>
           </div>
 
           {/* Legal & Accessibility Links */}
           <div className="flex flex-col items-center gap-0.5 text-center">
             <nav className="flex items-center gap-3 sm:gap-4 text-[11px] sm:text-[11.5px] text-[#334155] font-medium" aria-label="Legal and Accessibility Links">
-              <a href="/privacy-policy" onClick={(e) => handleLinkClick(e, '/privacy-policy')} className="hover:text-[#1E3A8A] transition-colors">Privacy Policy</a>
+              <a href="/privacy-policy" onClick={(e) => handleLinkClick(e, '/privacy-policy')} className="hover:text-[#1E3A8A] transition-colors">{t('footer.privacy')}</a>
               <span className="text-slate-300" aria-hidden="true">|</span>
-              <a href="/accessibility" onClick={(e) => handleLinkClick(e, '/accessibility')} className="hover:text-[#1E3A8A] transition-colors">Accessibility</a>
+              <a href="/accessibility" onClick={(e) => handleLinkClick(e, '/accessibility')} className="hover:text-[#1E3A8A] transition-colors">{t('footer.accessibility')}</a>
               <span className="text-slate-300" aria-hidden="true">|</span>
-              <a href="/terms-of-use" onClick={(e) => handleLinkClick(e, '/terms-of-use')} className="hover:text-[#1E3A8A] transition-colors">Terms of Use</a>
+              <a href="/terms-of-use" onClick={(e) => handleLinkClick(e, '/terms-of-use')} className="hover:text-[#1E3A8A] transition-colors">{t('footer.terms')}</a>
               <span className="text-slate-300" aria-hidden="true">|</span>
-              <a href="/help-support" onClick={(e) => handleLinkClick(e, '/help-support')} className="hover:text-[#1E3A8A] transition-colors">Help & Support</a>
+              <a href="/help-support" onClick={(e) => handleLinkClick(e, '/help-support')} className="hover:text-[#1E3A8A] transition-colors">{t('footer.help')}</a>
             </nav>
             <span className="text-[9px] sm:text-[9.5px] text-[#64748B] font-normal">
-              Site best viewed in latest versions of Chrome, Firefox, Edge and Safari
+              {t('footer.bestViewed')}
             </span>
           </div>
 
           {/* Dynamic Copyright & Institutional Badges */}
           <div className="flex items-center gap-3 shrink-0">
             <div className="text-right leading-tight hidden lg:block">
-              <span className="font-semibold text-[#0F172A] text-[10.5px] sm:text-[11px]">© {new Date().getFullYear()} Government of India</span>
+              <span className="font-semibold text-[#0F172A] text-[10.5px] sm:text-[11px]">{t('footer.copyright', { year: new Date().getFullYear() })}</span>
             </div>
 
             {/* Official Digital India Vector Badge */}
@@ -211,10 +219,10 @@ export const LegalPageLayout: React.FC<LegalPageLayoutProps> = ({
               </svg>
               <div className="text-left flex flex-col justify-center whitespace-nowrap leading-tight">
                 <span className="text-[12px] sm:text-[12.5px] font-bold text-[#0F172A] tracking-normal font-sans">
-                  Digital India
+                  {t('footer.digitalIndia')}
                 </span>
                 <span className="text-[8.5px] sm:text-[9px] text-[#64748B] font-medium tracking-wide">
-                  Power To Empower
+                  {t('footer.powerToEmpower')}
                 </span>
               </div>
             </div>

@@ -27,9 +27,12 @@ import {
   CheckCircle2
 } from 'lucide-react';
 
+import { I18nProvider, useTranslation } from '../i18n';
+
 const MainAppContent: React.FC = () => {
   const { user, isAuthenticated, isLoading } = useAuth();
   const { currentPath } = useNavigation();
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState<NavTabType>('dashboard');
   const [selectedCandidate, setSelectedCandidate] = useState<CNMCCandidateItem | null>(null);
   const [refreshTrigger, setRefreshTrigger] = useState<number>(0);
@@ -88,7 +91,7 @@ const MainAppContent: React.FC = () => {
       <div className="min-h-screen bg-[#F8FAFC] flex flex-col items-center justify-center space-y-4">
         <div className="w-10 h-10 border-4 border-[#0F172A]/20 border-t-[#0F172A] rounded-full animate-spin" />
         <span className="text-xs font-semibold text-[#475569] tracking-wider uppercase">
-          Verifying National Unified Portal Session...
+          {t('common.verifyingSession')}
         </span>
       </div>
     );
@@ -274,10 +277,12 @@ const MainAppContent: React.FC = () => {
 
 export const App: React.FC = () => {
   return (
-    <NavigationProvider>
-      <AuthProvider>
-        <MainAppContent />
-      </AuthProvider>
-    </NavigationProvider>
+    <I18nProvider>
+      <NavigationProvider>
+        <AuthProvider>
+          <MainAppContent />
+        </AuthProvider>
+      </NavigationProvider>
+    </I18nProvider>
   );
 };

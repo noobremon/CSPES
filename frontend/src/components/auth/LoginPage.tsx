@@ -20,10 +20,13 @@ import { useAuth } from '../../context/AuthContext';
 import { useNavigation } from '../../context/NavigationContext';
 import { NationalEmblem } from '../common/NationalEmblem';
 import { IndiaMonumentsSkyline } from '../common/IndiaMonumentsSkyline';
+import { LanguageSelector } from '../common/LanguageSelector';
+import { useTranslation } from '../../i18n';
 
 export const LoginPage: React.FC = () => {
   const { login } = useAuth();
   const { navigate } = useNavigation();
+  const { t } = useTranslation();
   // By default, pre-populate National Master Admin credentials for instant 1-click evaluation
   const [email, setEmail] = useState('national_admin@sih.demo');
   const [password, setPassword] = useState('DemoAdmin@2026');
@@ -34,7 +37,7 @@ export const LoginPage: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email || !password) {
-      setError('Please provide both email and password.');
+      setError(t('auth.missingCreds'));
       return;
     }
 
@@ -43,7 +46,7 @@ export const LoginPage: React.FC = () => {
     try {
       await login({ email, password });
     } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : 'Invalid credentials. Please try again.');
+      setError(err instanceof Error ? err.message : t('auth.invalidCreds'));
     } finally {
       setLoading(false);
     }
@@ -63,35 +66,35 @@ export const LoginPage: React.FC = () => {
   const demoAccounts = [
     {
       role: 'NATIONAL_MASTER_ADMIN',
-      title: 'National Master Admin',
+      titleKey: 'auth.roles.adminTitle',
+      descKey: 'auth.roles.adminDesc',
       email: 'national_admin@sih.demo',
       password: 'DemoAdmin@2026',
       icon: ShieldCheck,
-      desc: 'National macro intelligence, cross-CPSE matrix, and governance visibility',
     },
     {
       role: 'CPSE_MATERIAL_MANAGER',
-      title: 'CPSE Material Manager (IOCL)',
+      titleKey: 'auth.roles.managerTitle',
+      descKey: 'auth.roles.managerDesc',
       email: 'cpse_manager_a@sih.demo',
       password: 'DemoManager@2026',
       icon: Building2,
-      desc: 'Ingestion, catalog deduplication, and cross-walk mappings for IOCL',
     },
     {
       role: 'DOMAIN_REVIEWER',
-      title: 'Domain Reviewer',
+      titleKey: 'auth.roles.reviewerTitle',
+      descKey: 'auth.roles.reviewerDesc',
       email: 'domain_reviewer@sih.demo',
       password: 'DemoReviewer@2026',
       icon: UserCheck,
-      desc: 'Technical specification review, APPROVE / REJECT / MODIFY candidates',
     },
     {
       role: 'AUDITOR',
-      title: 'National Auditor',
+      titleKey: 'auth.roles.auditorTitle',
+      descKey: 'auth.roles.auditorDesc',
       email: 'auditor@sih.demo',
       password: 'DemoAuditor@2026',
       icon: FileCheck2,
-      desc: 'Read-only access to immutable audit trails and governance decision logs',
     }
   ];
 
@@ -123,13 +126,13 @@ export const LoginPage: React.FC = () => {
             <div className="h-9 w-[1.5px] bg-slate-300 hidden sm:block shrink-0" />
             <div className="text-left flex flex-col justify-center leading-tight">
               <h1 className="text-[16.5px] sm:text-[17.5px] font-bold text-[#0F172A] tracking-normal leading-snug">
-                Government of India
+                {t('header.govTitle')}
               </h1>
               <span className="text-[12px] sm:text-[12.5px] font-medium text-[#1E3A8A] leading-normal">
-                Ministry of Heavy Industries
+                {t('header.ministry')}
               </span>
               <span className="text-[10px] sm:text-[10.5px] font-normal text-[#64748B] leading-tight">
-                Department of Public Enterprises
+                {t('header.department')}
               </span>
             </div>
           </div>
@@ -142,7 +145,7 @@ export const LoginPage: React.FC = () => {
               rel="noopener noreferrer"
               className="hidden md:inline hover:text-[#1E3A8A] transition-colors cursor-pointer"
             >
-              Digital India
+              {t('header.digitalIndia')}
             </a>
             <span className="text-slate-300 hidden md:inline" aria-hidden="true">|</span>
             <a
@@ -151,7 +154,7 @@ export const LoginPage: React.FC = () => {
               rel="noopener noreferrer"
               className="hidden lg:inline hover:text-[#1E3A8A] transition-colors cursor-pointer"
             >
-              Atmanirbhar Bharat
+              {t('header.atmanirbhar')}
             </a>
             <span className="text-slate-300 hidden lg:inline" aria-hidden="true">|</span>
             <a
@@ -160,7 +163,7 @@ export const LoginPage: React.FC = () => {
               rel="noopener noreferrer"
               className="hidden sm:inline hover:text-[#1E3A8A] transition-colors cursor-pointer"
             >
-              Viksit Bharat
+              {t('header.viksit')}
             </a>
             <span className="text-slate-300 hidden sm:inline" aria-hidden="true">|</span>
 
@@ -176,12 +179,7 @@ export const LoginPage: React.FC = () => {
             <span className="text-slate-300" aria-hidden="true">|</span>
 
             {/* Language Selector */}
-            <div className="flex items-center gap-1 font-semibold text-[#0F172A] hover:text-[#1E3A8A] px-2 py-1 rounded transition-colors cursor-pointer text-[12px] sm:text-[12.5px]">
-              <span>English</span>
-              <svg className="w-3.5 h-3.5 text-slate-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clipRule="evenodd" />
-              </svg>
-            </div>
+            <LanguageSelector />
           </nav>
         </div>
       </header>
@@ -202,24 +200,24 @@ export const LoginPage: React.FC = () => {
               </div>
               <div className="space-y-0.5">
                 <h2 className="text-[20px] sm:text-[22px] lg:text-[23px] font-extrabold text-[#0F172A] tracking-tight leading-tight">
-                  National Unified Material Master Framework
+                  {t('auth.frameworkTitle')}
                 </h2>
                 <div className="text-[12px] sm:text-[13px] font-bold text-[#1E3A8A] tracking-wide">
-                  “One Nation – One Common Material Code”
+                  {t('auth.frameworkTagline')}
                 </div>
               </div>
             </div>
 
             {/* Description / Mission */}
             <p className="text-[11px] sm:text-[11.5px] text-[#475569] leading-relaxed max-w-xl font-normal">
-              A unified, intelligent and governed platform for cross-CPSE material standardization, enabling efficient procurement, better resource utilization and a stronger, self-reliant India.
+              {t('auth.frameworkDesc')}
             </p>
 
             {/* Role Selection Section */}
             <div className="space-y-1.5 pt-0.5">
               <div className="flex items-center justify-between">
                 <span className="text-[10.5px] sm:text-[11px] font-bold text-[#334155] uppercase tracking-wider">
-                  Select Your Role to Continue
+                  {t('auth.selectRole')}
                 </span>
               </div>
 
@@ -246,7 +244,7 @@ export const LoginPage: React.FC = () => {
                             <RoleIcon className="w-3.5 h-3.5" />
                           </div>
                           <span className="text-[11.5px] sm:text-[12px] font-bold text-[#0F172A] truncate">
-                            {demo.title}
+                            {t(demo.titleKey)}
                           </span>
                         </div>
                         {isSelected && (
@@ -270,7 +268,7 @@ export const LoginPage: React.FC = () => {
 
                       {/* Description */}
                       <p className="text-[9.5px] sm:text-[10px] text-[#64748B] mt-1.5 leading-snug line-clamp-1 sm:line-clamp-2">
-                        {demo.desc}
+                        {t(demo.descKey)}
                       </p>
                     </button>
                   );
@@ -282,19 +280,19 @@ export const LoginPage: React.FC = () => {
             <div className="pt-2.5 border-t border-slate-200/80 grid grid-cols-4 gap-2 text-center">
               <div className="flex items-center justify-center gap-1 text-[#475569] font-semibold text-[10.5px] sm:text-[11px]">
                 <SlidersHorizontal className="w-3 h-3 text-[#2563EB]" />
-                <span>Standardize</span>
+                <span>{t('auth.pillars.standardize')}</span>
               </div>
               <div className="flex items-center justify-center gap-1 text-[#475569] font-semibold text-[10.5px] sm:text-[11px]">
                 <TrendingUp className="w-3 h-3 text-[#2563EB]" />
-                <span>Optimize</span>
+                <span>{t('auth.pillars.optimize')}</span>
               </div>
               <div className="flex items-center justify-center gap-1 text-[#475569] font-semibold text-[10.5px] sm:text-[11px]">
                 <Leaf className="w-3 h-3 text-[#15803D]" />
-                <span>Sustain</span>
+                <span>{t('auth.pillars.sustain')}</span>
               </div>
               <div className="flex items-center justify-center gap-1 text-[#475569] font-semibold text-[10.5px] sm:text-[11px]">
                 <ShieldCheck className="w-3 h-3 text-[#2563EB]" />
-                <span>Govern</span>
+                <span>{t('auth.pillars.govern')}</span>
               </div>
             </div>
 
@@ -312,15 +310,15 @@ export const LoginPage: React.FC = () => {
                       <Lock className="w-3.5 h-3.5" />
                     </div>
                     <h3 className="text-[16px] sm:text-[17px] font-bold text-[#0F172A] tracking-tight">
-                      Portal Authentication
+                      {t('auth.portalAuth')}
                     </h3>
                   </div>
                   <p className="text-[11px] text-[#64748B] mt-0.5">
-                    Enter your registered enterprise credentials to access the platform.
+                    {t('auth.portalSubtitle')}
                   </p>
                 </div>
                 <span className="text-[10px] font-semibold bg-[#F1F5F9] text-[#1E3A8A] border border-slate-200 px-2 py-0.5 rounded-md shrink-0">
-                  Enterprise Portal
+                  {t('auth.enterpriseBadge')}
                 </span>
               </div>
 
@@ -335,14 +333,14 @@ export const LoginPage: React.FC = () => {
               <form onSubmit={handleSubmit} className="space-y-3 text-xs">
                 <div>
                   <label className="block text-[#0F172A] font-bold mb-1 text-[11px]">
-                    Email Address
+                    {t('auth.emailLabel')}
                   </label>
                   <div className="relative flex items-center">
                     <Mail className="w-3.5 h-3.5 text-[#64748B] absolute left-3.5 pointer-events-none" />
                     <input
                       type="email"
                       required
-                      placeholder="e.g. national_admin@sih.demo"
+                      placeholder={t('auth.emailPlaceholder')}
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       className="w-full h-[38px] sm:h-[40px] pl-9 pr-3.5 bg-[#F8FAFC] border border-[#CBD5E1] rounded-xl text-[#0F172A] placeholder-[#94A3B8] hover:border-slate-400 focus:outline-hidden focus:bg-white focus:border-[#2563EB] focus:ring-2 focus:ring-[#2563EB]/15 font-medium transition-all text-xs"
@@ -352,14 +350,14 @@ export const LoginPage: React.FC = () => {
 
                 <div>
                   <label className="block text-[#0F172A] font-bold mb-1 text-[11px]">
-                    Password
+                    {t('auth.passwordLabel')}
                   </label>
                   <div className="relative flex items-center">
                     <Lock className="w-3.5 h-3.5 text-[#64748B] absolute left-3.5 pointer-events-none" />
                     <input
                       type={showPassword ? "text" : "password"}
                       required
-                      placeholder="••••••••••••"
+                      placeholder={t('auth.passwordPlaceholder')}
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       className="w-full h-[38px] sm:h-[40px] pl-9 pr-9 bg-[#F8FAFC] border border-[#CBD5E1] rounded-xl text-[#0F172A] placeholder-[#94A3B8] hover:border-slate-400 focus:outline-hidden focus:bg-white focus:border-[#2563EB] focus:ring-2 focus:ring-[#2563EB]/15 font-medium transition-all text-xs"
@@ -368,7 +366,7 @@ export const LoginPage: React.FC = () => {
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
                       className="absolute right-3 text-[#64748B] hover:text-[#0F172A] transition-colors cursor-pointer flex items-center"
-                      title={showPassword ? "Hide password" : "Show password"}
+                      title={showPassword ? t('auth.hidePassword') : t('auth.showPassword')}
                     >
                       {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                     </button>
@@ -383,11 +381,11 @@ export const LoginPage: React.FC = () => {
                   {loading ? (
                     <>
                       <div className="w-3.5 h-3.5 border-2 border-white/20 border-t-white rounded-full animate-spin" />
-                      <span>Verifying Credentials...</span>
+                      <span>{t('auth.verifying')}</span>
                     </>
                   ) : (
                     <>
-                      <span>Sign In to Platform</span>
+                      <span>{t('auth.signInBtn')}</span>
                       <ArrowRight className="w-4 h-4" />
                     </>
                   )}
@@ -395,15 +393,15 @@ export const LoginPage: React.FC = () => {
               </form>
 
               <div className="pt-0.5 flex items-center justify-between text-[9.5px] sm:text-[10px] text-[#64748B]">
-                <span>Session: Secure JWT Bearer</span>
-                <span>Security Standard: ADR-007</span>
+                <span>{t('auth.sessionSecure')}</span>
+                <span>{t('auth.securityStandard')}</span>
               </div>
 
               {/* Official Notice Callout */}
               <div className="p-2 sm:p-2.5 rounded-xl bg-[#FFFBEB] border border-[#FDE68A] text-[9.5px] sm:text-[10px] text-[#92400E] flex items-start gap-2 shadow-2xs text-left">
                 <Info className="w-3.5 h-3.5 text-[#D97706] mt-0.5 shrink-0" />
                 <span className="leading-snug">
-                  <strong className="text-[#92400E]">DEMONSTRATION ACCESS:</strong> Select any role above to load credentials or click <strong>Sign In to Platform</strong> with the pre-filled Admin account.
+                  <strong className="text-[#92400E]">{t('auth.demoNoticeTitle')}</strong> {t('auth.demoNoticeText')}
                 </span>
               </div>
 
@@ -444,32 +442,32 @@ export const LoginPage: React.FC = () => {
             <NationalEmblem className="h-8 sm:h-9 w-auto shrink-0" />
             <div className="h-7 w-[1.5px] bg-slate-300 hidden sm:block shrink-0" />
             <div className="flex flex-col leading-tight">
-              <span className="font-bold text-[#0F172A] text-[11.5px] sm:text-[12px]">Ministry of Heavy Industries</span>
-              <span className="text-[10px] sm:text-[10.5px] text-[#475569] font-medium">Department of Public Enterprises</span>
-              <span className="text-[9.5px] sm:text-[10px] text-[#64748B]">Government of India</span>
+              <span className="font-bold text-[#0F172A] text-[11.5px] sm:text-[12px]">{t('footer.ministry')}</span>
+              <span className="text-[10px] sm:text-[10.5px] text-[#475569] font-medium">{t('footer.department')}</span>
+              <span className="text-[9.5px] sm:text-[10px] text-[#64748B]">{t('footer.gov')}</span>
             </div>
           </div>
 
           {/* Legal & Accessibility Links + Browser Compatibility */}
           <div className="flex flex-col items-center gap-0.5 text-center">
             <nav className="footer-links flex items-center gap-3 sm:gap-4 text-[11px] sm:text-[11.5px] text-[#334155] font-medium" aria-label="Legal and Accessibility Links">
-              <a href="/privacy-policy" onClick={(e) => handleLegalNav(e, '/privacy-policy')} className="hover:text-[#1E3A8A] transition-colors cursor-pointer">Privacy Policy</a>
+              <a href="/privacy-policy" onClick={(e) => handleLegalNav(e, '/privacy-policy')} className="hover:text-[#1E3A8A] transition-colors cursor-pointer">{t('footer.privacy')}</a>
               <span className="text-slate-300" aria-hidden="true">|</span>
-              <a href="/accessibility" onClick={(e) => handleLegalNav(e, '/accessibility')} className="hover:text-[#1E3A8A] transition-colors cursor-pointer">Accessibility</a>
+              <a href="/accessibility" onClick={(e) => handleLegalNav(e, '/accessibility')} className="hover:text-[#1E3A8A] transition-colors cursor-pointer">{t('footer.accessibility')}</a>
               <span className="text-slate-300" aria-hidden="true">|</span>
-              <a href="/terms-of-use" onClick={(e) => handleLegalNav(e, '/terms-of-use')} className="hover:text-[#1E3A8A] transition-colors cursor-pointer">Terms of Use</a>
+              <a href="/terms-of-use" onClick={(e) => handleLegalNav(e, '/terms-of-use')} className="hover:text-[#1E3A8A] transition-colors cursor-pointer">{t('footer.terms')}</a>
               <span className="text-slate-300" aria-hidden="true">|</span>
-              <a href="/help-support" onClick={(e) => handleLegalNav(e, '/help-support')} className="hover:text-[#1E3A8A] transition-colors cursor-pointer">Help & Support</a>
+              <a href="/help-support" onClick={(e) => handleLegalNav(e, '/help-support')} className="hover:text-[#1E3A8A] transition-colors cursor-pointer">{t('footer.help')}</a>
             </nav>
             <span className="text-[9px] sm:text-[9.5px] text-[#64748B] font-normal">
-              Site best viewed in latest versions of Chrome, Firefox, Edge and Safari
+              {t('footer.bestViewed')}
             </span>
           </div>
 
           {/* Dynamic Copyright & Institutional Badges */}
           <div className="footer-meta flex items-center gap-3 shrink-0">
             <div className="text-right leading-tight hidden lg:block">
-              <span className="font-semibold text-[#0F172A] text-[10.5px] sm:text-[11px]">© {new Date().getFullYear()} Government of India</span>
+              <span className="font-semibold text-[#0F172A] text-[10.5px] sm:text-[11px]">{t('footer.copyright', { year: new Date().getFullYear() })}</span>
             </div>
 
             {/* Official Digital India Vector Badge */}
@@ -482,10 +480,10 @@ export const LoginPage: React.FC = () => {
               </svg>
               <div className="text-left flex flex-col justify-center whitespace-nowrap leading-tight">
                 <span className="text-[12px] sm:text-[12.5px] font-bold text-[#0F172A] tracking-normal font-sans">
-                  Digital India
+                  {t('footer.digitalIndia')}
                 </span>
                 <span className="text-[8.5px] sm:text-[9px] text-[#64748B] font-medium tracking-wide">
-                  Power To Empower
+                  {t('footer.powerToEmpower')}
                 </span>
               </div>
             </div>

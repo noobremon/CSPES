@@ -11,6 +11,7 @@ import {
   LogOut 
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
+import { useTranslation } from '../../i18n';
 
 export type NavTabType = 'dashboard' | 'ingestion' | 'workspace' | 'queue' | 'mappings' | 'analytics' | 'health';
 
@@ -26,15 +27,16 @@ export const Sidebar: React.FC<SidebarProps> = ({
   pendingCount = 0,
 }) => {
   const { logout } = useAuth();
+  const { t } = useTranslation();
 
   const navItems = [
-    { id: 'dashboard' as NavTabType, label: 'Dashboard', icon: LayoutDashboard },
-    { id: 'ingestion' as NavTabType, label: 'Data Ingestion', icon: UploadCloud },
-    { id: 'workspace' as NavTabType, label: 'CNMC Workspace', icon: FileText },
-    { id: 'queue' as NavTabType, label: 'Governance Queue', icon: CheckSquare, badge: pendingCount },
-    { id: 'mappings' as NavTabType, label: 'CPSE ↔ CNMC Cross-Walk', icon: GitCompare },
-    { id: 'analytics' as NavTabType, label: 'National Analytics', icon: BarChart3 },
-    { id: 'health' as NavTabType, label: 'System Status', icon: Activity },
+    { id: 'dashboard' as NavTabType, label: t('sidebar.dashboard'), icon: LayoutDashboard },
+    { id: 'ingestion' as NavTabType, label: t('sidebar.ingestion'), icon: UploadCloud },
+    { id: 'workspace' as NavTabType, label: t('sidebar.workspace'), icon: FileText },
+    { id: 'queue' as NavTabType, label: t('sidebar.queue'), icon: CheckSquare, badge: pendingCount },
+    { id: 'mappings' as NavTabType, label: t('sidebar.mappings'), icon: GitCompare },
+    { id: 'analytics' as NavTabType, label: t('sidebar.analytics'), icon: BarChart3 },
+    { id: 'health' as NavTabType, label: t('sidebar.health'), icon: Activity },
   ];
 
   return (
@@ -71,11 +73,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
       {/* Bottom Secondary Navigation (Help & Logout) - Flush to footer */}
       <div className="p-3 border-t border-[#1E3A8A]/40 space-y-1.5">
         <button
-          onClick={() => alert('National Unified Material Master Framework — Help & Support Portal')}
+          onClick={() => alert(`${t('header.portalName')} — ${t('footer.help')}`)}
           className="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-[#BFDBFE] hover:bg-white/10 hover:text-white transition-colors cursor-pointer"
         >
           <HelpCircle className="w-4 h-4 text-[#93C5FD]" />
-          <span>Help & Support</span>
+          <span>{t('footer.help')}</span>
         </button>
 
         <button
@@ -83,7 +85,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
           className="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-[#FCA5A5] hover:bg-red-500/20 hover:text-white transition-colors cursor-pointer"
         >
           <LogOut className="w-4 h-4 text-[#F87171]" />
-          <span>Logout</span>
+          <span>{t('header.signOut')}</span>
         </button>
       </div>
     </aside>

@@ -1,8 +1,10 @@
 import React from 'react';
 import { useNavigation } from '../../context/NavigationContext';
+import { useTranslation } from '../../i18n';
 
 export const Footer: React.FC = () => {
   const { navigate } = useNavigation();
+  const { t } = useTranslation();
 
   const handleLegalNav = (e: React.MouseEvent<HTMLAnchorElement>, path: string) => {
     e.preventDefault();
@@ -16,25 +18,25 @@ export const Footer: React.FC = () => {
         <div className="flex items-center gap-2.5 text-left">
           <div className="h-7 w-0.5 bg-[#1E3A8A] rounded-full hidden sm:block shrink-0" />
           <div className="flex flex-col leading-tight">
-            <span className="font-bold text-[#0F172A] text-[11px]">Ministry of Heavy Industries &nbsp;|&nbsp; Department of Public Enterprises</span>
-            <span className="text-[10px] text-[#64748B]">Government of India</span>
+            <span className="font-bold text-[#0F172A] text-[11px]">{t('footer.ministry')} &nbsp;|&nbsp; {t('footer.department')}</span>
+            <span className="text-[10px] text-[#64748B]">{t('footer.gov')}</span>
           </div>
         </div>
 
         {/* Center: Legal & Accessibility Links */}
         <div className="flex items-center gap-2.5 text-[#475569] font-medium text-[11px]">
-          <a href="/privacy-policy" onClick={(e) => handleLegalNav(e, '/privacy-policy')} className="hover:text-[#1E3A8A] transition-colors cursor-pointer">Privacy Policy</a>
+          <a href="/privacy-policy" onClick={(e) => handleLegalNav(e, '/privacy-policy')} className="hover:text-[#1E3A8A] transition-colors cursor-pointer">{t('footer.privacy')}</a>
           <span className="text-slate-300">|</span>
-          <a href="/accessibility" onClick={(e) => handleLegalNav(e, '/accessibility')} className="hover:text-[#1E3A8A] transition-colors cursor-pointer">Accessibility</a>
+          <a href="/accessibility" onClick={(e) => handleLegalNav(e, '/accessibility')} className="hover:text-[#1E3A8A] transition-colors cursor-pointer">{t('footer.accessibility')}</a>
           <span className="text-slate-300">|</span>
-          <a href="/terms-of-use" onClick={(e) => handleLegalNav(e, '/terms-of-use')} className="hover:text-[#1E3A8A] transition-colors cursor-pointer">Terms of Use</a>
+          <a href="/terms-of-use" onClick={(e) => handleLegalNav(e, '/terms-of-use')} className="hover:text-[#1E3A8A] transition-colors cursor-pointer">{t('footer.terms')}</a>
           <span className="text-slate-300">|</span>
-          <a href="/help-support" onClick={(e) => handleLegalNav(e, '/help-support')} className="hover:text-[#1E3A8A] transition-colors cursor-pointer">Help & Support</a>
+          <a href="/help-support" onClick={(e) => handleLegalNav(e, '/help-support')} className="hover:text-[#1E3A8A] transition-colors cursor-pointer">{t('footer.help')}</a>
         </div>
 
         {/* Right: Copyright & National Badges */}
         <div className="flex items-center gap-2.5">
-          <span className="text-[10.5px] font-semibold text-[#0F172A] hidden lg:inline">© {new Date().getFullYear()} Government of India</span>
+          <span className="text-[10.5px] font-semibold text-[#0F172A] hidden lg:inline">{t('footer.copyright', { year: new Date().getFullYear() })}</span>
 
           {/* Digital India Badge */}
           <div className="flex items-center gap-2 px-2.5 py-1 bg-white border border-slate-200/90 rounded-lg shadow-2xs">
@@ -45,8 +47,8 @@ export const Footer: React.FC = () => {
               <circle cx="20" cy="20" r="2.2" fill="#000080" />
             </svg>
             <div className="text-left leading-tight flex flex-col justify-center whitespace-nowrap">
-              <span className="text-[11px] font-bold text-[#0F172A] tracking-normal font-sans">Digital India</span>
-              <span className="text-[7.5px] text-[#64748B] font-medium tracking-wide">Power To Empower</span>
+              <span className="text-[11px] font-bold text-[#0F172A] tracking-normal font-sans">{t('footer.digitalIndia')}</span>
+              <span className="text-[7.5px] text-[#64748B] font-medium tracking-wide">{t('footer.powerToEmpower')}</span>
             </div>
           </div>
 
@@ -54,8 +56,8 @@ export const Footer: React.FC = () => {
           <div className="flex items-center gap-1 px-2 py-0.5 bg-white border border-slate-200 rounded-md shadow-2xs">
             <span className="font-black text-[10px] text-[#1E3A8A] tracking-tighter">75<sup className="text-[7px]">+</sup></span>
             <div className="text-left leading-none">
-              <div className="text-[7.5px] font-black text-[#FF9933]">Azadi<span className="text-[6px] font-normal text-slate-400"> Ka</span></div>
-              <div className="text-[6.5px] font-black text-[#138808]">Amrit Mahotsav</div>
+              <div className="text-[7.5px] font-black text-[#FF9933]">{t('footer.azadiKa')}<span className="text-[6px] font-normal text-slate-400"> </span></div>
+              <div className="text-[6.5px] font-black text-[#138808]">{t('footer.amritMahotsav')}</div>
             </div>
           </div>
         </div>
