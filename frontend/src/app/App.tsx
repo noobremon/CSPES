@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { AuthProvider, useAuth } from '../context/AuthContext';
+import { NavigationProvider, useNavigation } from '../context/NavigationContext';
 import { Header } from '../components/layout/Header';
 import { Sidebar, NavTabType } from '../components/layout/Sidebar';
 import { Footer } from '../components/layout/Footer';
 import { LoginPage } from '../components/auth/LoginPage';
+import { PrivacyPolicyPage } from '../components/legal/PrivacyPolicyPage';
+import { AccessibilityPage } from '../components/legal/AccessibilityPage';
+import { TermsOfUsePage } from '../components/legal/TermsOfUsePage';
+import { HelpSupportPage } from '../components/legal/HelpSupportPage';
 import { NationalDashboardView } from '../components/dashboard/NationalDashboardView';
 import { DataIngestionView } from '../components/ingestion/DataIngestionView';
 import { RecommendationWorkspace } from '../components/cnmc/RecommendationWorkspace';
@@ -24,6 +29,7 @@ import {
 
 const MainAppContent: React.FC = () => {
   const { user, isAuthenticated, isLoading } = useAuth();
+  const { currentPath } = useNavigation();
   const [activeTab, setActiveTab] = useState<NavTabType>('dashboard');
   const [selectedCandidate, setSelectedCandidate] = useState<CNMCCandidateItem | null>(null);
   const [refreshTrigger, setRefreshTrigger] = useState<number>(0);
@@ -62,6 +68,20 @@ const MainAppContent: React.FC = () => {
   const handleReviewSubmitted = () => {
     setRefreshTrigger((prev) => prev + 1);
   };
+
+  // 1. Dedicated Legal & Policy Support Routes (Accessible Publicly & Authenticated)
+  if (currentPath === '/privacy-policy') {
+    return <PrivacyPolicyPage />;
+  }
+  if (currentPath === '/accessibility') {
+    return <AccessibilityPage />;
+  }
+  if (currentPath === '/terms-of-use') {
+    return <TermsOfUsePage />;
+  }
+  if (currentPath === '/help-support') {
+    return <HelpSupportPage />;
+  }
 
   if (isLoading) {
     return (
@@ -254,8 +274,10 @@ const MainAppContent: React.FC = () => {
 
 export const App: React.FC = () => {
   return (
-    <AuthProvider>
-      <MainAppContent />
-    </AuthProvider>
+    <NavigationProvider>
+      <AuthProvider>
+        <MainAppContent />
+      </AuthProvider>
+    </NavigationProvider>
   );
 };

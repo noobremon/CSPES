@@ -17,11 +17,13 @@ import {
   Leaf
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
+import { useNavigation } from '../../context/NavigationContext';
 import { NationalEmblem } from '../common/NationalEmblem';
 import { IndiaMonumentsSkyline } from '../common/IndiaMonumentsSkyline';
 
 export const LoginPage: React.FC = () => {
   const { login } = useAuth();
+  const { navigate } = useNavigation();
   // By default, pre-populate National Master Admin credentials for instant 1-click evaluation
   const [email, setEmail] = useState('national_admin@sih.demo');
   const [password, setPassword] = useState('DemoAdmin@2026');
@@ -51,6 +53,11 @@ export const LoginPage: React.FC = () => {
     setEmail(demoEmail);
     setPassword(demoPassword);
     setError(null);
+  };
+
+  const handleLegalNav = (e: React.MouseEvent<HTMLAnchorElement>, path: string) => {
+    e.preventDefault();
+    navigate(path);
   };
 
   const demoAccounts = [
@@ -129,11 +136,32 @@ export const LoginPage: React.FC = () => {
 
           {/* Institutional Links & Indian Flag */}
           <nav className="institutional-links flex items-center gap-4 sm:gap-5 text-[12px] sm:text-[12.5px] text-[#334155] font-medium" aria-label="Institutional Links">
-            <a href="#digital-india" className="hidden md:inline hover:text-[#1E3A8A] transition-colors cursor-pointer">Digital India</a>
+            <a
+              href="https://www.digitalindia.gov.in/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden md:inline hover:text-[#1E3A8A] transition-colors cursor-pointer"
+            >
+              Digital India
+            </a>
             <span className="text-slate-300 hidden md:inline" aria-hidden="true">|</span>
-            <a href="#atmanirbhar" className="hidden lg:inline hover:text-[#1E3A8A] transition-colors cursor-pointer">Atmanirbhar Bharat</a>
+            <a
+              href="https://transformingindia.mygov.in/aatmanirbharbharat/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden lg:inline hover:text-[#1E3A8A] transition-colors cursor-pointer"
+            >
+              Atmanirbhar Bharat
+            </a>
             <span className="text-slate-300 hidden lg:inline" aria-hidden="true">|</span>
-            <a href="#viksit" className="hidden sm:inline hover:text-[#1E3A8A] transition-colors cursor-pointer">Viksit Bharat</a>
+            <a
+              href="https://innovateindia.mygov.in/viksitbharat2047/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden sm:inline hover:text-[#1E3A8A] transition-colors cursor-pointer"
+            >
+              Viksit Bharat
+            </a>
             <span className="text-slate-300 hidden sm:inline" aria-hidden="true">|</span>
 
             {/* Indian Flag SVG Badge */}
@@ -425,13 +453,13 @@ export const LoginPage: React.FC = () => {
           {/* Legal & Accessibility Links + Browser Compatibility */}
           <div className="flex flex-col items-center gap-0.5 text-center">
             <nav className="footer-links flex items-center gap-3 sm:gap-4 text-[11px] sm:text-[11.5px] text-[#334155] font-medium" aria-label="Legal and Accessibility Links">
-              <a href="#privacy" className="hover:text-[#1E3A8A] transition-colors">Privacy Policy</a>
+              <a href="/privacy-policy" onClick={(e) => handleLegalNav(e, '/privacy-policy')} className="hover:text-[#1E3A8A] transition-colors cursor-pointer">Privacy Policy</a>
               <span className="text-slate-300" aria-hidden="true">|</span>
-              <a href="#accessibility" className="hover:text-[#1E3A8A] transition-colors">Accessibility</a>
+              <a href="/accessibility" onClick={(e) => handleLegalNav(e, '/accessibility')} className="hover:text-[#1E3A8A] transition-colors cursor-pointer">Accessibility</a>
               <span className="text-slate-300" aria-hidden="true">|</span>
-              <a href="#terms" className="hover:text-[#1E3A8A] transition-colors">Terms of Use</a>
+              <a href="/terms-of-use" onClick={(e) => handleLegalNav(e, '/terms-of-use')} className="hover:text-[#1E3A8A] transition-colors cursor-pointer">Terms of Use</a>
               <span className="text-slate-300" aria-hidden="true">|</span>
-              <a href="#help" className="hover:text-[#1E3A8A] transition-colors">Help & Support</a>
+              <a href="/help-support" onClick={(e) => handleLegalNav(e, '/help-support')} className="hover:text-[#1E3A8A] transition-colors cursor-pointer">Help & Support</a>
             </nav>
             <span className="text-[9px] sm:text-[9.5px] text-[#64748B] font-normal">
               Site best viewed in latest versions of Chrome, Firefox, Edge and Safari

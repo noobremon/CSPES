@@ -1,6 +1,14 @@
 import React from 'react';
+import { useNavigation } from '../../context/NavigationContext';
 
 export const Footer: React.FC = () => {
+  const { navigate } = useNavigation();
+
+  const handleLegalNav = (e: React.MouseEvent<HTMLAnchorElement>, path: string) => {
+    e.preventDefault();
+    navigate(path);
+  };
+
   return (
     <footer className="w-full border-t border-[#DDE7EE] bg-[#F4F8FB] py-2.5 px-6 text-xs text-[#64748B] select-none mt-auto">
       <div className="w-full flex flex-col md:flex-row items-center justify-between gap-3 text-[11px]">
@@ -15,13 +23,13 @@ export const Footer: React.FC = () => {
 
         {/* Center: Legal & Accessibility Links */}
         <div className="flex items-center gap-2.5 text-[#475569] font-medium text-[11px]">
-          <a href="#privacy" className="hover:text-[#1E3A8A] transition-colors">Privacy Policy</a>
+          <a href="/privacy-policy" onClick={(e) => handleLegalNav(e, '/privacy-policy')} className="hover:text-[#1E3A8A] transition-colors cursor-pointer">Privacy Policy</a>
           <span className="text-slate-300">|</span>
-          <a href="#accessibility" className="hover:text-[#1E3A8A] transition-colors">Accessibility</a>
+          <a href="/accessibility" onClick={(e) => handleLegalNav(e, '/accessibility')} className="hover:text-[#1E3A8A] transition-colors cursor-pointer">Accessibility</a>
           <span className="text-slate-300">|</span>
-          <a href="#terms" className="hover:text-[#1E3A8A] transition-colors">Terms of Use</a>
+          <a href="/terms-of-use" onClick={(e) => handleLegalNav(e, '/terms-of-use')} className="hover:text-[#1E3A8A] transition-colors cursor-pointer">Terms of Use</a>
           <span className="text-slate-300">|</span>
-          <a href="#help" className="hover:text-[#1E3A8A] transition-colors">Help & Support</a>
+          <a href="/help-support" onClick={(e) => handleLegalNav(e, '/help-support')} className="hover:text-[#1E3A8A] transition-colors cursor-pointer">Help & Support</a>
         </div>
 
         {/* Right: Copyright & National Badges */}
